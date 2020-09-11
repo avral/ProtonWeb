@@ -227,7 +227,7 @@ export default class BrowserTransport {
         infoEl.appendChild(infoTitle);
         let subtitle;
         if (deviceName && deviceName.length > 0) {
-            subtitle = `Please open Proton Wallet on “${deviceName}” to review and sign the transaction.`;
+            subtitle = `Please open on “${deviceName}” to review and sign the transaction.`;
         }
         else {
             subtitle = 'Please review and sign the transaction in the linked wallet.';

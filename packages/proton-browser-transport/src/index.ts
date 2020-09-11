@@ -159,6 +159,7 @@ export default class BrowserTransport implements LinkTransport {
                 margin: 0,
                 errorCorrectionLevel: 'L',
             })
+
         } catch (error) {
             console.warn('Unable to generate QR code', error)
         }
@@ -291,7 +292,7 @@ export default class BrowserTransport implements LinkTransport {
 
         let subtitle: string
         if (deviceName && deviceName.length > 0) {
-            subtitle = `Please open Proton Wallet on “${deviceName}” to review and sign the transaction.`
+            subtitle = `Please open on “${deviceName}” to review and sign the transaction.`
         } else {
             subtitle = 'Please review and sign the transaction in the linked wallet.'
         }
