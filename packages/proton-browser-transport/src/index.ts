@@ -12,6 +12,8 @@ export interface BrowserTransportOptions {
     requestStatus?: boolean
     /** Local storage prefix, defaults to `anchor-link`. */
     storagePrefix?: string
+    /** Requesting account of the dapp (optional) */
+    requestAccount?: string
 }
 
 class Storage implements LinkStorage {
@@ -38,11 +40,13 @@ export default class BrowserTransport implements LinkTransport {
         this.injectStyles = !(options.injectStyles === false)
         this.requestStatus = !(options.requestStatus === false)
         this.storage = new Storage(options.storagePrefix || 'proton-link')
+        this.requestAccount = options.requestAccount || ''
     }
 
     private classPrefix: string
     private injectStyles: boolean
     private requestStatus: boolean
+    private requestAccount: string
     private activeRequest?: SigningRequest
     private activeCancel?: (reason: string | Error) => void
     private containerEl!: HTMLElement
@@ -138,6 +142,10 @@ export default class BrowserTransport implements LinkTransport {
         let sameDeviceRequest = request.clone()
         sameDeviceRequest.setInfoKey('same_device', true)
         sameDeviceRequest.setInfoKey('return_path', returnUrl())
+
+        if (this.requestAccount.length > 0) {
+            sameDeviceRequest.setInfoKey('req_account', this.requestAccount)
+        }
 
         let crossDeviceUri = request.encode(true, false)
 
@@ -298,7 +306,7 @@ export default class BrowserTransport implements LinkTransport {
         this.show()
 
         if (isAppleHandheld() && session.metadata.sameDevice) {
-            window.location.href = 'anchor://link'
+            window.location.href = 'proton://link'
         }
     }
 
