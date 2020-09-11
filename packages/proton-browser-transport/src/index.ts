@@ -3,8 +3,6 @@ import {SigningRequest} from 'eosio-signing-request'
 import * as qrcode from 'qrcode'
 import styleText from './styles'
 
-import {fuel} from './fuel'
-
 export interface BrowserTransportOptions {
     /** CSS class prefix, defaults to `anchor-link` */
     classPrefix?: string
@@ -14,12 +12,6 @@ export interface BrowserTransportOptions {
     requestStatus?: boolean
     /** Local storage prefix, defaults to `anchor-link`. */
     storagePrefix?: string
-    /**
-     * Whether to use Greymass Fuel for low resource accounts, defaults to false.
-     * Note that this service is not available on all networks.
-     * Visit https://greymass.com/en/fuel for more information.
-     */
-    disableGreymassFuel?: boolean
 }
 
 class Storage implements LinkStorage {
@@ -42,17 +34,15 @@ export default class BrowserTransport implements LinkTransport {
     storage: LinkStorage
 
     constructor(public readonly options: BrowserTransportOptions = {}) {
-        this.classPrefix = options.classPrefix || 'anchor-link'
+        this.classPrefix = options.classPrefix || 'proton-link'
         this.injectStyles = !(options.injectStyles === false)
         this.requestStatus = !(options.requestStatus === false)
-        this.fuelEnabled = options.disableGreymassFuel !== true
-        this.storage = new Storage(options.storagePrefix || 'anchor-link')
+        this.storage = new Storage(options.storagePrefix || 'proton-link')
     }
 
     private classPrefix: string
     private injectStyles: boolean
     private requestStatus: boolean
-    private fuelEnabled: boolean
     private activeRequest?: SigningRequest
     private activeCancel?: (reason: string | Error) => void
     private containerEl!: HTMLElement
@@ -60,7 +50,6 @@ export default class BrowserTransport implements LinkTransport {
     private styleEl?: HTMLStyleElement
     private countdownTimer?: NodeJS.Timeout
     private closeTimer?: NodeJS.Timeout
-    private prepareStatusEl?: HTMLElement
 
     private closeModal() {
         this.hide()
@@ -150,12 +139,11 @@ export default class BrowserTransport implements LinkTransport {
         sameDeviceRequest.setInfoKey('same_device', true)
         sameDeviceRequest.setInfoKey('return_path', returnUrl())
 
-        let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
 
         const isIdentity = request.isIdentity()
-        const title = isIdentity ? 'Login' : 'Sign'
-        const subtitle = 'Scan the QR-code with your Anchor app.'
+        const title = isIdentity ? 'Login with Proton' : 'Sign with Proton'
+        const subtitle = 'Scan the QR-code with your Proton Wallet.'
 
         const qrEl = this.createEl({class: 'qr'})
         try {
@@ -168,20 +156,6 @@ export default class BrowserTransport implements LinkTransport {
         }
 
         const linkEl = this.createEl({class: 'uri'})
-        const linkA = this.createEl({
-            tag: 'a',
-            href: crossDeviceUri,
-            text: 'Open Anchor app',
-        })
-        linkA.addEventListener('click', (event) => {
-            event.preventDefault()
-            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-                iframe.setAttribute('src', sameDeviceUri)
-            } else {
-                window.location.href = sameDeviceUri
-            }
-        })
-        linkEl.appendChild(linkA)
 
         const iframe = this.createEl({
             class: 'wskeepalive',
@@ -196,18 +170,21 @@ export default class BrowserTransport implements LinkTransport {
         infoEl.appendChild(infoTitle)
         infoEl.appendChild(infoSubtitle)
 
+        const backgroundEl = this.createEl({class: 'background'})
+
         const actionEl = this.createEl({class: 'actions'})
-        actionEl.appendChild(qrEl)
-        actionEl.appendChild(linkEl)
+        actionEl.appendChild(backgroundEl)
+        backgroundEl.appendChild(qrEl)
+        // actionEl.appendChild(linkEl)
 
         let footnoteEl: HTMLElement
         if (isIdentity) {
-            footnoteEl = this.createEl({class: 'footnote', text: "Don't have Anchor? "})
+            footnoteEl = this.createEl({class: 'footnote', text: "Don't have Proton Wallet? "})
             const footnoteLink = this.createEl({
                 tag: 'a',
                 target: '_blank',
-                href: 'https://greymass.com/anchor',
-                text: 'Download Anchor app now',
+                href: 'https://protonchain.com',
+                text: 'Download it now',
             })
             footnoteEl.appendChild(footnoteLink)
         } else {
@@ -245,7 +222,6 @@ export default class BrowserTransport implements LinkTransport {
             tag: 'span',
             text: 'Preparing request...',
         })
-        this.prepareStatusEl = infoSubtitle
 
         infoEl.appendChild(infoTitle)
         infoEl.appendChild(infoSubtitle)
@@ -305,7 +281,7 @@ export default class BrowserTransport implements LinkTransport {
 
         let subtitle: string
         if (deviceName && deviceName.length > 0) {
-            subtitle = `Please open Anchor app on “${deviceName}” to review and sign the transaction.`
+            subtitle = `Please open Proton Wallet on “${deviceName}” to review and sign the transaction.`
         } else {
             subtitle = 'Please review and sign the transaction in the linked wallet.'
         }
@@ -333,30 +309,6 @@ export default class BrowserTransport implements LinkTransport {
             clearTimeout(this.countdownTimer)
             this.countdownTimer = undefined
         }
-    }
-
-    private updatePrepareStatus(message: string): void {
-        if (this.prepareStatusEl) {
-            this.prepareStatusEl.textContent = message
-        }
-    }
-
-    public async prepare(request: SigningRequest, session?: LinkSession) {
-        this.showLoading()
-        if (!this.fuelEnabled || !session || request.isIdentity()) {
-            // don't attempt to cosign id request or if we don't have a session attached
-            return request
-        }
-        try {
-            const result = fuel(request, session, this.updatePrepareStatus.bind(this))
-            const timeout = new Promise((r) => setTimeout(r, 3500)).then(() => {
-                throw new Error('Fuel API timeout after 3500ms')
-            })
-            return await Promise.race([result, timeout])
-        } catch (error) {
-            console.info(`Not applying fuel (${error.message})`)
-        }
-        return request
     }
 
     public onSuccess(request: SigningRequest) {
