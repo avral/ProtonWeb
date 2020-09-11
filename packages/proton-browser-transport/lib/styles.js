@@ -27,8 +27,7 @@ export default `
 }
 
 .%prefix%-inner {
-    background: #010c2c;
-    color: white;
+    background: #EFF1F7;
     margin: 20px;
     padding-top: 50px;
     border-radius: 20px;
@@ -89,7 +88,7 @@ export default `
     border-radius: 20px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background: #010c2c;
+    background: white;
 }
 
 .%prefix%-info {
@@ -126,11 +125,11 @@ export default `
     line-height: 1.71;
     letter-spacing: normal;
     text-align: center;
+    color: #010c2c;
     width: 320px;
     height: 24px;
     font-family: CircularStd;
     margin-bottom: 24px;
-    color: #c2a2f6;
 }
 
 .%prefix%-actions {
@@ -165,7 +164,6 @@ export default `
 
 .%prefix%-qr svg {
     width: 100%;
-    fill: #010c2c;
 }
 
 .%prefix%-footnote {
@@ -213,4 +211,5 @@ export default `
         background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.66 10.987L6 7.327l-3.66 3.66A1.035 1.035 0 11.876 9.523l3.66-3.66-3.66-3.66A1.035 1.035 0 012.34.737L6 4.398 9.66.739a1.035 1.035 0 111.464 1.464l-3.66 3.66 3.66 3.661a1.035 1.035 0 11-1.464 1.464z' fill='%23FFF' fill-rule='nonzero'/%3E%3C/svg%3E");
     }
 }
-`
+`;
+//# sourceMappingURL=styles.js.map
