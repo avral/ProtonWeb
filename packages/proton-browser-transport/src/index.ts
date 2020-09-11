@@ -143,7 +143,7 @@ export default class BrowserTransport implements LinkTransport {
 
         const isIdentity = request.isIdentity()
         const title = isIdentity ? 'Login with Proton' : 'Sign with Proton'
-        const subtitle = 'Scan the QR-code with your Proton Wallet.'
+        const subtitle = 'Scan the QR-code with your Proton Wallet'
 
         const qrEl = this.createEl({class: 'qr'})
         try {
@@ -171,11 +171,13 @@ export default class BrowserTransport implements LinkTransport {
         infoEl.appendChild(infoSubtitle)
 
         const backgroundEl = this.createEl({class: 'background'})
+        const waveBackground = this.createEl({class: 'wave'})
 
         const actionEl = this.createEl({class: 'actions'})
         actionEl.appendChild(backgroundEl)
+        actionEl.appendChild(waveBackground)
+
         backgroundEl.appendChild(qrEl)
-        // actionEl.appendChild(linkEl)
 
         let footnoteEl: HTMLElement
         if (isIdentity) {
