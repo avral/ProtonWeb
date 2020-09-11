@@ -11,7 +11,7 @@ if (process.env['UNPKG_BUNDLE']) {
     config = {
         input: './src/index.ts',
         output: {
-            name: 'ProtonBrowserTransport',
+            name: 'ProtonLinkBrowserTransport',
             file: 'lib/bundle.js',
             format: 'umd',
             sourcemap: true

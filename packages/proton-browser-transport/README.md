@@ -1,4 +1,4 @@
-# Anchor Link - Browser Transport [![Package Version](https://img.shields.io/npm/v/anchor-link-browser-transport.svg?style=flat-square)](https://www.npmjs.com/package/anchor-link-browser-transport) ![License](https://img.shields.io/npm/l/anchor-link-browser-transport.svg?style=flat-square)
+# Proton Browser Transport [![Package Version](https://img.shields.io/npm/v/anchor-link-browser-transport.svg?style=flat-square)](https://www.npmjs.com/package/anchor-link-browser-transport) ![License](https://img.shields.io/npm/l/anchor-link-browser-transport.svg?style=flat-square)
 
 A transport library for usage of [Anchor Link](https://github.com/greymass/anchor-link) within a web browser environment.
 
@@ -7,14 +7,14 @@ A transport library for usage of [Anchor Link](https://github.com/greymass/ancho
 A transport is required for Anchor Link to communicate with clients. In most examples we use the browser transport with no configuration, like so:
 
 ```ts
-const transport = new AnchorLinkBrowserTransport()
+const transport = new ProtonLinkBrowserTransport()
 const link = new AnchorLink({transport})
 ```
 
 Parameters can be passed to the transport during construction as an object, allowing for the following optional changes:
 
 ```ts
-const transport = new AnchorLinkBrowserTransport({
+const transport = new ProtonLinkBrowserTransport({
     /** CSS class prefix, defaults to `anchor-link` */
     classPrefix: 'my-css-prefix',
     /** Whether to inject CSS styles in the page header, defaults to true. */
