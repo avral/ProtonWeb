@@ -103,7 +103,6 @@ export default `
     font-weight: bold;
     width: 320px;
     height: 40px;
-    font-family: CircularStd;
     font-size: 21px;
     line-height: 1.9;
     text-align: center;
@@ -126,10 +125,9 @@ export default `
     line-height: 1.71;
     letter-spacing: normal;
     text-align: center;
-    width: 320px;
+    width: 300px;
     height: 24px;
-    font-family: CircularStd;
-    margin-bottom: 24px;
+    margin: 10px 0px 24px 0px;
     color: #c2a2f6;
 }
 
@@ -138,7 +136,6 @@ export default `
     flex-direction: column;
     align-items: center;
     position: relative;
-
 }
 
 .%prefix%-uri {
@@ -166,14 +163,6 @@ export default `
 .%prefix%-qr svg {
     width: 100%;
     fill: #010c2c;
-}
-
-.%prefix%-qr svg path {
-    fill: #010c2c;
-}
-
-.%prefix%-qr svg path:last-child {
-    stroke: white;
 }
 
 .%prefix%-footnote {
