@@ -168,6 +168,14 @@ export default `
     fill: #010c2c;
 }
 
+.%prefix%-qr svg path {
+    fill: #010c2c;
+}
+
+.%prefix%-qr svg path:last-child {
+    stroke: white;
+}
+
 .%prefix%-footnote {
     text-align: center;
     width: 100%;
@@ -185,32 +193,8 @@ export default `
     display: none;
 }
 
-@media (prefers-color-scheme: dark) {
-    .%prefix%-inner {
-        background: #010c2c;
-        color: white;
-    }
-    .%prefix%-request {
-        background: #010c2c;
-    }
-    .%prefix%-title {
-        color: #FFFFFF;
-    }
-    .%prefix%-subtitle {
-        color: #c2a2f6;
-    }
-    .%prefix%-qr svg path {
-        fill: #010c2c;
-    }
-    .%prefix%-qr svg path:last-child {
-        stroke: white;
-    }
-    .%prefix%-uri a {
-        color: #FCFCFC;
-        background: #262D43;
-    }
-    .%prefix%-close {
-        background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.66 10.987L6 7.327l-3.66 3.66A1.035 1.035 0 11.876 9.523l3.66-3.66-3.66-3.66A1.035 1.035 0 012.34.737L6 4.398 9.66.739a1.035 1.035 0 111.464 1.464l-3.66 3.66 3.66 3.661a1.035 1.035 0 11-1.464 1.464z' fill='%23FFF' fill-rule='nonzero'/%3E%3C/svg%3E");
-    }
+.%prefix%-uri a {
+    color: #FCFCFC;
+    background: #262D43;
 }
 `
