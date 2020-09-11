@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-browser-transport",
-  "version": "2.1.2",
+  "version": "1.0.0",
   "description": "Vanilla JS browser transport for Proton Link",
   "license": "MIT",
   "main": "lib/index.es5.js",
