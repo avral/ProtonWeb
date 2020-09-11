@@ -1,7 +1,7 @@
 {
-  "name": "anchor-link-browser-transport",
+  "name": "proton-browser-transport",
   "version": "2.1.2",
-  "description": "Vanilla JS browser transport for Anchor Link",
+  "description": "Vanilla JS browser transport for Proton Link",
   "license": "MIT",
   "main": "lib/index.es5.js",
   "module": "lib/index.js",

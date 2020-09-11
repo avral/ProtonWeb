@@ -1,6 +1,6 @@
 import typescript from 'rollup-plugin-typescript2'
 import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs' 
+import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import nodePolyfills from 'rollup-plugin-node-polyfills'
 import {terser} from 'rollup-plugin-terser'
@@ -11,7 +11,7 @@ if (process.env['UNPKG_BUNDLE']) {
     config = {
         input: './src/index.ts',
         output: {
-            name: 'AnchorLinkBrowserTransport',
+            name: 'ProtonBrowserTransport',
             file: 'lib/bundle.js',
             format: 'umd',
             sourcemap: true
