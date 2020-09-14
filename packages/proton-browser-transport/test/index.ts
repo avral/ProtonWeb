@@ -1,5 +1,5 @@
-import {Link, LinkSession} from 'anchor-link'
-import {abi, ChainName} from 'eosio-signing-request'
+import {Link, LinkSession} from '@protonprotocol/proton-link'
+import {abi, ChainName} from '@protonprotocol/proton-signing-request'
 import BrowserTransport from '../src'
 
 const link = new Link({
