@@ -202,16 +202,16 @@ var BrowserTransport = /** @class */ (function () {
     };
     BrowserTransport.prototype.displayRequest = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var sameDeviceRequest, crossDeviceUri, isIdentity, title, subtitle, qrEl, _a, error_1, linkEl, iframe, infoEl, infoTitle, infoSubtitle, backgroundEl, waveBackground, actionEl, footnoteEl, footnoteLink, logoEl;
+            var crossDeviceUri, isIdentity, title, subtitle, qrEl, _a, error_1, linkEl, iframe, infoEl, infoTitle, infoSubtitle, backgroundEl, waveBackground, actionEl, footnoteEl, footnoteLink, logoEl;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         this.setupElements();
-                        sameDeviceRequest = request.clone();
-                        sameDeviceRequest.setInfoKey('same_device', true);
-                        sameDeviceRequest.setInfoKey('return_path', returnUrl());
+                        // let sameDeviceRequest = request.clone()
+                        // sameDeviceRequest.setInfoKey('same_device', true)
+                        // sameDeviceRequest.setInfoKey('return_path', returnUrl())
                         if (this.requestAccount.length > 0) {
-                            sameDeviceRequest.setInfoKey('req_account', this.requestAccount);
+                            request.setInfoKey('req_account', this.requestAccount);
                         }
                         crossDeviceUri = request.encode(true, false);
                         isIdentity = request.isIdentity();
