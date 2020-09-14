@@ -139,12 +139,12 @@ export default class BrowserTransport implements LinkTransport {
     private async displayRequest(request: SigningRequest) {
         this.setupElements()
 
-        let sameDeviceRequest = request.clone()
-        sameDeviceRequest.setInfoKey('same_device', true)
-        sameDeviceRequest.setInfoKey('return_path', returnUrl())
+        // let sameDeviceRequest = request.clone()
+        // sameDeviceRequest.setInfoKey('same_device', true)
+        // sameDeviceRequest.setInfoKey('return_path', returnUrl())
 
         if (this.requestAccount.length > 0) {
-            sameDeviceRequest.setInfoKey('req_account', this.requestAccount)
+            request.setInfoKey('req_account', this.requestAccount)
         }
 
         // let sameDeviceUri = sameDeviceRequest.encode(true, false)
