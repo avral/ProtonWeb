@@ -1,7 +1,7 @@
 {
-  "name": "eosio-signing-request",
-  "version": "1.2.1",
-  "description": "EOSIO Signing Request (ESR / EEP-7) encoder and decoder",
+  "name": "@protonprotocol/proton-signing-request",
+  "version": "1.2.1-2",
+  "description": "Proton Signing Request (ESR / EEP-7) encoder and decoder",
   "license": "MIT",
   "module": "lib/index.js",
   "main": "lib/index.umd.js",

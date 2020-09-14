@@ -134,6 +134,8 @@ const ChainIdLookup = new Map<abi.ChainAlias, abi.ChainId>([
     [ChainName.FIO, '21dcae42c0182200e93f954a074011f9048a7624c6fe81d3c9541a614a88bd1c'],
 ])
 
+const DEFAULT_SCHEME = 'esr'
+
 /**
  * The placeholder name: `............1` aka `uint64(1)`.
  * If used in action data will be resolved to current signer.
@@ -232,6 +234,8 @@ export interface SigningRequestEncodingOptions {
     abiProvider?: AbiProvider
     /** Optional signature provider, will be used to create a request signature if provided. */
     signatureProvider?: SignatureProvider
+    /** Custom Scheme . */
+    scheme?: string
 }
 
 export type AbiMap = Map<string, any>
@@ -240,6 +244,7 @@ export class SigningRequest {
     public static type = AbiTypes.get('signing_request')!
     public static idType = AbiTypes.get('identity')!
     public static transactionType = AbiTypes.get('transaction')!
+    public scheme: string = DEFAULT_SCHEME
 
     /** Create a new signing request. */
     public static async create(
@@ -342,7 +347,9 @@ export class SigningRequest {
             textEncoder,
             textDecoder,
             options.zlib,
-            options.abiProvider
+            options.abiProvider,
+            undefined,
+            options.scheme
         )
 
         // sign the request if given a signature provider
@@ -403,7 +410,7 @@ export class SigningRequest {
             textEncoder: options.textEncoder,
         })
         buf.push(2) // header
-        const id = variantId(chainId)
+        const id = variantId(chainId as any)
         if (id[0] === 'chain_alias') {
             buf.push(0)
             buf.push(id[1])
@@ -425,7 +432,7 @@ export class SigningRequest {
             throw new Error('Invalid request uri')
         }
         const [scheme, path] = uri.split(':')
-        if (scheme !== 'esr' && scheme !== 'web+esr') {
+        if (scheme !== (options.scheme || DEFAULT_SCHEME) && scheme !== `web+${(options.scheme || DEFAULT_SCHEME)}`) {
             throw new Error('Invalid scheme')
         }
         const data = base64u.decode(path.startsWith('//') ? path.slice(2) : path)
@@ -465,7 +472,8 @@ export class SigningRequest {
             textDecoder,
             options.zlib,
             options.abiProvider,
-            signature
+            signature,
+            options.scheme
         )
     }
 
@@ -494,7 +502,8 @@ export class SigningRequest {
         textDecoder: TextDecoder,
         zlib?: ZlibProvider,
         abiProvider?: AbiProvider,
-        signature?: abi.RequestSignature
+        signature?: abi.RequestSignature,
+        scheme?: string
     ) {
         if ((data.flags & abi.RequestFlagsBroadcast) !== 0 && data.req[0] === 'identity') {
             throw new Error('Invalid request (identity request cannot be broadcast)')
@@ -509,6 +518,7 @@ export class SigningRequest {
         this.zlib = zlib
         this.abiProvider = abiProvider
         this.signature = signature
+        this.scheme = scheme || this.scheme
     }
 
     /**
@@ -599,7 +609,7 @@ export class SigningRequest {
         const out = new Uint8Array(1 + array.byteLength)
         out[0] = header
         out.set(array, 1)
-        let scheme = 'esr:'
+        let scheme = `${this.scheme}:`
         if (slashes !== false) {
             scheme += '//'
         }
@@ -700,7 +710,7 @@ export class SigningRequest {
                 this.textDecoder
             )
             if (signer) {
-                action.authorization = action.authorization.map((auth) => {
+                action.authorization = action.authorization.map((auth: any) => {
                     let {actor, permission} = auth
                     if (actor === PlaceholderName) {
                         actor = signer.actor
@@ -790,6 +800,14 @@ export class SigningRequest {
         })
         const serializedTransaction = buf.asUint8Array()
         return new ResolvedSigningRequest(this, signer, transaction, serializedTransaction)
+    }
+
+    /**
+     * Get Scheme
+     * @returns scheme like 'esr'
+     */
+    public getScheme(): string {
+        return this.scheme
     }
 
     /**
@@ -973,7 +991,8 @@ export class SigningRequest {
             this.textDecoder,
             this.zlib,
             this.abiProvider,
-            signature
+            signature,
+            this.scheme
         )
     }
 
