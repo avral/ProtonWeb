@@ -111,6 +111,7 @@ export default class BrowserTransport {
         if (this.requestAccount.length > 0) {
             sameDeviceRequest.setInfoKey('req_account', this.requestAccount);
         }
+        // let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false);
         const isIdentity = request.isIdentity();
         const title = isIdentity ? 'Login with Proton' : 'Sign with Proton';
@@ -126,6 +127,20 @@ export default class BrowserTransport {
             console.warn('Unable to generate QR code', error);
         }
         const linkEl = this.createEl({ class: 'uri' });
+        // const linkA = this.createEl({
+        //     tag: 'a',
+        //     href: crossDeviceUri,
+        //     text: 'Open Anchor app',
+        // })
+        // linkA.addEventListener('click', (event) => {
+        //     event.preventDefault()
+        //     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        //         iframe.setAttribute('src', sameDeviceUri)
+        //     } else {
+        //         window.location.href = sameDeviceUri
+        //     }
+        // })
+        // linkEl.appendChild(linkA)
         const iframe = this.createEl({
             class: 'wskeepalive',
             src: 'about:blank',
@@ -155,24 +170,24 @@ export default class BrowserTransport {
             footnoteEl.appendChild(footnoteLink);
         }
         else {
-            footnoteEl = this.createEl({
-                class: 'footnote',
-                text: 'Anchor signing is brought to you by ',
-            });
-            const footnoteLink = this.createEl({
-                tag: 'a',
-                target: '_blank',
-                href: 'https://greymass.com',
-                text: 'Greymass',
-            });
-            footnoteEl.appendChild(footnoteLink);
+            // footnoteEl = this.createEl({
+            //     class: 'footnote',
+            //     text: 'Anchor signing is brought to you by ',
+            // })
+            // const footnoteLink = this.createEl({
+            //     tag: 'a',
+            //     target: '_blank',
+            //     href: 'https://greymass.com',
+            //     text: 'Greymass',
+            // })
+            // footnoteEl.appendChild(footnoteLink)
         }
         emptyElement(this.requestEl);
         const logoEl = this.createEl({ class: 'logo' });
         this.requestEl.appendChild(logoEl);
         this.requestEl.appendChild(infoEl);
         this.requestEl.appendChild(actionEl);
-        this.requestEl.appendChild(footnoteEl);
+        // this.requestEl.appendChild(footnoteEl)
         this.show();
     }
     async showLoading() {
@@ -240,7 +255,8 @@ export default class BrowserTransport {
         this.requestEl.appendChild(infoEl);
         this.show();
         if (isAppleHandheld() && session.metadata.sameDevice) {
-            window.location.href = 'proton://link';
+            const scheme = request.getScheme();
+            window.location.href = `${scheme}://link`;
         }
     }
     clearTimers() {
@@ -253,6 +269,28 @@ export default class BrowserTransport {
             this.countdownTimer = undefined;
         }
     }
+    // private updatePrepareStatus(message: string): void {
+    //     if (this.prepareStatusEl) {
+    //         this.prepareStatusEl.textContent = message
+    //     }
+    // }
+    // public async prepare(request: SigningRequest, session?: LinkSession) {
+    //     this.showLoading()
+    //     if (!this.fuelEnabled || !session || request.isIdentity()) {
+    //         // don't attempt to cosign id request or if we don't have a session attached
+    //         return request
+    //     }
+    //     try {
+    //         const result = fuel(request, session, this.updatePrepareStatus.bind(this))
+    //         const timeout = new Promise((r) => setTimeout(r, 3500)).then(() => {
+    //             throw new Error('Fuel API timeout after 3500ms')
+    //         })
+    //         return await Promise.race([result, timeout])
+    //     } catch (error) {
+    //         console.info(`Not applying fuel (${error.message})`)
+    //     }
+    //     return request
+    // }
     onSuccess(request) {
         if (request === this.activeRequest) {
             this.clearTimers();

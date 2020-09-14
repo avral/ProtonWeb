@@ -259,12 +259,12 @@
   dependencies:
     "@types/node" "*"
 
-anchor-link@2.1.1:
+@protonprotocol/proton-link@2.1.1:
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/anchor-link/-/anchor-link-2.1.1.tgz#ef78eca1a2e4d61da70badf85a4c25c4edca6269"
+  resolved "https://registry.yarnpkg.com/@protonprotocol/proton-link/-/@protonprotocol/proton-link-2.1.1.tgz#ef78eca1a2e4d61da70badf85a4c25c4edca6269"
   integrity sha512-u9iFJq3/gw6WGqLOUnl3w/ZO7v4ZOyflQwzqiHwMgTR24IqLclRaQI9aynH+6AJYo7bxoZPlQ74GF/3SAtRiFg==
   dependencies:
-    eosio-signing-request "^1.2.0"
+    @protonprotocol/proton-signing-request "^1.2.0"
     eosjs "^20.0.0"
     eosjs-ecc "^4.0.7"
     fetch-ponyfill "^6.1.0"
@@ -543,9 +543,9 @@ emoji-regex@^7.0.1:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
   integrity sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==
 
-eosio-signing-request@^1.2.0:
+@protonprotocol/proton-signing-request@^1.2.0:
   version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eosio-signing-request/-/eosio-signing-request-1.2.0.tgz#543922b4bfb60c5b07e350c5391e1599555fb0fa"
+  resolved "https://registry.yarnpkg.com/@protonprotocol/proton-signing-request/-/@protonprotocol/proton-signing-request-1.2.0.tgz#543922b4bfb60c5b07e350c5391e1599555fb0fa"
   integrity sha512-1sINQYrj5MkLg8MEPdBPOU/opJEZVGL4xF29ph1htvb6C6kpE+CZx5tEvBBwYWL5PK4T8VRZzhi8xSQg5j7sZw==
   dependencies:
     eosjs "^20.0.0"

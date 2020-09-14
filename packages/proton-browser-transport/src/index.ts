@@ -1,16 +1,16 @@
-import {LinkSession, LinkStorage, LinkTransport} from 'anchor-link'
-import {SigningRequest} from 'eosio-signing-request'
+import {LinkSession, LinkStorage, LinkTransport} from '@protonprotocol/proton-link'
+import {SigningRequest} from '@protonprotocol/proton-signing-request'
 import * as qrcode from 'qrcode'
 import styleText from './styles'
 
 export interface BrowserTransportOptions {
-    /** CSS class prefix, defaults to `anchor-link` */
+    /** CSS class prefix, defaults to `@protonprotocol/proton-link` */
     classPrefix?: string
     /** Whether to inject CSS styles in the page header, defaults to true. */
     injectStyles?: boolean
     /** Whether to display request success and error messages, defaults to true */
     requestStatus?: boolean
-    /** Local storage prefix, defaults to `anchor-link`. */
+    /** Local storage prefix, defaults to `@protonprotocol/proton-link`. */
     storagePrefix?: string
     /** Requesting account of the dapp (optional) */
     requestAccount?: string
@@ -147,6 +147,7 @@ export default class BrowserTransport implements LinkTransport {
             sameDeviceRequest.setInfoKey('req_account', this.requestAccount)
         }
 
+        // let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
 
         const isIdentity = request.isIdentity()
@@ -165,6 +166,20 @@ export default class BrowserTransport implements LinkTransport {
         }
 
         const linkEl = this.createEl({class: 'uri'})
+        // const linkA = this.createEl({
+        //     tag: 'a',
+        //     href: crossDeviceUri,
+        //     text: 'Open Anchor app',
+        // })
+        // linkA.addEventListener('click', (event) => {
+        //     event.preventDefault()
+        //     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+        //         iframe.setAttribute('src', sameDeviceUri)
+        //     } else {
+        //         window.location.href = sameDeviceUri
+        //     }
+        // })
+        // linkEl.appendChild(linkA)
 
         const iframe = this.createEl({
             class: 'wskeepalive',
@@ -199,17 +214,17 @@ export default class BrowserTransport implements LinkTransport {
             })
             footnoteEl.appendChild(footnoteLink)
         } else {
-            footnoteEl = this.createEl({
-                class: 'footnote',
-                text: 'Anchor signing is brought to you by ',
-            })
-            const footnoteLink = this.createEl({
-                tag: 'a',
-                target: '_blank',
-                href: 'https://greymass.com',
-                text: 'Greymass',
-            })
-            footnoteEl.appendChild(footnoteLink)
+            // footnoteEl = this.createEl({
+            //     class: 'footnote',
+            //     text: 'Anchor signing is brought to you by ',
+            // })
+            // const footnoteLink = this.createEl({
+            //     tag: 'a',
+            //     target: '_blank',
+            //     href: 'https://greymass.com',
+            //     text: 'Greymass',
+            // })
+            // footnoteEl.appendChild(footnoteLink)
         }
 
         emptyElement(this.requestEl)
@@ -218,7 +233,7 @@ export default class BrowserTransport implements LinkTransport {
         this.requestEl.appendChild(logoEl)
         this.requestEl.appendChild(infoEl)
         this.requestEl.appendChild(actionEl)
-        this.requestEl.appendChild(footnoteEl)
+        // this.requestEl.appendChild(footnoteEl)
 
         this.show()
     }
@@ -307,7 +322,8 @@ export default class BrowserTransport implements LinkTransport {
         this.show()
 
         if (isAppleHandheld() && session.metadata.sameDevice) {
-            window.location.href = 'proton://link'
+            const scheme = request.getScheme()
+            window.location.href = `${scheme}://link`
         }
     }
 
@@ -321,6 +337,30 @@ export default class BrowserTransport implements LinkTransport {
             this.countdownTimer = undefined
         }
     }
+
+    // private updatePrepareStatus(message: string): void {
+    //     if (this.prepareStatusEl) {
+    //         this.prepareStatusEl.textContent = message
+    //     }
+    // }
+
+    // public async prepare(request: SigningRequest, session?: LinkSession) {
+    //     this.showLoading()
+    //     if (!this.fuelEnabled || !session || request.isIdentity()) {
+    //         // don't attempt to cosign id request or if we don't have a session attached
+    //         return request
+    //     }
+    //     try {
+    //         const result = fuel(request, session, this.updatePrepareStatus.bind(this))
+    //         const timeout = new Promise((r) => setTimeout(r, 3500)).then(() => {
+    //             throw new Error('Fuel API timeout after 3500ms')
+    //         })
+    //         return await Promise.race([result, timeout])
+    //     } catch (error) {
+    //         console.info(`Not applying fuel (${error.message})`)
+    //     }
+    //     return request
+    // }
 
     public onSuccess(request: SigningRequest) {
         if (request === this.activeRequest) {
