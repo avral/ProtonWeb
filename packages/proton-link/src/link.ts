@@ -1,7 +1,6 @@
-import * as esr from 'eosio-signing-request'
+import * as esr from '@protonprotocol/proton-signing-request'
 import {ApiInterfaces, JsonRpc} from 'eosjs'
 import * as ecc from 'eosjs-ecc'
-import makeFetch from 'fetch-ponyfill'
 import WebSocket from 'isomorphic-ws'
 import zlib from 'pako'
 import {v4 as uuid} from 'uuid'
@@ -143,6 +142,7 @@ export class Link implements esr.AbiProvider {
             textDecoder: options.textDecoder || new TextDecoder(),
             textEncoder: options.textEncoder || new TextEncoder(),
             zlib,
+            scheme: options.scheme
         }
     }
 

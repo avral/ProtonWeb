@@ -1,6 +1,6 @@
 # Anchor Link [![Package Version](https://img.shields.io/npm/v/anchor-link.svg?style=flat-square)](https://www.npmjs.com/package/anchor-link) ![License](https://img.shields.io/npm/l/anchor-link.svg?style=flat-square)
 
-Persistent, fast and secure signature provider for EOSIO chains built on top of [EOSIO Signing Requests (EEP-7)](https://github.com/greymass/eosio-signing-request)
+Persistent, fast and secure signature provider for EOSIO chains built on top of [EOSIO Signing Requests (EEP-7)](https://github.com/greymass/@protonprotocol/proton-signing-request)
 
 Key features:
   - Persistent sessions
@@ -95,7 +95,7 @@ link.transact({action}).then((result) => {
 
 See the [Link.transact API docs](https://greymass.github.io/anchor-link/classes/link.html#transact) for all options and return values.
 
-To create a persistent login session use [Link.login](https://greymass.github.io/anchor-link/classes/link.html#login), example: 
+To create a persistent login session use [Link.login](https://greymass.github.io/anchor-link/classes/link.html#login), example:
 
 ```ts
 link.login('mydapp').then(({session}) => {
@@ -113,7 +113,7 @@ Transports in Anchor Link are responsible for getting signature requests to the 
 
 Available transports:
 
- Package | Description 
+ Package | Description
 ---------| ---------------
  [anchor-link-browser-transport](https://github.com/greymass/anchor-link-browser-transport) | Browser overlay that generates QR codes or triggers local URI handler if available
  [anchor-link-console-transport](https://github.com/greymass/anchor-link-console-transport) | Transport that prints ASCII QR codes and esr:// links to the JavaScript console
