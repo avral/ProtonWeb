@@ -1,4 +1,4 @@
-import {ChainName} from 'eosio-signing-request'
+import {ChainName} from '@protonprotocol/proton-signing-request'
 import {JsonRpc} from 'eosjs'
 import {LinkStorage} from './link-storage'
 import {LinkTransport} from './link-transport'
@@ -40,6 +40,10 @@ export interface LinkOptions {
      * Text decoder, only needed in old browsers or if used in node.js versions prior to v13.
      */
     textDecoder?: TextDecoder
+    /**
+     * Scheme for transport
+     */
+    scheme?: string
 }
 
 /** @internal */

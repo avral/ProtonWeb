@@ -1,4 +1,4 @@
-import {SigningRequest} from 'eosio-signing-request'
+import {SigningRequest} from '@protonprotocol/proton-signing-request'
 
 import {TransactResult} from './link'
 import {LinkSession} from './link-session'

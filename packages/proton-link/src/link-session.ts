@@ -1,4 +1,4 @@
-import {SigningRequest} from 'eosio-signing-request'
+import {SigningRequest} from '@protonprotocol/proton-signing-request'
 import {ApiInterfaces} from 'eosjs'
 
 import {SessionError} from './errors'
