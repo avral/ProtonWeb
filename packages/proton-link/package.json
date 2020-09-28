@@ -54,5 +54,6 @@
     "tslint-plugin-prettier": "^2.3.0",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3"
-  }
+  },
+  "gitHead": "2d0787da7f9e44cfdfe37c07f350ae11e165b655"
 }

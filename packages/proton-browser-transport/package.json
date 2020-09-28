@@ -53,5 +53,6 @@
   "bugs": {
     "url": "https://github.com/ProtonProtocol/proton-browser-transport/issues"
   },
-  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme"
+  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme",
+  "gitHead": "2d0787da7f9e44cfdfe37c07f350ae11e165b655"
 }
