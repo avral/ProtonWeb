@@ -1,5 +1,5 @@
 {
-  "name": "@protonprotocol/proton-connect",
+  "name": "@protonprotocol/proton-web-sdk",
   "version": "2.2.1",
   "description": "Connect to Proton",
   "license": "MIT",

@@ -1,4 +1,5 @@
 {
+  "name": "transport-test",
   "private": true,
   "scripts": {
     "dev": "parcel index.html",

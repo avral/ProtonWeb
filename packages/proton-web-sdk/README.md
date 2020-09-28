@@ -1,11 +1,13 @@
-# Proton Connect
+# Proton Web SDK
 
 Installation
+
 ```
 npm i @protonprotocol/proton-connect
 ```
 
 Usage
+
 ```javascript
 import { ProtonConnect } from '@protonprotocol/proton-connect'
 
