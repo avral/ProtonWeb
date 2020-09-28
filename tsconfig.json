@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2015",
     "module": "ESNext",
-    "moduleResolution": "node",
     "rootDir": ".",
     "baseUrl": "packages",
     "paths": {
@@ -11,18 +9,15 @@
       "@protonprotocol/proton-signing-request": ["proton-signing-request/src"],
       "@protonprotocol/proton-web-sdk": ["proton-web-sdk/src"]
     },
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "removeComments": true,
-    "composite": true,
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "downlevelIteration": true,
     "esModuleInterop": true,
-    "incremental": true,
-    "resolveJsonModule": true
+    "lib": ["esnext", "dom"],
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "lib",
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext"
   }
 }
