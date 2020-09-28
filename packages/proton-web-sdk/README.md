@@ -3,13 +3,13 @@
 Installation
 
 ```
-npm i @protonprotocol/proton-connect
+npm i @protonprotocol/proton-web-sdk
 ```
 
 Usage
 
 ```javascript
-import { ProtonConnect } from '@protonprotocol/proton-connect'
+import { ProtonConnect } from '@protonprotocol/proton-web-sdk'
 
 // Initialize
 const chainId = '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0' // Proton Mainnet
