@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-signing-request",
-  "version": "2.3.23",
+  "version": "2.3.24",
   "description": "Proton Signing Request (ESR / EEP-7) encoder and decoder",
   "license": "MIT",
   "main": "index.es5.js",

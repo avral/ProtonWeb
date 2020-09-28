@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-link",
-  "version": "2.3.23",
+  "version": "2.3.24",
   "description": "Library for authenticating and signing transactions using the Anchor Link protocol",
   "license": "MIT",
   "main": "index.es5.js",
@@ -28,7 +28,7 @@
     "src/*"
   ],
   "dependencies": {
-    "@protonprotocol/proton-signing-request": "^2.3.23",
+    "@protonprotocol/proton-signing-request": "^2.3.24",
     "eosjs": "^20.0.0",
     "eosjs-ecc": "^4.0.7",
     "fetch-ponyfill": "^6.1.0",
