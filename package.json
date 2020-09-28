@@ -1,5 +1,5 @@
 {
-  "name": "proton-web-sdk",
+  "name": "proton-web",
   "version": "2.3.0",
   "main": "index.js",
   "license": "MIT",
