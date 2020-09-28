@@ -2,9 +2,9 @@
   "extends": "../../tsconfig.build.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "./lib",
     "tsBuildInfoFile": "../../.build-cache/proton-browser-transport.tsbuildinfo"
   },
   "include": ["src"],
-  "exclude": ["dist"]
+  "exclude": ["lib"]
 }
