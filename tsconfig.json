@@ -19,7 +19,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
-    "skipLibCheck": true,
-    "exclude": ["lib"]
-  }
+    "skipLibCheck": true
+  },
+  "exclude": ["lib"]
 }
