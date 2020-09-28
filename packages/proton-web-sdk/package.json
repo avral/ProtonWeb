@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-web-sdk",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Connect to Proton",
   "license": "MIT",
   "main": "lib/index.es5.js",
