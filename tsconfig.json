@@ -6,10 +6,10 @@
     "rootDir": ".",
     "baseUrl": "packages",
     "paths": {
-      "@protonjs/proton-browser-transport": ["proton-browser-transport/src/*"],
-      "@protonjs/proton-link": ["proton-link/src/*"],
-      "@protonjs/proton-signing-request": ["proton-signing-request/src/*"],
-      "@protonjs/proton-web-sdk": ["proton-web-sdk/src/*"]
+      "@protonprotocol/proton-browser-transport": ["proton-browser-transport/src"],
+      "@protonprotocol/proton-link": ["proton-link/src"],
+      "@protonprotocol/proton-signing-request": ["proton-signing-request/src"],
+      "@protonprotocol/proton-web-sdk": ["proton-web-sdk/src"]
     },
     "strict": true,
     "noUnusedLocals": true,
