@@ -2,12 +2,13 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var AnchorLink = require('anchor-link');
+var ProtonLink = require('@protonprotocol/proton-link');
 var ProtonLinkBrowserTransport = require('@protonprotocol/proton-browser-transport');
+var protonjs = require('@protonprotocol/protonjs');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var AnchorLink__default = /*#__PURE__*/_interopDefaultLegacy(AnchorLink);
+var ProtonLink__default = /*#__PURE__*/_interopDefaultLegacy(ProtonLink);
 var ProtonLinkBrowserTransport__default = /*#__PURE__*/_interopDefaultLegacy(ProtonLinkBrowserTransport);
 
 /*! *****************************************************************************
@@ -39,8 +40,16 @@ var __assign = function() {
 var ProtonConnect = function (linkOptions, transportOptions) {
     if (linkOptions === void 0) { linkOptions = {}; }
     if (transportOptions === void 0) { transportOptions = {}; }
+    // Add RPC if not provided
+    if (!linkOptions.rpc && linkOptions.endpoints) {
+        linkOptions.rpc = new protonjs.JsonRpc(linkOptions.endpoints);
+    }
+    // Create transport
     var transport = new ProtonLinkBrowserTransport__default['default'](transportOptions);
-    return new AnchorLink__default['default'](__assign({ transport: transport }, linkOptions));
+    // Create link
+    var link = new ProtonLink__default['default'](__assign({ transport: transport }, linkOptions));
+    // Return link to users
+    return link;
 };
 
 exports.ProtonConnect = ProtonConnect;

@@ -33,7 +33,7 @@ if (process.env['UNPKG_BUNDLE']) {
             format: 'cjs',
             sourcemap: true
         },
-        external: ['anchor-link', '@protonprotocol/proton-browser-transport'],
+        external: ['anchor-link', '@protonprotocol/protonjs', '@protonprotocol/proton-browser-transport'],
         plugins: [
             typescript({tsconfigOverride: {compilerOptions: {target: 'es5'}}}),
         ]

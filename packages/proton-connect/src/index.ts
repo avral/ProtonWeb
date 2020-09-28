@@ -1,10 +1,22 @@
-import AnchorLink from 'anchor-link'
+import ProtonLink from '@protonprotocol/proton-link'
 import ProtonLinkBrowserTransport from '@protonprotocol/proton-browser-transport'
+import { JsonRpc } from '@protonprotocol/protonjs'
 
-export const ProtonConnect = (linkOptions = {}, transportOptions = {}) => {
+export const ProtonConnect = (linkOptions = {} as any, transportOptions = {}) => {
+    // Add RPC if not provided
+    if (!linkOptions.rpc && linkOptions.endpoints) {
+        linkOptions.rpc = new JsonRpc(linkOptions.endpoints)
+    }
+
+    // Create transport
     const transport = new ProtonLinkBrowserTransport(transportOptions)
-    return new AnchorLink({
+
+    // Create link
+    const link = new ProtonLink({
         transport,
         ...linkOptions
     })
+
+    // Return link to users
+    return link
 }
