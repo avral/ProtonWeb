@@ -6,4 +6,5 @@
     "tsBuildInfoFile": "../../.build-cache/proton-signing-request.tsbuildinfo"
   },
   "include": ["src"],
+  "exclude": ["lib"]
 }

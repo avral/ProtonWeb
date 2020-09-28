@@ -6,4 +6,5 @@
     "tsBuildInfoFile": "../../.build-cache/proton-link.tsbuildinfo"
   },
   "include": ["src"],
+  "exclude": ["lib"]
 }

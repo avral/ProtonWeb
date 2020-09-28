@@ -6,4 +6,5 @@
     "tsBuildInfoFile": "../../.build-cache/proton-browser-transport.tsbuildinfo"
   },
   "include": ["src"],
+  "exclude": ["lib"]
 }
