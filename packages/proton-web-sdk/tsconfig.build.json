@@ -2,7 +2,6 @@
   "extends": "../../tsconfig.build.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./lib",
     "tsBuildInfoFile": "../../.build-cache/proton-web-sdk.tsbuildinfo"
   },
   "include": ["src"]
