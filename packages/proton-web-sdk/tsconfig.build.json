@@ -5,6 +5,5 @@
     "outDir": "./lib",
     "tsBuildInfoFile": "../../.build-cache/proton-web-sdk.tsbuildinfo"
   },
-  "include": ["src"],
-  "exclude": ["lib"]
+  "include": ["src"]
 }
