@@ -9,8 +9,7 @@
       "~proton-browser-transport/*": ["proton-browser-transport/src/*"],
       "~proton-link/*": ["proton-link/src/*"],
       "~proton-signing-request/*": ["proton-signing-request/src/*"],
-      "~proton-web-sdk/*": ["proton-web-sdk/src/*"],
-      "~*": ["*/src"]
+      "~proton-web-sdk/*": ["proton-web-sdk/src/*"]
     },
     "strict": true,
     "noUnusedLocals": true,
