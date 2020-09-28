@@ -6,7 +6,7 @@ npm i @protonprotocol/proton-connect
 ```
 
 Usage
-```
+```javascript
 import { ProtonConnect } from '@protonprotocol/proton-connect'
 
 // Initialize
