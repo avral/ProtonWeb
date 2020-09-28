@@ -3,10 +3,11 @@
   "version": "2.3.20",
   "description": "Proton Signing Request (ESR / EEP-7) encoder and decoder",
   "license": "MIT",
-  "module": "lib/index.js",
-  "main": "lib/index.umd.js",
-  "types": "lib/index.d.ts",
-  "source": "src/index.ts",
+  "main": "index.es5.js",
+  "module": "index.js",
+  "unpkg": "bundle.js",
+  "types": "index.d.ts",
+  "source": "index.ts",
   "scripts": {
     "prepare": "make lib"
   },
@@ -30,5 +31,5 @@
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.8.3"
   },
-  "gitHead": "1237597c8edf22f1037da9abe8d345c1f0a29bae"
+  "gitHead": "d8b514b2f5c4ab12d03d38047e4eef2e47f95253"
 }
