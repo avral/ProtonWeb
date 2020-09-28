@@ -6,6 +6,6 @@
     "packages/proton-signing-request",
     "packages/proton-web-sdk"
   ],
-  "version": "2.3.22",
+  "version": "2.3.23",
   "useWorkspaces": true
 }
