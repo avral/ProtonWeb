@@ -18,6 +18,7 @@
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "esnext"
+    "target": "esnext",
+    "skipLibCheck": true
   }
 }
