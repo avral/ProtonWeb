@@ -1,5 +1,5 @@
 {
-  "name": "ts-lernarepo",
+  "name": "proton-web",
   "private": true,
   "devDependencies": {
     "lerna": "^3.19.0"
