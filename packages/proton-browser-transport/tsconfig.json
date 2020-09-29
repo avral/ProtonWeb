@@ -1,15 +1,3 @@
 {
-    "compilerOptions": {
-        "declaration": true,
-        "downlevelIteration": true,
-        "esModuleInterop": true,
-        "lib": ["esnext", "dom"],
-        "moduleResolution": "node",
-        "noImplicitAny": false,
-        "outDir": "lib",
-        "sourceMap": true,
-        "strict": true,
-        "target": "esnext"
-    },
-    "include": ["src/*"]
+    "extends": "../../tsconfig.base.json"
 }
