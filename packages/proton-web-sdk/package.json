@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-web-sdk",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "Connect to Proton",
   "license": "MIT",
   "main": "lib/index.es5.js",
@@ -16,8 +16,8 @@
     "src/*"
   ],
   "dependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.4.1",
-    "@protonprotocol/proton-link": "^2.4.1",
+    "@protonprotocol/proton-browser-transport": "^2.4.2",
+    "@protonprotocol/proton-link": "^2.4.2",
     "@protonprotocol/protonjs": "^21.0.0-rc.20"
   },
   "devDependencies": {
