@@ -29,5 +29,6 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.8.3"
-  }
+  },
+  "gitHead": "8a51d99ed7044ef13c1983203d521913e20e1067"
 }

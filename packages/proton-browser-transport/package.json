@@ -21,6 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.8.7",
     "@protonprotocol/proton-link": "^2.4.2",
+    "@protonprotocol/proton-signing-request": "^2.4.2",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
@@ -53,5 +54,6 @@
   "bugs": {
     "url": "https://github.com/ProtonProtocol/proton-browser-transport/issues"
   },
-  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme"
+  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme",
+  "gitHead": "8a51d99ed7044ef13c1983203d521913e20e1067"
 }
