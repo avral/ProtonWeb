@@ -139,15 +139,15 @@ export default class BrowserTransport implements LinkTransport {
     private async displayRequest(request: SigningRequest) {
         this.setupElements()
 
-        // let sameDeviceRequest = request.clone()
-        // sameDeviceRequest.setInfoKey('same_device', true)
-        // sameDeviceRequest.setInfoKey('return_path', returnUrl())
+        let sameDeviceRequest = request.clone()
+        sameDeviceRequest.setInfoKey('same_device', true)
+        sameDeviceRequest.setInfoKey('return_path', returnUrl())
 
         if (this.requestAccount.length > 0) {
             request.setInfoKey('req_account', this.requestAccount)
         }
 
-        // let sameDeviceUri = sameDeviceRequest.encode(true, false)
+        let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
 
         const isIdentity = request.isIdentity()
@@ -165,20 +165,20 @@ export default class BrowserTransport implements LinkTransport {
         }
 
         const linkEl = this.createEl({class: 'uri'})
-        // const linkA = this.createEl({
-        //     tag: 'a',
-        //     href: crossDeviceUri,
-        //     text: 'Open Anchor app',
-        // })
-        // linkA.addEventListener('click', (event) => {
-        //     event.preventDefault()
-        //     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        //         iframe.setAttribute('src', sameDeviceUri)
-        //     } else {
-        //         window.location.href = sameDeviceUri
-        //     }
-        // })
-        // linkEl.appendChild(linkA)
+        const linkA = this.createEl({
+            tag: 'a',
+            href: crossDeviceUri,
+            text: 'Open Proton Wallet',
+        })
+        linkA.addEventListener('click', (event) => {
+            event.preventDefault()
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                iframe.setAttribute('src', sameDeviceUri)
+            } else {
+                window.location.href = sameDeviceUri
+            }
+        })
+        linkEl.appendChild(linkA)
 
         const iframe = this.createEl({
             class: 'wskeepalive',
@@ -205,7 +205,7 @@ export default class BrowserTransport implements LinkTransport {
 
         backgroundEl.appendChild(qrEl)
 
-        let footnoteEl: HTMLElement
+        let footnoteEl: HTMLElement = this.createEl({class: 'footnote'})
         if (isIdentity) {
             footnoteEl = this.createEl({class: 'footnote', text: "Don't have Proton Wallet? "})
             const footnoteLink = this.createEl({
@@ -215,18 +215,6 @@ export default class BrowserTransport implements LinkTransport {
                 text: 'Download it now',
             })
             footnoteEl.appendChild(footnoteLink)
-        } else {
-            // footnoteEl = this.createEl({
-            //     class: 'footnote',
-            //     text: 'Anchor signing is brought to you by ',
-            // })
-            // const footnoteLink = this.createEl({
-            //     tag: 'a',
-            //     target: '_blank',
-            //     href: 'https://greymass.com',
-            //     text: 'Greymass',
-            // })
-            // footnoteEl.appendChild(footnoteLink)
         }
 
         emptyElement(this.requestEl)
@@ -235,7 +223,8 @@ export default class BrowserTransport implements LinkTransport {
         this.requestEl.appendChild(logoEl)
         this.requestEl.appendChild(infoEl)
         this.requestEl.appendChild(actionEl)
-        // this.requestEl.appendChild(footnoteEl)
+        this.requestEl.appendChild(divider)
+        this.requestEl.appendChild(footnoteEl)
 
         this.show()
     }
