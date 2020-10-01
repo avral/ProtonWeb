@@ -9,5 +9,5 @@ export * from './errors'
 import {Link} from './link'
 export default Link
 
-// convenience re-exports from esr
+// convenience re-exports from esr.
 export {PlaceholderAuth, PlaceholderName, PlaceholderPermission} from '@protonprotocol/proton-signing-request'

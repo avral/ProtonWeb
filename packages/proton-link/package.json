@@ -55,7 +55,7 @@
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3"
   },
-  "gitHead": "67dbe7a9e0c812ab2d59fa401d92be9b1b5697f1",
+  "gitHead": "294f4ec66b874a78400d5b543a739edfe9396465",
   "publishConfig": {
     "access": "public"
   }
