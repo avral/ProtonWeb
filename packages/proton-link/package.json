@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-link",
-  "version": "2.4.0",
+  "version": "2.4.7",
   "description": "Library for authenticating and signing transactions using the Anchor Link protocol",
   "license": "MIT",
   "main": "lib/index.es5.js",
@@ -28,7 +28,7 @@
     "src/*"
   ],
   "dependencies": {
-    "@protonprotocol/proton-signing-request": "^2.4.0",
+    "@protonprotocol/proton-signing-request": "^2.4.4",
     "eosjs": "^20.0.0",
     "eosjs-ecc": "^4.0.7",
     "fetch-ponyfill": "^6.1.0",
@@ -54,5 +54,9 @@
     "tslint-plugin-prettier": "^2.3.0",
     "typedoc": "^0.17.7",
     "typescript": "^3.9.3"
+  },
+  "gitHead": "67dbe7a9e0c812ab2d59fa401d92be9b1b5697f1",
+  "publishConfig": {
+    "access": "public"
   }
 }

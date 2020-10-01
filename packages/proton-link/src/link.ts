@@ -76,6 +76,8 @@ export interface IdentifyResult extends TransactResult {
 export interface LoginResult extends IdentifyResult {
     /** The session created by the login. */
     session: LinkSession
+    /** Account data */
+    accountData: object
 }
 
 /**
@@ -142,7 +144,7 @@ export class Link implements esr.AbiProvider {
             textDecoder: options.textDecoder || new TextDecoder(),
             textEncoder: options.textEncoder || new TextEncoder(),
             zlib,
-            scheme: options.scheme
+            scheme: options.scheme,
         }
     }
 
@@ -448,9 +450,23 @@ export class Link implements esr.AbiProvider {
         if (this.storage) {
             await this.storeSession(identifier, session)
         }
+
+        let accountData = {}
+        if (session.auth.actor) {
+            accountData = await this.rpc.get_table_rows({
+                scope: 'eosio.proton',
+                code: 'eosio.proton',
+                json: true,
+                table: 'usersinfo',
+                lower_bound: session.auth.actor,
+                upper_bound: session.auth.actor,
+            })
+        }
+
         return {
             ...res,
             session,
+            accountData,
         }
     }
 
@@ -492,6 +508,19 @@ export class Link implements esr.AbiProvider {
             // update latest used
             await this.touchSession(identifier, auth)
         }
+
+        if (session.auth.actor) {
+            const { rows } = await this.rpc.get_table_rows({
+                scope: 'eosio.proton',
+                code: 'eosio.proton',
+                json: true,
+                table: 'usersinfo',
+                lower_bound: session.auth.actor,
+                upper_bound: session.auth.actor,
+            })
+            session.accountData = rows
+        }
+
         return session
     }
 

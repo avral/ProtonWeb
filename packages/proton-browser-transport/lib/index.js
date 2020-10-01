@@ -130,7 +130,7 @@ export default class BrowserTransport {
         // const linkA = this.createEl({
         //     tag: 'a',
         //     href: crossDeviceUri,
-        //     text: 'Open Anchor app',
+        //     text: 'Open Proton Wallet',
         // })
         // linkA.addEventListener('click', (event) => {
         //     event.preventDefault()
@@ -154,11 +154,14 @@ export default class BrowserTransport {
         infoEl.appendChild(infoSubtitle);
         const backgroundEl = this.createEl({ class: 'background' });
         const waveBackground = this.createEl({ class: 'wave' });
+        // const divider = this.createEl({class: 'separator', text: 'OR'})
         const actionEl = this.createEl({ class: 'actions' });
         actionEl.appendChild(backgroundEl);
         actionEl.appendChild(waveBackground);
+        // actionEl.appendChild(divider)
+        // actionEl.appendChild(linkEl)
         backgroundEl.appendChild(qrEl);
-        let footnoteEl;
+        let footnoteEl = this.createEl({ class: 'footnote' });
         if (isIdentity) {
             footnoteEl = this.createEl({ class: 'footnote', text: "Don't have Proton Wallet? " });
             const footnoteLink = this.createEl({
@@ -168,19 +171,6 @@ export default class BrowserTransport {
                 text: 'Download it now',
             });
             footnoteEl.appendChild(footnoteLink);
-        }
-        else {
-            // footnoteEl = this.createEl({
-            //     class: 'footnote',
-            //     text: 'Anchor signing is brought to you by ',
-            // })
-            // const footnoteLink = this.createEl({
-            //     tag: 'a',
-            //     target: '_blank',
-            //     href: 'https://greymass.com',
-            //     text: 'Greymass',
-            // })
-            // footnoteEl.appendChild(footnoteLink)
         }
         emptyElement(this.requestEl);
         const logoEl = this.createEl({ class: 'logo' });

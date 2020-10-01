@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-signing-request",
-  "version": "2.4.0",
+  "version": "2.4.4",
   "description": "Proton Signing Request (ESR / EEP-7) encoder and decoder",
   "license": "MIT",
   "module": "lib/index.js",
@@ -29,5 +29,9 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.8.3"
+  },
+  "gitHead": "67dbe7a9e0c812ab2d59fa401d92be9b1b5697f1",
+  "publishConfig": {
+    "access": "public"
   }
 }

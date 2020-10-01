@@ -27,6 +27,10 @@ export abstract class LinkSession {
     abstract type: string
     /** Arbitrary metadata that will be serialized with the session. */
     abstract metadata: {[key: string]: any}
+    // Proton
+    /** Accoun data for proton related info */
+    accountData?: any[]
+
     /** Creates a eosjs compatible authority provider. */
     abstract makeAuthorityProvider(): ApiInterfaces.AuthorityProvider
     /** Creates a eosjs compatible signature provider that can sign for the session public key. */
@@ -37,6 +41,7 @@ export abstract class LinkSession {
     abstract transact(args: TransactArgs, options?: TransactOptions): Promise<TransactResult>
     /** Returns a JSON-encodable object that can be used recreate the session. */
     abstract serialize(): SerializedLinkSession
+
     /**
      * Convenience, remove this session from associated [[Link]] storage if set.
      * Equivalent to:

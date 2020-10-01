@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-web-sdk",
-  "version": "2.4.0",
+  "version": "2.4.11",
   "description": "Connect to Proton",
   "license": "MIT",
   "main": "lib/index.es5.js",
@@ -16,8 +16,8 @@
     "src/*"
   ],
   "dependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.1.4-10",
-    "@protonprotocol/proton-link": "^2.4.0",
+    "@protonprotocol/proton-browser-transport": "^2.4.11",
+    "@protonprotocol/proton-link": "^2.4.7",
     "@protonprotocol/protonjs": "^21.0.0-rc.20"
   },
   "devDependencies": {
@@ -54,5 +54,9 @@
   "bugs": {
     "url": "https://github.com/ProtonProtocol/proton-browser-transport/issues"
   },
-  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme"
+  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme",
+  "gitHead": "2bf8571f5a71785e9e7a31fdb5ab952a15e542dd",
+  "publishConfig": {
+    "access": "public"
+  }
 }
