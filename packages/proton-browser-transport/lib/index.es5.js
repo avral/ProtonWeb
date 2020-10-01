@@ -287,7 +287,7 @@ var BrowserTransport = /** @class */ (function () {
                         this.requestEl.appendChild(logoEl);
                         this.requestEl.appendChild(infoEl);
                         this.requestEl.appendChild(actionEl);
-                        // this.requestEl.appendChild(footnoteEl)
+                        this.requestEl.appendChild(footnoteEl);
                         this.show();
                         return [2 /*return*/];
                 }

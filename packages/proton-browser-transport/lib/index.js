@@ -178,7 +178,7 @@ export default class BrowserTransport {
         this.requestEl.appendChild(logoEl);
         this.requestEl.appendChild(infoEl);
         this.requestEl.appendChild(actionEl);
-        // this.requestEl.appendChild(footnoteEl)
+        this.requestEl.appendChild(footnoteEl);
         this.show();
     }
     async showLoading() {
