@@ -210,8 +210,21 @@ export default `
 }
 
 .%prefix%-uri a {
-    color: #FCFCFC;
-    background: #262D43;
+    width: 100%;
+    border-radius: 28px;
+    background-image: linear-gradient(94deg, #7543e3 5%, #582acb 98%);
+    font-size: 14px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    text-decoration: none;
+    flex-grow: 1;
+    flex: 1;
+    padding: 18px 0px 16px 0px;
+    display: block;
 }
 `;
 //# sourceMappingURL=styles.js.map

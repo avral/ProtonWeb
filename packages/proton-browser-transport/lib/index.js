@@ -105,10 +105,13 @@ export default class BrowserTransport {
     }
     async displayRequest(request) {
         this.setupElements();
+        let sameDeviceRequest = request.clone();
+        sameDeviceRequest.setInfoKey('same_device', true);
+        sameDeviceRequest.setInfoKey('return_path', returnUrl());
         if (this.requestAccount.length > 0) {
             request.setInfoKey('req_account', this.requestAccount);
         }
-        // let sameDeviceUri = sameDeviceRequest.encode(true, false)
+        let sameDeviceUri = sameDeviceRequest.encode(true, false);
         let crossDeviceUri = request.encode(true, false);
         const isIdentity = request.isIdentity();
         const title = isIdentity ? 'Login with Proton' : 'Sign with Proton';
@@ -124,6 +127,21 @@ export default class BrowserTransport {
             console.warn('Unable to generate QR code', error);
         }
         const linkEl = this.createEl({ class: 'uri' });
+        const linkA = this.createEl({
+            tag: 'a',
+            href: crossDeviceUri,
+            text: 'Open Proton Wallet',
+        });
+        linkA.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                iframe.setAttribute('src', sameDeviceUri);
+            }
+            else {
+                window.location.href = sameDeviceUri;
+            }
+        });
+        linkEl.appendChild(linkA);
         const iframe = this.createEl({
             class: 'wskeepalive',
             src: 'about:blank',
@@ -144,7 +162,7 @@ export default class BrowserTransport {
         actionEl.appendChild(divider);
         actionEl.appendChild(linkEl);
         backgroundEl.appendChild(qrEl);
-        let footnoteEl;
+        let footnoteEl = this.createEl({ class: 'footnote' });
         if (isIdentity) {
             footnoteEl = this.createEl({ class: 'footnote', text: "Don't have Proton Wallet? " });
             const footnoteLink = this.createEl({
@@ -160,6 +178,8 @@ export default class BrowserTransport {
         this.requestEl.appendChild(logoEl);
         this.requestEl.appendChild(infoEl);
         this.requestEl.appendChild(actionEl);
+        this.requestEl.appendChild(divider);
+        this.requestEl.appendChild(footnoteEl);
         this.show();
     }
     async showLoading() {
