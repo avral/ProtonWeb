@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-browser-transport",
-  "version": "2.4.12",
+  "version": "2.4.13",
   "description": "Vanilla JS browser transport for Proton Link",
   "license": "MIT",
   "main": "lib/index.es5.js",
@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
-    "@protonprotocol/proton-link": "^2.4.7",
-    "@protonprotocol/proton-signing-request": "^2.4.4",
+    "@protonprotocol/proton-link": "^2.4.8",
+    "@protonprotocol/proton-signing-request": "^2.4.5",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
