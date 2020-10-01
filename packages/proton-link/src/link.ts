@@ -144,7 +144,7 @@ export class Link implements esr.AbiProvider {
             textDecoder: options.textDecoder || new TextDecoder(),
             textEncoder: options.textEncoder || new TextEncoder(),
             zlib,
-            scheme: options.scheme
+            scheme: options.scheme,
         }
     }
 
