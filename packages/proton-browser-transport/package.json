@@ -55,7 +55,7 @@
     "url": "https://github.com/ProtonProtocol/proton-browser-transport/issues"
   },
   "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme",
-  "gitHead": "67dbe7a9e0c812ab2d59fa401d92be9b1b5697f1",
+  "gitHead": "342f2ad8a786b36d5b94a9610d794d393f57d6ac",
   "publishConfig": {
     "access": "public"
   }
