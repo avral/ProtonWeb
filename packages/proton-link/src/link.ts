@@ -508,7 +508,20 @@ export class Link implements esr.AbiProvider {
             // update latest used
             await this.touchSession(identifier, auth)
         }
-        return session
+
+        let accountData = {}
+        if (session.auth.actor) {
+            accountData = await this.rpc.get_table_rows({
+                scope: 'eosio.proton',
+                code: 'eosio.proton',
+                json: true,
+                table: 'usersinfo',
+                lower_bound: session.auth.actor,
+                upper_bound: session.auth.actor,
+            })
+        }
+
+        return {session, accountData}
     }
 
     /**
