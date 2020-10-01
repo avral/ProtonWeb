@@ -2,7 +2,7 @@ import ProtonLink from '@protonprotocol/proton-link'
 import ProtonLinkBrowserTransport from '@protonprotocol/proton-browser-transport'
 import { JsonRpc } from '@protonprotocol/protonjs'
 
-export const ProtonConnect = (linkOptions = {} as any, transportOptions = {}) => {
+export const ConnectProton = (linkOptions = {} as any, transportOptions = {}) => {
     // Add RPC if not provided
     if (!linkOptions.rpc && linkOptions.endpoints) {
         linkOptions.rpc = new JsonRpc(linkOptions.endpoints)

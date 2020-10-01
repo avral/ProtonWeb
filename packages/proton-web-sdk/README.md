@@ -7,7 +7,7 @@ npm i @protonprotocol/proton-web-sdk
 
 Usage
 ```javascript
-import { ProtonConnect } from '@protonprotocol/proton-web-sdk'
+import { ConnectProton } from '@protonprotocol/proton-web-sdk'
 
 // Initialize
 const chainId = '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0' // Proton Mainnet
@@ -16,7 +16,7 @@ const appName = 'my-app-1' // Set your own
 const requestAccount = 'myprotonacc' // optional
 
 // Create Link
-const link = ProtonConnect({ chainId, endpoints }, { requestAccount })
+const link = ConnectProton({ chainId, endpoints }, { requestAccount })
 
 // Login
 const { session } = await link.login(appName)
