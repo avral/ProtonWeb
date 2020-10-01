@@ -105,9 +105,6 @@ export default class BrowserTransport {
     }
     async displayRequest(request) {
         this.setupElements();
-        // let sameDeviceRequest = request.clone()
-        // sameDeviceRequest.setInfoKey('same_device', true)
-        // sameDeviceRequest.setInfoKey('return_path', returnUrl())
         if (this.requestAccount.length > 0) {
             request.setInfoKey('req_account', this.requestAccount);
         }
@@ -127,20 +124,6 @@ export default class BrowserTransport {
             console.warn('Unable to generate QR code', error);
         }
         const linkEl = this.createEl({ class: 'uri' });
-        // const linkA = this.createEl({
-        //     tag: 'a',
-        //     href: crossDeviceUri,
-        //     text: 'Open Anchor app',
-        // })
-        // linkA.addEventListener('click', (event) => {
-        //     event.preventDefault()
-        //     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-        //         iframe.setAttribute('src', sameDeviceUri)
-        //     } else {
-        //         window.location.href = sameDeviceUri
-        //     }
-        // })
-        // linkEl.appendChild(linkA)
         const iframe = this.createEl({
             class: 'wskeepalive',
             src: 'about:blank',
@@ -154,9 +137,12 @@ export default class BrowserTransport {
         infoEl.appendChild(infoSubtitle);
         const backgroundEl = this.createEl({ class: 'background' });
         const waveBackground = this.createEl({ class: 'wave' });
+        const divider = this.createEl({ class: 'separator', text: 'OR' });
         const actionEl = this.createEl({ class: 'actions' });
         actionEl.appendChild(backgroundEl);
         actionEl.appendChild(waveBackground);
+        actionEl.appendChild(divider);
+        actionEl.appendChild(linkEl);
         backgroundEl.appendChild(qrEl);
         let footnoteEl;
         if (isIdentity) {
@@ -169,25 +155,11 @@ export default class BrowserTransport {
             });
             footnoteEl.appendChild(footnoteLink);
         }
-        else {
-            // footnoteEl = this.createEl({
-            //     class: 'footnote',
-            //     text: 'Anchor signing is brought to you by ',
-            // })
-            // const footnoteLink = this.createEl({
-            //     tag: 'a',
-            //     target: '_blank',
-            //     href: 'https://greymass.com',
-            //     text: 'Greymass',
-            // })
-            // footnoteEl.appendChild(footnoteLink)
-        }
         emptyElement(this.requestEl);
         const logoEl = this.createEl({ class: 'logo' });
         this.requestEl.appendChild(logoEl);
         this.requestEl.appendChild(infoEl);
         this.requestEl.appendChild(actionEl);
-        // this.requestEl.appendChild(footnoteEl)
         this.show();
     }
     async showLoading() {

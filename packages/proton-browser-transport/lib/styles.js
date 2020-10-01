@@ -131,6 +131,32 @@ export default `
     color: #c2a2f6;
 }
 
+.%prefix%-separator {
+    margin-top: 20px;
+    width: 100%;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.%prefix%-separator::before,
+.%prefix%-separator::after {
+    content: '';
+    flex: 1;
+    opacity: 0.2;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.%prefix%-separator::before {
+    margin-right: .5em;
+}
+
+.%prefix%-separator::after {
+    margin-left: .5em;
+}
+
 .%prefix%-actions {
     display: flex;
     flex-direction: column;
@@ -140,6 +166,7 @@ export default `
 
 .%prefix%-uri {
     width: 100%;
+    padding: 20px 4px 0px 4px;
 }
 
 .%prefix%-background {
