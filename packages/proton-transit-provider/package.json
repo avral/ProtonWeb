@@ -35,5 +35,9 @@
 		"tabWidth": 2,
 		"useTabs": false,
 		"bracketSpacing": true
-	}
+	},
+	"gitHead": "c813d287af9b6483dc7aa71d7fd6a6330fedd72d",
+  "publishConfig": {
+    "access": "public"
+  }
 }
