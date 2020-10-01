@@ -202,17 +202,18 @@ var BrowserTransport = /** @class */ (function () {
     };
     BrowserTransport.prototype.displayRequest = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var crossDeviceUri, isIdentity, title, subtitle, qrEl, _a, error_1, linkEl, iframe, infoEl, infoTitle, infoSubtitle, backgroundEl, waveBackground, actionEl, footnoteEl, footnoteLink, logoEl;
+            var sameDeviceRequest, sameDeviceUri, crossDeviceUri, isIdentity, title, subtitle, qrEl, _a, error_1, linkEl, linkA, iframe, infoEl, infoTitle, infoSubtitle, backgroundEl, waveBackground, divider, actionEl, footnoteEl, footnoteLink, logoEl;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         this.setupElements();
-                        // let sameDeviceRequest = request.clone()
-                        // sameDeviceRequest.setInfoKey('same_device', true)
-                        // sameDeviceRequest.setInfoKey('return_path', returnUrl())
+                        sameDeviceRequest = request.clone();
+                        sameDeviceRequest.setInfoKey('same_device', true);
+                        sameDeviceRequest.setInfoKey('return_path', returnUrl());
                         if (this.requestAccount.length > 0) {
                             request.setInfoKey('req_account', this.requestAccount);
                         }
+                        sameDeviceUri = sameDeviceRequest.encode(true, false);
                         crossDeviceUri = request.encode(true, false);
                         isIdentity = request.isIdentity();
                         title = isIdentity ? 'Login with Proton' : 'Sign with Proton';
@@ -235,6 +236,21 @@ var BrowserTransport = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 4:
                         linkEl = this.createEl({ class: 'uri' });
+                        linkA = this.createEl({
+                            tag: 'a',
+                            href: crossDeviceUri,
+                            text: 'Open Proton Wallet',
+                        });
+                        linkA.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                                iframe.setAttribute('src', sameDeviceUri);
+                            }
+                            else {
+                                window.location.href = sameDeviceUri;
+                            }
+                        });
+                        linkEl.appendChild(linkA);
                         iframe = this.createEl({
                             class: 'wskeepalive',
                             src: 'about:blank',
@@ -248,11 +264,12 @@ var BrowserTransport = /** @class */ (function () {
                         infoEl.appendChild(infoSubtitle);
                         backgroundEl = this.createEl({ class: 'background' });
                         waveBackground = this.createEl({ class: 'wave' });
+                        divider = this.createEl({ class: 'separator', text: 'OR' });
                         actionEl = this.createEl({ class: 'actions' });
                         actionEl.appendChild(backgroundEl);
                         actionEl.appendChild(waveBackground);
-                        // actionEl.appendChild(divider)
-                        // actionEl.appendChild(linkEl)
+                        actionEl.appendChild(divider);
+                        actionEl.appendChild(linkEl);
                         backgroundEl.appendChild(qrEl);
                         footnoteEl = this.createEl({ class: 'footnote' });
                         if (isIdentity) {
