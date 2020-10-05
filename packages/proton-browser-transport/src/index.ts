@@ -145,6 +145,7 @@ export default class BrowserTransport implements LinkTransport {
 
         if (this.requestAccount.length > 0) {
             request.setInfoKey('req_account', this.requestAccount)
+            sameDeviceRequest.setInfoKey('req_account', this.requestAccount)
         }
 
         let sameDeviceUri = sameDeviceRequest.encode(true, false)
