@@ -1,6 +1,6 @@
 {
 	"name": "@protonprotocol/proton-transit-provider",
-	"version": "2.4.8",
+	"version": "2.4.9",
 	"description": "Transit provider for Proton Wallet",
 	"license": "MIT",
 	"main": "lib/index.js",
@@ -18,10 +18,10 @@
 		"lint": "../../node_modules/.bin/tslint -c ../../tslint.json -p ./tsconfig.json"
 	},
 	"dependencies": {
-		"@protonprotocol/proton-web-sdk": "^2.4.18"
+		"@protonprotocol/proton-web-sdk": "^2.4.19"
 	},
 	"devDependencies": {
-		"@protonprotocol/proton-browser-transport": "^2.4.18",
+		"@protonprotocol/proton-browser-transport": "^2.4.19",
 		"@protonprotocol/proton-link": "^2.4.11",
 		"eos-transit": "^4.0.7",
 		"eosjs": "^20.0.0",
