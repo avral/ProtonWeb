@@ -212,6 +212,7 @@ var BrowserTransport = /** @class */ (function () {
                         sameDeviceRequest.setInfoKey('return_path', returnUrl());
                         if (this.requestAccount.length > 0) {
                             request.setInfoKey('req_account', this.requestAccount);
+                            sameDeviceRequest.setInfoKey('req_account', this.requestAccount);
                         }
                         sameDeviceUri = sameDeviceRequest.encode(true, false);
                         crossDeviceUri = request.encode(true, false);

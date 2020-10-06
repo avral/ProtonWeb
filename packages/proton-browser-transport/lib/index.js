@@ -110,6 +110,7 @@ export default class BrowserTransport {
         sameDeviceRequest.setInfoKey('return_path', returnUrl());
         if (this.requestAccount.length > 0) {
             request.setInfoKey('req_account', this.requestAccount);
+            sameDeviceRequest.setInfoKey('req_account', this.requestAccount);
         }
         let sameDeviceUri = sameDeviceRequest.encode(true, false);
         let crossDeviceUri = request.encode(true, false);
