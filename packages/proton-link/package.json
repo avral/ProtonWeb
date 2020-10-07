@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-link",
-  "version": "2.4.11",
+  "version": "2.4.12",
   "description": "Library for authenticating and signing transactions using the Anchor Link protocol",
   "license": "MIT",
   "main": "lib/index.es5.js",
