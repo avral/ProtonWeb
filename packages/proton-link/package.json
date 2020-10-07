@@ -16,13 +16,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/greymass/anchor-link.git"
+    "url": "git+https://github.com/ProtonProtocol/ProtonWeb.git"
   },
-  "author": "",
+  "keywords": [
+    "Proton"
+  ],
+  "author": "Proton, Greymass",
   "bugs": {
-    "url": "https://github.com/greymass/anchor-link/issues"
+    "url": "https://github.com/ProtonProtocol/ProtonWeb/issues"
   },
-  "homepage": "https://github.com/greymass/anchor-link#readme",
+  "homepage": "https://github.com/ProtonProtocol/ProtonWeb#readme",
   "files": [
     "lib/*",
     "src/*"

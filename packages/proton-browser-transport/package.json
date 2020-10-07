@@ -45,16 +45,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ProtonProtocol/proton-browser-transport.git"
+    "url": "git+https://github.com/ProtonProtocol/ProtonWeb.git"
   },
   "keywords": [
     "Proton"
   ],
   "author": "Proton, Greymass",
   "bugs": {
-    "url": "https://github.com/ProtonProtocol/proton-browser-transport/issues"
+    "url": "https://github.com/ProtonProtocol/ProtonWeb/issues"
   },
-  "homepage": "https://github.com/ProtonProtocol/proton-browser-transport#readme",
+  "homepage": "https://github.com/ProtonProtocol/ProtonWeb#readme",
   "gitHead": "c813d287af9b6483dc7aa71d7fd6a6330fedd72d",
   "publishConfig": {
     "access": "public"
