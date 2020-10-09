@@ -101,17 +101,15 @@ export default class BrowserTransport implements LinkTransport {
         if (!this.requestEl) {
             const wrapper = this.createEl({class: 'inner'})
             const nav = this.createEl({class: 'nav'})
-            const navHeader = this.createEl({
-                class: 'header',
-                tag: 'span',
-                text: '',
-            })
+            const backButton = this.createEl({class: 'back'})
+            const navHeader = this.createEl({ class: 'header', tag: 'span', text: 'Scan the QR-code'})
             const closeButton = this.createEl({class: 'close'})
             closeButton.onclick = (event) => {
                 event.stopPropagation()
                 this.closeModal()
             }
             this.requestEl = this.createEl({class: 'request'})
+            nav.appendChild(backButton)
             nav.appendChild(navHeader)
             nav.appendChild(closeButton)
             wrapper.appendChild(nav)
@@ -181,7 +179,9 @@ export default class BrowserTransport implements LinkTransport {
 
         let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
+
         const logoEl = this.createEl({class: 'logo'})
+
         const qrEl = this.createEl({class: 'qr'})
         try {
             qrEl.innerHTML = await qrcode.toString(crossDeviceUri, {
@@ -227,7 +227,7 @@ export default class BrowserTransport implements LinkTransport {
         backgroundEl.appendChild(qrEl)
 
         let footnoteEl: HTMLElement = this.createEl({class: 'footnote'})
-        const isIdentity = request.isIdentity()
+        const isIdentity = request.isIdentity();
         if (isIdentity) {
             footnoteEl = this.createEl({class: 'footnote', text: `Don't have ${this.walletType.replace(/\b[a-z]/g, (letter) => letter.toUpperCase())} Wallet? `})
             const footnoteLink = this.createEl({
