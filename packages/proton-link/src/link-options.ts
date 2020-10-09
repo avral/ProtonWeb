@@ -48,7 +48,7 @@ export interface LinkOptions {
 
 /** @internal */
 export const defaults = {
-    chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    rpc: 'https://eos.greymass.com',
+    chainId: '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0',
+    rpc: 'https://proton.greymass.com',
     service: 'https://cb.anchor.link',
 }
