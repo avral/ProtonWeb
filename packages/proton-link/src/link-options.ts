@@ -44,6 +44,10 @@ export interface LinkOptions {
      * Scheme for transport
      */
     scheme?: string
+    /**
+     * Type of wallet
+     */
+    walletType?: string
 }
 
 /** @internal */

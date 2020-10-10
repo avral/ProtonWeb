@@ -87,7 +87,11 @@ export default class BrowserTransport implements LinkTransport {
             const wrapper = this.createEl({class: 'inner'})
             const nav = this.createEl({class: 'nav'})
             const backButton = this.createEl({class: 'back'})
-            const navHeader = this.createEl({ class: 'header', tag: 'span', text: 'Scan the QR-code'})
+            const navHeader = this.createEl({
+                class: 'header',
+                tag: 'span',
+                text: 'Scan the QR-code',
+            })
             const closeButton = this.createEl({class: 'close'})
             closeButton.onclick = (event) => {
                 event.stopPropagation()

@@ -27,7 +27,8 @@ export const ConnectWallet = async (
     linkOptions = {} as any,
     transportOptions = {},
     appLogo: string,
-    appName: string
+    appName: string,
+    showSelector: boolean = true
 ) => {
     // Add RPC if not provided
     if (!linkOptions.rpc && linkOptions.endpoints) {
@@ -36,26 +37,23 @@ export const ConnectWallet = async (
 
     const wallets = new SupportedWallets(appName, appLogo)
 
-    let type
-    if (localStorage.getItem('browser-transport-type')) {
-        type = localStorage.getItem('browser-transport-type')
-    } else {
-        type = await wallets.displayWalletSelector()
+    let walletType
+    if (localStorage.getItem('browser-transport-wallet-type')) {
+        walletType = localStorage.getItem('browser-transport-wallet-type')
+    } else if (showSelector) {
+        walletType = await wallets.displayWalletSelector()
     }
 
     let transport
-    switch (type) {
+    switch (walletType) {
         case 'proton':
             transport = new ProtonLinkBrowserTransport(transportOptions)
-            localStorage.setItem('browser-transport-type', 'proton')
             break
         case 'anchor':
             transport = new AnchorLinkBrowserTransport(transportOptions)
-            localStorage.setItem('browser-transport-type', 'anchor')
             break
         default:
             transport = new ProtonLinkBrowserTransport(transportOptions)
-            localStorage.setItem('browser-transport-type', 'proton')
             break
     }
 
@@ -63,6 +61,7 @@ export const ConnectWallet = async (
     const link = new ProtonLink({
         transport,
         ...linkOptions,
+        walletType,
     })
 
     // Return link to users
