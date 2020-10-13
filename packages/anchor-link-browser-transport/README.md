@@ -23,12 +23,6 @@ const transport = new AnchorLinkBrowserTransport({
     requestStatus: false,
     /** Local storage prefix, defaults to `anchor-link`. */
     storagePrefix: 'my-localstorage-prefix',
-    /**
-     * Whether to use Greymass Fuel for low resource accounts, defaults to false.
-     *  Note that this service is not available on all networks, and will automatically
-     *  determine based on chain id if it should be enabled or not.
-     */
-    disableGreymassFuel: false,
 })
 const link = new AnchorLink({transport})
 ```

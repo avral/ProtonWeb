@@ -1,5 +1,6 @@
-import {LinkSession, LinkStorage, LinkTransport} from 'anchor-link'
-import {SigningRequest} from 'eosio-signing-request'
+import {LinkSession, LinkStorage, LinkTransport} from '@protonprotocol/proton-link'
+import {SigningRequest} from '@protonprotocol/proton-signing-request'
+
 import * as qrcode from 'qrcode'
 import styleText from './styles'
 
@@ -19,7 +20,8 @@ export interface BrowserTransportOptions {
      * Note that this service is not available on all networks.
      * Visit https://greymass.com/en/fuel for more information.
      */
-    disableGreymassFuel?: boolean
+    /** Requesting account of the dapp (optional) */
+    requestAccount?: string
 }
 
 class Storage implements LinkStorage {
@@ -45,14 +47,12 @@ export default class BrowserTransport implements LinkTransport {
         this.classPrefix = options.classPrefix || 'anchor-link'
         this.injectStyles = !(options.injectStyles === false)
         this.requestStatus = !(options.requestStatus === false)
-        this.fuelEnabled = options.disableGreymassFuel !== true
         this.storage = new Storage(options.storagePrefix || 'anchor-link')
     }
 
     private classPrefix: string
     private injectStyles: boolean
     private requestStatus: boolean
-    private fuelEnabled: boolean
     private activeRequest?: SigningRequest
     private activeCancel?: (reason: string | Error) => void
     private containerEl!: HTMLElement
@@ -91,15 +91,25 @@ export default class BrowserTransport implements LinkTransport {
             document.body.appendChild(this.containerEl)
         }
         if (!this.requestEl) {
-            let wrapper = this.createEl({class: 'inner'})
-            let closeButton = this.createEl({class: 'close'})
+            const wrapper = this.createEl({class: 'inner'})
+            const nav = this.createEl({class: 'nav'})
+            const backButton = this.createEl({class: 'back'})
+            const navHeader = this.createEl({
+                class: 'header',
+                tag: 'span',
+                text: 'Scan the QR-code',
+            })
+            const closeButton = this.createEl({class: 'close'})
             closeButton.onclick = (event) => {
                 event.stopPropagation()
                 this.closeModal()
             }
             this.requestEl = this.createEl({class: 'request'})
+            nav.appendChild(backButton)
+            nav.appendChild(navHeader)
+            nav.appendChild(closeButton)
+            wrapper.appendChild(nav)
             wrapper.appendChild(this.requestEl)
-            wrapper.appendChild(closeButton)
             this.containerEl.appendChild(wrapper)
         }
     }
@@ -152,11 +162,7 @@ export default class BrowserTransport implements LinkTransport {
 
         let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
-
-        const isIdentity = request.isIdentity()
-        const title = isIdentity ? 'Login' : 'Sign'
-        const subtitle = 'Scan the QR-code with your Anchor app.'
-
+        const logoEl = this.createEl({class: 'logo'})
         const qrEl = this.createEl({class: 'qr'})
         try {
             qrEl.innerHTML = await qrcode.toString(crossDeviceUri, {
@@ -171,8 +177,12 @@ export default class BrowserTransport implements LinkTransport {
         const linkA = this.createEl({
             tag: 'a',
             href: crossDeviceUri,
-            text: 'Open Anchor app',
+            text: 'Open Anchor Wallet',
         })
+
+        console.log('SAME DEVICE URI: ', sameDeviceUri)
+        console.log('CROSS DEVICE: ', crossDeviceUri)
+
         linkA.addEventListener('click', (event) => {
             event.preventDefault()
             if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
@@ -190,24 +200,24 @@ export default class BrowserTransport implements LinkTransport {
         })
         linkEl.appendChild(iframe)
 
-        const infoEl = this.createEl({class: 'info'})
-        const infoTitle = this.createEl({class: 'title', tag: 'span', text: title})
-        const infoSubtitle = this.createEl({class: 'subtitle', tag: 'span', text: subtitle})
-        infoEl.appendChild(infoTitle)
-        infoEl.appendChild(infoSubtitle)
+        const backgroundEl = this.createEl({class: 'background'})
+        const divider = this.createEl({class: 'separator', text: 'OR'})
 
         const actionEl = this.createEl({class: 'actions'})
-        actionEl.appendChild(qrEl)
+        actionEl.appendChild(backgroundEl)
+        actionEl.appendChild(divider)
         actionEl.appendChild(linkEl)
+        backgroundEl.appendChild(qrEl)
 
         let footnoteEl: HTMLElement
+        const isIdentity = request.isIdentity()
         if (isIdentity) {
             footnoteEl = this.createEl({class: 'footnote', text: "Don't have Anchor? "})
             const footnoteLink = this.createEl({
                 tag: 'a',
                 target: '_blank',
                 href: 'https://greymass.com/anchor',
-                text: 'Download Anchor app now',
+                text: 'Download it here',
             })
             footnoteEl.appendChild(footnoteLink)
         } else {
@@ -225,10 +235,7 @@ export default class BrowserTransport implements LinkTransport {
         }
 
         emptyElement(this.requestEl)
-
-        const logoEl = this.createEl({class: 'logo'})
         this.requestEl.appendChild(logoEl)
-        this.requestEl.appendChild(infoEl)
         this.requestEl.appendChild(actionEl)
         this.requestEl.appendChild(footnoteEl)
 
@@ -343,7 +350,7 @@ export default class BrowserTransport implements LinkTransport {
 
     public async prepare(request: SigningRequest, session?: LinkSession) {
         this.showLoading()
-        if (!this.fuelEnabled || !session || request.isIdentity()) {
+        if (!session || request.isIdentity()) {
             // don't attempt to cosign id request or if we don't have a session attached
             return request
         }

@@ -1,5 +1,5 @@
-import {LinkSession} from 'anchor-link'
-import {SigningRequest} from 'eosio-signing-request'
+import {LinkSession} from '@protonprotocol/proton-link'
+import {SigningRequest} from '@protonprotocol/proton-signing-request'
 
 const supportedChains = {
     'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906':

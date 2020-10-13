@@ -51,6 +51,7 @@ export const ConnectWallet = async (
             break
         case 'anchor':
             transport = new AnchorLinkBrowserTransport(transportOptions)
+            delete linkOptions.scheme
             break
         default:
             transport = new ProtonLinkBrowserTransport(transportOptions)

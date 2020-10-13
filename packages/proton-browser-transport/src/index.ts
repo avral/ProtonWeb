@@ -160,9 +160,7 @@ export default class BrowserTransport implements LinkTransport {
 
         let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
-
         const logoEl = this.createEl({class: 'logo'})
-
         const qrEl = this.createEl({class: 'qr'})
         try {
             qrEl.innerHTML = await qrcode.toString(crossDeviceUri, {
@@ -208,7 +206,7 @@ export default class BrowserTransport implements LinkTransport {
         backgroundEl.appendChild(qrEl)
 
         let footnoteEl: HTMLElement = this.createEl({class: 'footnote'})
-        const isIdentity = request.isIdentity();
+        const isIdentity = request.isIdentity()
         if (isIdentity) {
             footnoteEl = this.createEl({class: 'footnote', text: "Don't have Proton Wallet? "})
             const footnoteLink = this.createEl({
