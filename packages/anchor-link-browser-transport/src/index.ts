@@ -1,17 +1,25 @@
 import {LinkSession, LinkStorage, LinkTransport} from '@protonprotocol/proton-link'
 import {SigningRequest} from '@protonprotocol/proton-signing-request'
+
 import * as qrcode from 'qrcode'
 import styleText from './styles'
 
+import {fuel} from './fuel'
+
 export interface BrowserTransportOptions {
-    /** CSS class prefix, defaults to `@protonprotocol/proton-link` */
+    /** CSS class prefix, defaults to `anchor-link` */
     classPrefix?: string
     /** Whether to inject CSS styles in the page header, defaults to true. */
     injectStyles?: boolean
     /** Whether to display request success and error messages, defaults to true */
     requestStatus?: boolean
-    /** Local storage prefix, defaults to `@protonprotocol/proton-link`. */
+    /** Local storage prefix, defaults to `anchor-link`. */
     storagePrefix?: string
+    /**
+     * Whether to use Greymass Fuel for low resource accounts, defaults to false.
+     * Note that this service is not available on all networks.
+     * Visit https://greymass.com/en/fuel for more information.
+     */
     /** Requesting account of the dapp (optional) */
     requestAccount?: string
 }
@@ -36,17 +44,15 @@ export default class BrowserTransport implements LinkTransport {
     storage: LinkStorage
 
     constructor(public readonly options: BrowserTransportOptions = {}) {
-        this.classPrefix = options.classPrefix || 'proton-link'
+        this.classPrefix = options.classPrefix || 'anchor-link'
         this.injectStyles = !(options.injectStyles === false)
         this.requestStatus = !(options.requestStatus === false)
-        this.storage = new Storage(options.storagePrefix || 'proton-link')
-        this.requestAccount = options.requestAccount || ''
+        this.storage = new Storage(options.storagePrefix || 'anchor-link')
     }
 
     private classPrefix: string
     private injectStyles: boolean
     private requestStatus: boolean
-    private requestAccount: string
     private activeRequest?: SigningRequest
     private activeCancel?: (reason: string | Error) => void
     private containerEl!: HTMLElement
@@ -54,6 +60,7 @@ export default class BrowserTransport implements LinkTransport {
     private styleEl?: HTMLStyleElement
     private countdownTimer?: NodeJS.Timeout
     private closeTimer?: NodeJS.Timeout
+    private prepareStatusEl?: HTMLElement
 
     private closeModal() {
         this.hide()
@@ -146,17 +153,12 @@ export default class BrowserTransport implements LinkTransport {
         }
     }
 
-    private async displayRequest(request) {
+    private async displayRequest(request: SigningRequest) {
         this.setupElements()
 
         let sameDeviceRequest = request.clone()
         sameDeviceRequest.setInfoKey('same_device', true)
         sameDeviceRequest.setInfoKey('return_path', returnUrl())
-
-        if (this.requestAccount.length > 0) {
-            request.setInfoKey('req_account', this.requestAccount)
-            sameDeviceRequest.setInfoKey('req_account', this.requestAccount)
-        }
 
         let sameDeviceUri = sameDeviceRequest.encode(true, false)
         let crossDeviceUri = request.encode(true, false)
@@ -175,8 +177,12 @@ export default class BrowserTransport implements LinkTransport {
         const linkA = this.createEl({
             tag: 'a',
             href: crossDeviceUri,
-            text: 'Open Proton Wallet',
+            text: 'Open Anchor Wallet',
         })
+
+        console.log('SAME DEVICE URI: ', sameDeviceUri)
+        console.log('CROSS DEVICE: ', crossDeviceUri)
+
         linkA.addEventListener('click', (event) => {
             event.preventDefault()
             if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
@@ -194,7 +200,6 @@ export default class BrowserTransport implements LinkTransport {
         })
         linkEl.appendChild(iframe)
 
-
         const backgroundEl = this.createEl({class: 'background'})
         const divider = this.createEl({class: 'separator', text: 'OR'})
 
@@ -202,24 +207,34 @@ export default class BrowserTransport implements LinkTransport {
         actionEl.appendChild(backgroundEl)
         actionEl.appendChild(divider)
         actionEl.appendChild(linkEl)
-
         backgroundEl.appendChild(qrEl)
 
-        let footnoteEl: HTMLElement = this.createEl({class: 'footnote'})
+        let footnoteEl: HTMLElement
         const isIdentity = request.isIdentity()
         if (isIdentity) {
-            footnoteEl = this.createEl({class: 'footnote', text: "Don't have Proton Wallet? "})
+            footnoteEl = this.createEl({class: 'footnote', text: "Don't have Anchor? "})
             const footnoteLink = this.createEl({
                 tag: 'a',
                 target: '_blank',
-                href: 'https://protonchain.com',
+                href: 'https://greymass.com/anchor',
                 text: 'Download it here',
+            })
+            footnoteEl.appendChild(footnoteLink)
+        } else {
+            footnoteEl = this.createEl({
+                class: 'footnote',
+                text: 'Anchor signing is brought to you by ',
+            })
+            const footnoteLink = this.createEl({
+                tag: 'a',
+                target: '_blank',
+                href: 'https://greymass.com',
+                text: 'Greymass',
             })
             footnoteEl.appendChild(footnoteLink)
         }
 
         emptyElement(this.requestEl)
-
         this.requestEl.appendChild(logoEl)
         this.requestEl.appendChild(actionEl)
         this.requestEl.appendChild(footnoteEl)
@@ -237,6 +252,7 @@ export default class BrowserTransport implements LinkTransport {
             tag: 'span',
             text: 'Preparing request...',
         })
+        this.prepareStatusEl = infoSubtitle
 
         infoEl.appendChild(infoTitle)
         infoEl.appendChild(infoSubtitle)
@@ -296,7 +312,7 @@ export default class BrowserTransport implements LinkTransport {
 
         let subtitle: string
         if (deviceName && deviceName.length > 0) {
-            subtitle = `Please open on “${deviceName}” to review and sign the transaction.`
+            subtitle = `Please open Anchor app on “${deviceName}” to review and sign the transaction.`
         } else {
             subtitle = 'Please review and sign the transaction in the linked wallet.'
         }
@@ -311,8 +327,7 @@ export default class BrowserTransport implements LinkTransport {
         this.show()
 
         if (isAppleHandheld() && session.metadata.sameDevice) {
-            const scheme = request.getScheme()
-            window.location.href = `${scheme}://link`
+            window.location.href = 'anchor://link'
         }
     }
 
@@ -325,6 +340,30 @@ export default class BrowserTransport implements LinkTransport {
             clearTimeout(this.countdownTimer)
             this.countdownTimer = undefined
         }
+    }
+
+    private updatePrepareStatus(message: string): void {
+        if (this.prepareStatusEl) {
+            this.prepareStatusEl.textContent = message
+        }
+    }
+
+    public async prepare(request: SigningRequest, session?: LinkSession) {
+        this.showLoading()
+        if (!session || request.isIdentity()) {
+            // don't attempt to cosign id request or if we don't have a session attached
+            return request
+        }
+        try {
+            const result = fuel(request, session, this.updatePrepareStatus.bind(this))
+            const timeout = new Promise((r) => setTimeout(r, 3500)).then(() => {
+                throw new Error('Fuel API timeout after 3500ms')
+            })
+            return await Promise.race([result, timeout])
+        } catch (error) {
+            console.info(`Not applying fuel (${error.message})`)
+        }
+        return request
     }
 
     public onSuccess(request: SigningRequest) {
