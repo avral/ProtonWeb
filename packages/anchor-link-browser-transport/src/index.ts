@@ -4,8 +4,6 @@ import {SigningRequest} from '@protonprotocol/proton-signing-request'
 import * as qrcode from 'qrcode'
 import styleText from './styles'
 
-import {fuel} from './fuel'
-
 export interface BrowserTransportOptions {
     /** CSS class prefix, defaults to `anchor-link` */
     classPrefix?: string
@@ -15,11 +13,6 @@ export interface BrowserTransportOptions {
     requestStatus?: boolean
     /** Local storage prefix, defaults to `anchor-link`. */
     storagePrefix?: string
-    /**
-     * Whether to use Greymass Fuel for low resource accounts, defaults to false.
-     * Note that this service is not available on all networks.
-     * Visit https://greymass.com/en/fuel for more information.
-     */
     /** Requesting account of the dapp (optional) */
     requestAccount?: string
 }
@@ -340,30 +333,6 @@ export default class BrowserTransport implements LinkTransport {
             clearTimeout(this.countdownTimer)
             this.countdownTimer = undefined
         }
-    }
-
-    private updatePrepareStatus(message: string): void {
-        if (this.prepareStatusEl) {
-            this.prepareStatusEl.textContent = message
-        }
-    }
-
-    public async prepare(request: SigningRequest, session?: LinkSession) {
-        this.showLoading()
-        if (!session || request.isIdentity()) {
-            // don't attempt to cosign id request or if we don't have a session attached
-            return request
-        }
-        try {
-            const result = fuel(request, session, this.updatePrepareStatus.bind(this))
-            const timeout = new Promise((r) => setTimeout(r, 3500)).then(() => {
-                throw new Error('Fuel API timeout after 3500ms')
-            })
-            return await Promise.race([result, timeout])
-        } catch (error) {
-            console.info(`Not applying fuel (${error.message})`)
-        }
-        return request
     }
 
     public onSuccess(request: SigningRequest) {
