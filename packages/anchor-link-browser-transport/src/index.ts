@@ -180,9 +180,6 @@ export default class BrowserTransport implements LinkTransport {
             text: 'Open Anchor Wallet',
         })
 
-        console.log('SAME DEVICE URI: ', sameDeviceUri)
-        console.log('CROSS DEVICE: ', crossDeviceUri)
-
         linkA.addEventListener('click', (event) => {
             event.preventDefault()
             if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
