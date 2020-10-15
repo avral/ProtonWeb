@@ -101,11 +101,10 @@ export default class BrowserTransport implements LinkTransport {
         if (!this.requestEl) {
             const wrapper = this.createEl({class: 'inner'})
             const nav = this.createEl({class: 'nav'})
-            const backButton = this.createEl({class: 'back'})
             const navHeader = this.createEl({
                 class: 'header',
                 tag: 'span',
-                text: 'Scan the QR-code',
+                text: '',
             })
             const closeButton = this.createEl({class: 'close'})
             closeButton.onclick = (event) => {
@@ -113,7 +112,6 @@ export default class BrowserTransport implements LinkTransport {
                 this.closeModal()
             }
             this.requestEl = this.createEl({class: 'request'})
-            nav.appendChild(backButton)
             nav.appendChild(navHeader)
             nav.appendChild(closeButton)
             wrapper.appendChild(nav)
