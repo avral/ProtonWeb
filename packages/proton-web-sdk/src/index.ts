@@ -26,8 +26,8 @@ export const ConnectProton = (linkOptions = {} as any, transportOptions = {}) =>
 export const ConnectWallet = async (
     linkOptions = {} as any,
     transportOptions = {},
-    appLogo: string,
     appName: string,
+    appLogo: string,
     showSelector: boolean = true
 ) => {
     // Add RPC if not provided
@@ -48,6 +48,7 @@ export const ConnectWallet = async (
     switch (walletType) {
         case 'proton':
             transport = new ProtonLinkBrowserTransport(transportOptions)
+            linkOptions.scheme = 'proton'
             break
         case 'anchor':
             transport = new AnchorLinkBrowserTransport(transportOptions)

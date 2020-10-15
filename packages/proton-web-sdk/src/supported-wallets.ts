@@ -1,7 +1,7 @@
 import styleText from './styles'
 
 export default class SupportedWallets {
-    constructor(public readonly logo: string, name: string) {
+    constructor(public readonly name: string, logo: string) {
         this.appLogo = logo
         this.appName = name || 'app'
     }

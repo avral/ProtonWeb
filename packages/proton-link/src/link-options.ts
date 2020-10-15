@@ -45,7 +45,7 @@ export interface LinkOptions {
      */
     scheme?: string
     /**
-     * Type of wallet
+     * Type of wallet (Anchor/Proton)
      */
     walletType?: string
 }
