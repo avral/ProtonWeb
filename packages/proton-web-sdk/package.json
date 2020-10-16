@@ -1,6 +1,6 @@
 {
   "name": "@protonprotocol/proton-web-sdk",
-  "version": "2.4.20",
+  "version": "2.5.0",
   "description": "Connect to Proton",
   "license": "MIT",
   "main": "lib/index.es5.js",
@@ -16,10 +16,10 @@
     "src/*"
   ],
   "dependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.4.20",
-    "@protonprotocol/proton-link": "^2.4.12",
-    "@protonprotocol/protonjs": "^21.0.0-rc.20",
-    "@protonprotocol/anchor-link-browser-transport": "^2.1.2"
+    "@protonprotocol/anchor-link-browser-transport": "^2.1.3",
+    "@protonprotocol/proton-browser-transport": "^2.4.21",
+    "@protonprotocol/proton-link": "^2.4.13",
+    "@protonprotocol/protonjs": "^21.0.0-rc.20"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",
