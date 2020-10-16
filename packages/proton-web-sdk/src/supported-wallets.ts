@@ -95,7 +95,7 @@ export default class SupportedWallets {
      * Only Proton and Anchor are available
      */
 
-    public displayWalletSelector() {
+    public displayWalletSelector(): Promise<string> {
         return new Promise((resolve, reject) => {
             this.setUpSelectorContainer()
             const header = this.createEl({class: 'connect-header'})

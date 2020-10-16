@@ -28,7 +28,8 @@ export const ConnectWallet = async (
     transportOptions = {},
     appName: string,
     appLogo: string,
-    showSelector: boolean = true
+    showSelector: boolean = true,
+    walletType: string
 ) => {
     // Add RPC if not provided
     if (!linkOptions.rpc && linkOptions.endpoints) {
@@ -37,11 +38,13 @@ export const ConnectWallet = async (
 
     const wallets = new SupportedWallets(appName, appLogo)
 
-    let walletType
-    if (localStorage.getItem('browser-transport-wallet-type')) {
-        walletType = localStorage.getItem('browser-transport-wallet-type')
-    } else if (showSelector) {
-        walletType = await wallets.displayWalletSelector()
+    if (!walletType) {
+        const storedWalletType = localStorage.getItem('browser-transport-wallet-type')
+        if (storedWalletType) {
+            walletType = storedWalletType
+        } else if (showSelector) {
+            walletType = await wallets.displayWalletSelector()
+        }
     }
 
     let transport
