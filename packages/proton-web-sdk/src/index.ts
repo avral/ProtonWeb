@@ -28,8 +28,8 @@ export const ConnectWallet = async (
     transportOptions = {},
     appName: string,
     appLogo: string,
-    showSelector: boolean = true,
-    walletType: string
+    walletType?: string,
+    showSelector: boolean = true
 ) => {
     // Add RPC if not provided
     if (!linkOptions.rpc && linkOptions.endpoints) {
