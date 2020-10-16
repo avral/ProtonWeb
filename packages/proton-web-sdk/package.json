@@ -18,7 +18,8 @@
   "dependencies": {
     "@protonprotocol/proton-browser-transport": "^2.4.20",
     "@protonprotocol/proton-link": "^2.4.12",
-    "@protonprotocol/protonjs": "^21.0.0-rc.20"
+    "@protonprotocol/protonjs": "^21.0.0-rc.20",
+    "@protonprotocol/anchor-link-browser-transport": "^2.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.7",

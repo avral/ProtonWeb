@@ -108,6 +108,7 @@ export class Link implements esr.AbiProvider {
     private requestOptions: esr.SigningRequestEncodingOptions
     private abiCache = new Map<string, any>()
     private pendingAbis = new Map<string, Promise<any>>()
+    private walletType: string = ''
 
     /** Create a new link instance. */
     constructor(options: LinkOptions) {
@@ -143,6 +144,9 @@ export class Link implements esr.AbiProvider {
             textEncoder: options.textEncoder || new TextEncoder(),
             zlib,
             scheme: options.scheme,
+        }
+        if (options.walletType && options.walletType.length > 0) {
+            this.walletType = options.walletType || ''
         }
     }
 
@@ -461,6 +465,11 @@ export class Link implements esr.AbiProvider {
             session.accountData = rows
         }
 
+        // once successfully logged in, set wallet type so restore session can work properly
+        if (this.walletType.length > 0) {
+            localStorage.setItem('browser-transport-wallet-type', this.walletType)
+        }
+
         return {
             ...res,
             session,
@@ -553,6 +562,9 @@ export class Link implements esr.AbiProvider {
         let key = this.sessionKey(identifier, formatAuth(auth))
         await this.storage.remove(key)
         await this.touchSession(identifier, auth, true)
+        if (localStorage.getItem('browser-transport-wallet-type')) {
+            localStorage.removeItem('browser-transport-wallet-type')
+        }
     }
 
     /**
@@ -593,10 +605,7 @@ export class Link implements esr.AbiProvider {
                 if (t.prepare) {
                     request = await t.prepare(request)
                 }
-                const {
-                    serializedTransaction,
-                    signatures,
-                } = await this.sendRequest(request, t)
+                const {serializedTransaction, signatures} = await this.sendRequest(request, t)
                 return {
                     ...args,
                     serializedTransaction,
@@ -739,4 +748,10 @@ function formatAuth(auth: PermissionLevel): string {
         permission = '<any>'
     }
     return `${actor}@${permission}`
+}
+
+function emptyElement(el: HTMLElement) {
+    while (el.firstChild) {
+        el.removeChild(el.firstChild)
+    }
 }

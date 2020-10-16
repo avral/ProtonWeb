@@ -34,7 +34,7 @@ export default class BrowserTransport {
             this.activeCancel = undefined;
         }
     }
-    setupElements() {
+    setupElements(title = '') {
         if (this.injectStyles && !this.styleEl) {
             this.styleEl = document.createElement('style');
             this.styleEl.type = 'text/css';
@@ -43,6 +43,7 @@ export default class BrowserTransport {
             document.head.appendChild(this.styleEl);
         }
         if (!this.containerEl) {
+            this.clearDuplicateContainers();
             this.containerEl = this.createEl();
             this.containerEl.className = this.classPrefix;
             this.containerEl.onclick = (event) => {
@@ -54,16 +55,31 @@ export default class BrowserTransport {
             document.body.appendChild(this.containerEl);
         }
         if (!this.requestEl) {
-            let wrapper = this.createEl({ class: 'inner' });
-            let closeButton = this.createEl({ class: 'close' });
+            const wrapper = this.createEl({ class: 'inner' });
+            const nav = this.createEl({ class: 'nav' });
+            const navHeader = this.createEl({
+                class: 'header',
+                tag: 'span',
+                text: '',
+            });
+            const closeButton = this.createEl({ class: 'close' });
             closeButton.onclick = (event) => {
                 event.stopPropagation();
                 this.closeModal();
             };
             this.requestEl = this.createEl({ class: 'request' });
+            nav.appendChild(navHeader);
+            nav.appendChild(closeButton);
+            wrapper.appendChild(nav);
             wrapper.appendChild(this.requestEl);
-            wrapper.appendChild(closeButton);
             this.containerEl.appendChild(wrapper);
+        }
+        document.getElementsByClassName(`${this.classPrefix}-header`)[0].textContent = title;
+    }
+    clearDuplicateContainers() {
+        const elements = document.getElementsByClassName(this.classPrefix);
+        while (elements.length > 0) {
+            elements[0].remove();
         }
     }
     createEl(attrs) {
@@ -104,7 +120,7 @@ export default class BrowserTransport {
         }
     }
     async displayRequest(request) {
-        this.setupElements();
+        this.setupElements('Scan the QR-Code');
         let sameDeviceRequest = request.clone();
         sameDeviceRequest.setInfoKey('same_device', true);
         sameDeviceRequest.setInfoKey('return_path', returnUrl());
@@ -114,9 +130,7 @@ export default class BrowserTransport {
         }
         let sameDeviceUri = sameDeviceRequest.encode(true, false);
         let crossDeviceUri = request.encode(true, false);
-        const isIdentity = request.isIdentity();
-        const title = isIdentity ? 'Login with Proton' : 'Sign with Proton';
-        const subtitle = 'Scan the QR-code with your Proton Wallet';
+        const logoEl = this.createEl({ class: 'logo' });
         const qrEl = this.createEl({ class: 'qr' });
         try {
             qrEl.innerHTML = await qrcode.toString(crossDeviceUri, {
@@ -149,35 +163,27 @@ export default class BrowserTransport {
             tag: 'iframe',
         });
         linkEl.appendChild(iframe);
-        const infoEl = this.createEl({ class: 'info' });
-        const infoTitle = this.createEl({ class: 'title', tag: 'span', text: title });
-        const infoSubtitle = this.createEl({ class: 'subtitle', tag: 'span', text: subtitle });
-        infoEl.appendChild(infoTitle);
-        infoEl.appendChild(infoSubtitle);
         const backgroundEl = this.createEl({ class: 'background' });
-        const waveBackground = this.createEl({ class: 'wave' });
         const divider = this.createEl({ class: 'separator', text: 'OR' });
         const actionEl = this.createEl({ class: 'actions' });
         actionEl.appendChild(backgroundEl);
-        actionEl.appendChild(waveBackground);
         actionEl.appendChild(divider);
         actionEl.appendChild(linkEl);
         backgroundEl.appendChild(qrEl);
         let footnoteEl = this.createEl({ class: 'footnote' });
+        const isIdentity = request.isIdentity();
         if (isIdentity) {
             footnoteEl = this.createEl({ class: 'footnote', text: "Don't have Proton Wallet? " });
             const footnoteLink = this.createEl({
                 tag: 'a',
                 target: '_blank',
                 href: 'https://protonchain.com',
-                text: 'Download it now',
+                text: 'Download it here',
             });
             footnoteEl.appendChild(footnoteLink);
         }
         emptyElement(this.requestEl);
-        const logoEl = this.createEl({ class: 'logo' });
         this.requestEl.appendChild(logoEl);
-        this.requestEl.appendChild(infoEl);
         this.requestEl.appendChild(actionEl);
         this.requestEl.appendChild(footnoteEl);
         this.show();
@@ -218,19 +224,20 @@ export default class BrowserTransport {
         }
         this.activeRequest = request;
         this.activeCancel = cancel;
-        this.setupElements();
+        this.setupElements('Pending...');
         const timeout = session.metadata.timeout || 60 * 1000 * 2;
         const deviceName = session.metadata.name;
         const start = Date.now();
-        const infoTitle = this.createEl({ class: 'title', tag: 'span', text: 'Sign' });
+        const countdown = this.createEl({ class: 'countdown', tag: 'span', text: '' });
         const updateCountdown = () => {
             const timeLeft = timeout + start - Date.now();
             const timeFormatted = timeLeft > 0 ? new Date(timeLeft).toISOString().substr(14, 5) : '00:00';
-            infoTitle.textContent = `Sign - ${timeFormatted}`;
+            countdown.textContent = `${timeFormatted}`;
         };
         this.countdownTimer = setInterval(updateCountdown, 500);
         updateCountdown();
         const infoEl = this.createEl({ class: 'info' });
+        const infoTitle = this.createEl({ class: 'title', tag: 'span', text: 'Confirm payment' });
         infoEl.appendChild(infoTitle);
         let subtitle;
         if (deviceName && deviceName.length > 0) {
@@ -242,8 +249,7 @@ export default class BrowserTransport {
         const infoSubtitle = this.createEl({ class: 'subtitle', tag: 'span', text: subtitle });
         infoEl.appendChild(infoSubtitle);
         emptyElement(this.requestEl);
-        const logoEl = this.createEl({ class: 'logo' });
-        this.requestEl.appendChild(logoEl);
+        this.requestEl.appendChild(countdown);
         this.requestEl.appendChild(infoEl);
         this.show();
         if (isAppleHandheld() && session.metadata.sameDevice) {
@@ -261,41 +267,17 @@ export default class BrowserTransport {
             this.countdownTimer = undefined;
         }
     }
-    // private updatePrepareStatus(message: string): void {
-    //     if (this.prepareStatusEl) {
-    //         this.prepareStatusEl.textContent = message
-    //     }
-    // }
-    // public async prepare(request: SigningRequest, session?: LinkSession) {
-    //     this.showLoading()
-    //     if (!this.fuelEnabled || !session || request.isIdentity()) {
-    //         // don't attempt to cosign id request or if we don't have a session attached
-    //         return request
-    //     }
-    //     try {
-    //         const result = fuel(request, session, this.updatePrepareStatus.bind(this))
-    //         const timeout = new Promise((r) => setTimeout(r, 3500)).then(() => {
-    //             throw new Error('Fuel API timeout after 3500ms')
-    //         })
-    //         return await Promise.race([result, timeout])
-    //     } catch (error) {
-    //         console.info(`Not applying fuel (${error.message})`)
-    //     }
-    //     return request
-    // }
     onSuccess(request) {
         if (request === this.activeRequest) {
             this.clearTimers();
             if (this.requestStatus) {
-                this.setupElements();
+                this.setupElements('Success');
                 const infoEl = this.createEl({ class: 'info' });
                 const logoEl = this.createEl({ class: 'logo' });
                 logoEl.classList.add('success');
-                const infoTitle = this.createEl({ class: 'title', tag: 'span', text: 'Success!' });
-                const subtitle = request.isIdentity() ? 'Identity signed.' : 'Transaction signed.';
-                const infoSubtitle = this.createEl({ class: 'subtitle', tag: 'span', text: subtitle });
+                const info = request.isIdentity() ? 'Your wallet was successfully linked' : 'Your transaction was successfully signed';
+                const infoTitle = this.createEl({ class: 'title', tag: 'span', text: info });
                 infoEl.appendChild(infoTitle);
-                infoEl.appendChild(infoSubtitle);
                 emptyElement(this.requestEl);
                 this.requestEl.appendChild(logoEl);
                 this.requestEl.appendChild(infoEl);
@@ -313,7 +295,7 @@ export default class BrowserTransport {
         if (request === this.activeRequest && error['code'] !== 'E_CANCEL') {
             this.clearTimers();
             if (this.requestStatus) {
-                this.setupElements();
+                this.setupElements('Transaction Failed');
                 const infoEl = this.createEl({ class: 'info' });
                 const logoEl = this.createEl({ class: 'logo' });
                 logoEl.classList.add('error');
