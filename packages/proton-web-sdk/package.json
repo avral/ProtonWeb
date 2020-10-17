@@ -41,15 +41,5 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "size-limit": [
-    {
-      "path": "dist/proton-web-sdk.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/proton-web-sdk.esm.js",
-      "limit": "10 KB"
-    }
-  ]
+  }
 }
