@@ -32,14 +32,14 @@ const link = await ConnectWallet({
 })
 
 // Login
-const { session } = await this.link.login(appIdentifier)
+const { session } = await link.login(appIdentifier)
 console.log('User authorization:', session.auth) // { actor: 'fred', permission: 'active }
 
 // Save auth for reconnection on refresh
 localStorage.setItem('saved-user-auth', JSON.stringify(session.auth))
 
 // Send Transaction
-const result = await this.session.transact({
+const result = await session.transact({
     transaction: {
         actions: [{
             // Token contract for XUSDT
@@ -48,12 +48,12 @@ const result = await this.session.transact({
             name: 'transfer',
             // Action parameters
             data: {
-                from: this.session.auth.actor,
-                to: 'eosio',
+                from: session.auth.actor,
+                to: 'syed',
                 quantity: '0.000001 XUSDT',
                 memo: 'Tip!'
             },
-            authorization: [this.session.auth]
+            authorization: [session.auth]
         }]
     },
     broadcast: true

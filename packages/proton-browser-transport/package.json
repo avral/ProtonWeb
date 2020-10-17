@@ -41,16 +41,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "size-limit": [
-    {
-      "path": "dist/proton-browser-transport.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/proton-browser-transport.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
     "@types/qrcode": "^1.3.5"
   }

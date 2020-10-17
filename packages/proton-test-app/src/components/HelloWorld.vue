@@ -69,7 +69,7 @@ export default {
             // Action parameters
             data: {
               from: this.session.auth.actor,
-              to: 'eosio',
+              to: 'syed',
               quantity: '0.000001 XUSDT',
               memo: 'Tip!'
             },

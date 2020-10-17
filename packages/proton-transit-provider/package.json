@@ -41,16 +41,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "size-limit": [
-    {
-      "path": "dist/proton-transit-provider.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/proton-transit-provider.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
     "@protonprotocol/proton-browser-transport": "^2.4.21",
     "eos-transit": "^4.0.7"

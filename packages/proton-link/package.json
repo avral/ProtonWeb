@@ -37,16 +37,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "size-limit": [
-    {
-      "path": "dist/proton-link.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/proton-link.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "dependencies": {
     "@protonprotocol/proton-signing-request": "^2.4.7",
     "@protonprotocol/protonjs": "^21.0.21",
