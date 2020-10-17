@@ -1,10 +1,10 @@
 import { NetworkConfig, WalletAuth, WalletProvider, DiscoveryOptions } from 'eos-transit';
-import { ApiInterfaces } from 'eosjs';
+import { ApiInterfaces } from '@protonprotocol/protonjs';
 import { Link, LinkOptions, LinkSession } from '@protonprotocol/proton-link';
 import { BrowserTransportOptions } from '@protonprotocol/proton-browser-transport';
-import { ConnectProton } from '@protonprotocol/proton-web-sdk'
+// import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
 
-class ProtonProvider implements WalletProvider {
+export class ProtonProvider implements WalletProvider {
   id = 'proton';
   meta = {
     name: 'Proton Web SDK',
@@ -40,7 +40,7 @@ class ProtonProvider implements WalletProvider {
 
   async connect() {}
   async disconnect() {}
-  async discover(discoveryOptions: DiscoveryOptions) {
+  async discover(_: DiscoveryOptions) {
     return {
         keys: [],
         note: 'protonlink does not support discovery'
@@ -54,8 +54,8 @@ class ProtonProvider implements WalletProvider {
   async login(
     accountName?: string,
     authorization?: string,
-    index?: number,
-    key?: string
+    _?: number, // index
+    __?: string // key
   ): Promise<WalletAuth> {
     let session: LinkSession;
     let auth: any = undefined;
@@ -97,7 +97,7 @@ type ProviderOptions = Partial<LinkOptions> &
   Partial<BrowserTransportOptions> & Partial<{ endpoints: string [] }>;
 
 export default function makeProvider(
-  sessionId: string,
+  _: string, // sessionId
   options: ProviderOptions = {}
 ) {
   return function(network: NetworkConfig): WalletProvider {
@@ -106,20 +106,19 @@ export default function makeProvider(
       options.endpoints = [network.protocol + '://' + network.host + ':' + network.port]
     }
 
-    // Create link
-    const link = ConnectProton({
-      ...options,
-      chainId: network.chainId,
-      scheme: network.chainId === '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0' ? 'proton' : 'proton-dev'
-    }, {
-      ...options,
-      // Optional: Disable the browser transport success/failure messages to serve your own
-      requestStatus: false
-    })
+    // // Create link
+    // const link = ConnectProton({
+    //   ...options,
+    //   chainId: network.chainId,
+    //   scheme: network.chainId === '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0' ? 'proton' : 'proton-dev'
+    // }, {
+    //   ...options,
+    //   // Optional: Disable the browser transport success/failure messages to serve your own
+    //   requestStatus: false
+    // })
 
-    // Return provider
-    return new ProtonProvider(link, sessionId);
+    // // Return provider
+    // return new ProtonProvider(link, sessionId);
+    return null as any
   };
 }
-
-// force rebuild 2

@@ -1,6 +1,5 @@
 import * as esr from '@protonprotocol/proton-signing-request'
-import {ApiInterfaces, JsonRpc} from 'eosjs'
-import * as ecc from 'eosjs-ecc'
+import {ApiInterfaces, JsonRpc, Key} from '@protonprotocol/protonjs'
 import WebSocket from 'isomorphic-ws'
 import zlib from 'pako'
 import {v4 as uuid} from 'uuid'
@@ -11,7 +10,7 @@ import {defaults, LinkOptions} from './link-options'
 import {LinkChannelSession, LinkFallbackSession, LinkSession} from './link-session'
 import {LinkStorage} from './link-storage'
 import {LinkTransport} from './link-transport'
-import {abiEncode, fetch, generatePrivateKey, normalizePublicKey, publicKeyEqual} from './utils'
+import {abiEncode, generatePrivateKey, normalizePublicKey, publicKeyEqual} from './utils'
 
 /** EOSIO permission level with actor and signer, a.k.a. 'auth', 'authority' or 'account auth' */
 export type PermissionLevel = esr.abi.PermissionLevel
@@ -121,7 +120,7 @@ export class Link implements esr.AbiProvider {
             )
         }
         if (options.rpc === undefined || typeof options.rpc === 'string') {
-            this.rpc = new JsonRpc(options.rpc || defaults.rpc, {fetch: fetch as any})
+            this.rpc = new JsonRpc(options.rpc || defaults.rpc)
         } else {
             this.rpc = options.rpc
         }
@@ -140,8 +139,6 @@ export class Link implements esr.AbiProvider {
         }
         this.requestOptions = {
             abiProvider: this,
-            textDecoder: options.textDecoder || new TextDecoder(),
-            textEncoder: options.textEncoder || new TextEncoder(),
             zlib,
             scheme: options.scheme,
         }
@@ -230,7 +227,7 @@ export class Link implements esr.AbiProvider {
                 }
                 return data
             })
-            const cancel = new Promise<never>((resolve, reject) => {
+            const cancel = new Promise<never>((_, reject) => {
                 t.onRequest(request, (reason) => {
                     if (ctx.cancel) {
                         ctx.cancel()
@@ -363,13 +360,13 @@ export class Link implements esr.AbiProvider {
             Buffer.alloc(32),
         ])
         const {signer} = res
-        const signerKey = ecc.recover(res.signatures[0], message)
+        const signerKey = Key.Signature.fromString(res.signatures[0]).recover(message).toLegacyString()
         const account = await this.rpc.get_account(signer.actor)
         if (!account) {
             throw new IdentityError(`Signature from unknown account: ${signer.actor}`)
         }
         const permission = account.permissions.find(
-            ({perm_name}) => perm_name === signer.permission
+            ({perm_name}: any) => perm_name === signer.permission
         )
         if (!permission) {
             throw new IdentityError(
@@ -377,7 +374,7 @@ export class Link implements esr.AbiProvider {
             )
         }
         const auth = permission.required_auth
-        const keyAuth = auth.keys.find(({key}) => publicKeyEqual(key, signerKey))
+        const keyAuth = auth.keys.find(({key}: any) => publicKeyEqual(key, signerKey))
         if (!keyAuth) {
             throw new IdentityError(`${formatAuth(signer)} has no key matching id signature`)
         }
@@ -412,7 +409,7 @@ export class Link implements esr.AbiProvider {
      */
     public async login(identifier: string): Promise<LoginResult> {
         const privateKey = await generatePrivateKey()
-        const requestKey = ecc.privateToPublic(privateKey)
+        const requestKey = Key.PrivateKey.fromString(privateKey).getPublicKey().toLegacyString()
         const createInfo: LinkCreate = {
             session_name: identifier,
             request_key: requestKey,
@@ -651,6 +648,7 @@ export class Link implements esr.AbiProvider {
     /** Makes sure session is in storage list of sessions and moves it to top (most recently used). */
     private async storeSession(identifier: string, session: LinkSession) {
         let key = this.sessionKey(identifier, formatAuth(session.auth))
+        console.log('store key', key)
         let data = JSON.stringify(session.serialize())
         await this.storage!.write(key, data)
         await this.touchSession(identifier, session.auth)
@@ -658,6 +656,7 @@ export class Link implements esr.AbiProvider {
 
     /** Session storage key for identifier and suffix. */
     private sessionKey(identifier: string, suffix: string) {
+        console.log([this.chainId, identifier, suffix].join('-'))
         return [this.chainId, identifier, suffix].join('-')
     }
 }
@@ -690,7 +689,7 @@ function waitForCallback(url: string, ctx: {cancel?: () => void}) {
                     socket.close()
                 }
             }
-            socket.onmessage = (event) => {
+            socket.onmessage = (event: any) => {
                 active = false
                 if (socket.readyState === WebSocket.OPEN) {
                     socket.close()
@@ -715,8 +714,8 @@ function waitForCallback(url: string, ctx: {cancel?: () => void}) {
             socket.onopen = () => {
                 retries = 0
             }
-            socket.onerror = (error) => {}
-            socket.onclose = (close) => {
+            socket.onerror = (_: any) => {}
+            socket.onclose = (_: any) => {
                 if (active) {
                     setTimeout(connect, backoff(retries++))
                 }
@@ -750,8 +749,8 @@ function formatAuth(auth: PermissionLevel): string {
     return `${actor}@${permission}`
 }
 
-function emptyElement(el: HTMLElement) {
-    while (el.firstChild) {
-        el.removeChild(el.firstChild)
-    }
-}
+// function emptyElement(el: HTMLElement) {
+//     while (el.firstChild) {
+//         el.removeChild(el.firstChild)
+//     }
+// }

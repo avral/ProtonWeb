@@ -1,7 +1,7 @@
 import {LinkSession, LinkStorage, LinkTransport} from '@protonprotocol/proton-link'
 import {SigningRequest} from '@protonprotocol/proton-signing-request'
 import * as qrcode from 'qrcode'
-import styleText from './styles'
+import styles from './styles'
 
 export interface BrowserTransportOptions {
     /** CSS class prefix, defaults to `@protonprotocol/proton-link` */
@@ -14,6 +14,8 @@ export interface BrowserTransportOptions {
     storagePrefix?: string
     /** Requesting account of the dapp (optional) */
     requestAccount?: string
+    /** Wallet name e.g. proton, anchor, etc */
+    walletType?: string
 }
 
 class Storage implements LinkStorage {
@@ -41,12 +43,14 @@ export default class BrowserTransport implements LinkTransport {
         this.requestStatus = !(options.requestStatus === false)
         this.storage = new Storage(options.storagePrefix || 'proton-link')
         this.requestAccount = options.requestAccount || ''
+        this.walletType = options.walletType || 'proton'
     }
 
     private classPrefix: string
     private injectStyles: boolean
     private requestStatus: boolean
     private requestAccount: string
+    private walletType: string
     private activeRequest?: SigningRequest
     private activeCancel?: (reason: string | Error) => void
     private containerEl!: HTMLElement
@@ -68,7 +72,7 @@ export default class BrowserTransport implements LinkTransport {
         if (this.injectStyles && !this.styleEl) {
             this.styleEl = document.createElement('style')
             this.styleEl.type = 'text/css'
-            const css = styleText.replace(/%prefix%/g, this.classPrefix)
+            const css = styles[this.walletType].replace(/%prefix%/g, this.classPrefix)
             this.styleEl.appendChild(document.createTextNode(css))
             document.head.appendChild(this.styleEl)
         }
@@ -104,7 +108,7 @@ export default class BrowserTransport implements LinkTransport {
             wrapper.appendChild(this.requestEl)
             this.containerEl.appendChild(wrapper)
         }
-        document.getElementsByClassName(`${this.classPrefix}-header`)[0].textContent = title        
+        document.getElementsByClassName(`${this.classPrefix}-header`)[0].textContent = title
     }
 
     private clearDuplicateContainers() {
@@ -153,7 +157,7 @@ export default class BrowserTransport implements LinkTransport {
         }
     }
 
-    private async displayRequest(request) {
+    private async displayRequest(request: any) {
         this.setupElements('Scan the QR-Code')
 
         let sameDeviceRequest = request.clone()
@@ -358,7 +362,7 @@ export default class BrowserTransport implements LinkTransport {
         }
     }
 
-    public onFailure(request: SigningRequest, error: Error) {
+    public onFailure(request: SigningRequest, error: Error | any) {
         if (request === this.activeRequest && error['code'] !== 'E_CANCEL') {
             this.clearTimers()
             if (this.requestStatus) {

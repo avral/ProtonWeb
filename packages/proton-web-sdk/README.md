@@ -3,31 +3,40 @@
 Installation
 ```
 npm i @protonprotocol/proton-web-sdk
+yarn add @protonprotocol/proton-web-sdk
 ```
 
 Usage
 ```javascript
-import { ConnectProton } from '@protonprotocol/proton-web-sdk'
+import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
 
-// Initialize
-const chainId = '384da888112027f0321850a169f737c33e53b388aad48b5adace4bab97f437e0' // Proton Mainnet
-const endpoints = ['https://proton.greymass.com'] // Multiple for fault tolerance
-const appName = 'my-app-1' // Set your own
-const requestAccount = 'myprotonacc' // optional
+// Constants
+const appIdentifier = 'taskly'
 
-// Create Link
-const link = ConnectProton({ chainId, endpoints }, { requestAccount })
+// Pop up modal
+const link = await ConnectWallet({
+    linkOptions: {
+        endpoints: ['https://proton.greymass.com']
+    },
+    transportOptions: {
+        requestAccount: 'myprotonacc', // Your proton account
+        appName: 'Taskly',
+        appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg',
+        // walletType: 'proton' // Optional: set if you want a specific wallet (e.g. 'proton', 'anchor')
+    },
+    // showSelector: false // Optional: Reconnect without modal (must provide walletType)
+})
 
 // Login
-const { session } = await link.login(appName)
-console.log(session.auth) // { actor: 'fred', permission: 'active' }
+const { session } = await this.link.login(appIdentifier)
+console.log('User authorization:', session.auth) // { actor: 'fred', permission: 'active }
 
 // Save auth for reconnection on refresh
-localStorage.setItem('savedUserAuth', JSON.stringify(session.auth));
+localStorage.setItem('savedUserAuth', JSON.stringify(session.auth))
 
 // Send Transaction
-const result = await session.transact({
-    {
+const result = await this.session.transact({
+    transaction: {
         actions: [{
             // Token contract for XUSDT
             account: 'xtokens',
@@ -35,21 +44,22 @@ const result = await session.transact({
             name: 'transfer',
             // Action parameters
             data: {
-                from: 'usera',
-                to: 'userb',
-                quantity: '4.0000 XUSDT',
+                from: this.session.auth.actor,
+                to: 'eosio',
+                quantity: '0.000001 XUSDT',
                 memo: 'Tip!'
-            }
+            },
+            authorization: [this.session.auth]
         }]
     },
     broadcast: true
 })
-console.log(result.processed.id) // Transaction ID
+console.log('Transaction ID', result.processed.id)
 
-// Restore session after refresh
+// Restore session after refresh (must recreate link first with showSelector as false and walletType as 'proton' or 'anchor)
 const savedUserAuth = JSON.parse(localstorage.getItem('savedUserAuth'))
-const session = await link.restoreSession(appName, savedUserAuth)
+const session = await link.restoreSession(appIdentifier, savedUserAuth)
 
 // Logout
-await link.removeSession(appName, session.auth)
+await link.removeSession(appIdentifier, session.auth)
 ```

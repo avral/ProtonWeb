@@ -1,74 +1,76 @@
-import AnchorLinkBrowserTransport from '@protonprotocol/anchor-link-browser-transport'
 import ProtonLinkBrowserTransport from '@protonprotocol/proton-browser-transport'
 import ProtonLink from '@protonprotocol/proton-link'
-import {JsonRpc} from '@protonprotocol/protonjs'
+import { JsonRpc } from '@protonprotocol/protonjs'
 import SupportedWallets from './supported-wallets'
 
-export const ConnectProton = (linkOptions = {} as any, transportOptions = {}) => {
-    // Add RPC if not provided
-    if (!linkOptions.rpc && linkOptions.endpoints) {
-        linkOptions.rpc = new JsonRpc(linkOptions.endpoints)
-    }
 
-    // Create transport
-    const transport = new ProtonLinkBrowserTransport(transportOptions)
-
-    // Create link
-    const link = new ProtonLink({
-        transport,
-        ...linkOptions,
-    })
-
-    // Return link to users
-    return link
+interface ConnectWalletArgs {
+    linkOptions: any,
+    transportOptions?: {
+        requestAccount?: string,
+        appName?: string,
+        appLogo?: string,
+        walletType?: string
+    } | any;
+    showSelector?: boolean
 }
 
-export const ConnectWallet = async (
-    linkOptions = {} as any,
+export const ConnectWallet = async ({
+    linkOptions = {},
     transportOptions = {},
-    appName: string,
-    appLogo: string,
-    walletType?: string,
-    showSelector: boolean = true
-) => {
+    showSelector = true
+}: ConnectWalletArgs) => {
     // Add RPC if not provided
     if (!linkOptions.rpc && linkOptions.endpoints) {
         linkOptions.rpc = new JsonRpc(linkOptions.endpoints)
     }
 
-    const wallets = new SupportedWallets(appName, appLogo)
+    // Add chain ID if not present
+    if (!linkOptions.chainId) {
+        const info = await linkOptions.rpc.get_info();;
+        linkOptions.chainId = info.chainId
+    }
 
-    if (!walletType) {
+    // Create Modal Class
+    const wallets = new SupportedWallets(transportOptions.appName, transportOptions.appLogo)
+
+    // Determine wallet type from storage or selector modal
+    if (!transportOptions.walletType) {
         const storedWalletType = localStorage.getItem('browser-transport-wallet-type')
         if (storedWalletType) {
-            walletType = storedWalletType
+            transportOptions.walletType = storedWalletType
         } else if (showSelector) {
-            walletType = await wallets.displayWalletSelector()
+            transportOptions.walletType = await wallets.displayWalletSelector()
+        } else {
+            throw new Error('Wallet Type Unavailable: No walletType provided and showSelector is set to false')
         }
     }
 
-    let transport
-    switch (walletType) {
-        case 'proton':
-            transport = new ProtonLinkBrowserTransport(transportOptions)
-            linkOptions.scheme = 'proton'
-            break
+    // Set scheme (proton default)
+    switch (transportOptions.walletType) {
         case 'anchor':
-            transport = new AnchorLinkBrowserTransport(transportOptions)
-            delete linkOptions.scheme
+            linkOptions.scheme = 'esr'
             break
+        case 'proton': {
+            // Proton Testnet
+            if (linkOptions.chainId === '71ee83bcf52142d61019d95f9cc5427ba6a0d7ff8accd9e2088ae2abeaf3d3dd') {
+                linkOptions.scheme = 'proton-dev'
+            } else {
+                linkOptions.scheme = 'proton'
+            }
+            break;
+        }
         default:
-            transport = new ProtonLinkBrowserTransport(transportOptions)
+            linkOptions.scheme = 'proton'
             break
     }
 
-    // Create link
-    const link = new ProtonLink({
-        transport,
-        ...linkOptions,
-        walletType,
-    })
+    // Create transport
+    linkOptions.transport = new ProtonLinkBrowserTransport(transportOptions)
 
-    // Return link to users
+    // Create link
+    const link = new ProtonLink(linkOptions)
+
+    // Return link
     return link
 }
