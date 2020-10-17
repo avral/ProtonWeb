@@ -27,7 +27,7 @@ const link = await ConnectWallet({
         appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
         appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
         // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
-        // showSelector: false /* Optional: Reconnect without modal if false if false, Default true */
+        // showSelector: false /* Optional: Reconnect without modal if false, Default true */
     }
 })
 
