@@ -1,14 +1,16 @@
-import ProtonLinkBrowserTransport from '@protonprotocol/proton-browser-transport'
-import ProtonLink from '@protonprotocol/proton-link'
+import ProtonLinkBrowserTransport, { BrowserTransportOptions } from '@protonprotocol/proton-browser-transport'
+import ProtonLink, { LinkOptions } from '@protonprotocol/proton-link'
 import { JsonRpc } from '@protonprotocol/protonjs'
 import SupportedWallets from './supported-wallets'
 
+type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 interface ConnectWalletArgs {
-    linkOptions: any,
-    transportOptions?: {
-        requestAccount?: string,
-    } | any;
+    linkOptions: PartialBy<LinkOptions, 'transport'> & {
+        endpoints?: string | string[],
+        rpc?: JsonRpc,
+    },
+    transportOptions?: BrowserTransportOptions;
     selectorOptions?: {
         appName?: string,
         appLogo?: string,
@@ -29,8 +31,8 @@ export const ConnectWallet = async ({
 
     // Add chain ID if not present
     if (!linkOptions.chainId) {
-        const info = await linkOptions.rpc.get_info();;
-        linkOptions.chainId = info.chainId
+        const info = await linkOptions.rpc!.get_info();;
+        linkOptions.chainId = info.chain_id
     }
 
     // Default showSelector to true
