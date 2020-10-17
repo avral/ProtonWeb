@@ -8,11 +8,11 @@ interface ConnectWalletArgs {
     linkOptions: any,
     transportOptions?: {
         requestAccount?: string,
-        walletType?: string
     } | any;
     selectorOptions?: {
         appName?: string,
         appLogo?: string,
+        walletType?: string
         showSelector?: boolean
     }
 }
@@ -42,19 +42,20 @@ export const ConnectWallet = async ({
     const wallets = new SupportedWallets(selectorOptions.appName, selectorOptions.appLogo)
 
     // Determine wallet type from storage or selector modal
-    if (!transportOptions.walletType) {
+    let walletType = selectorOptions.walletType
+    if (!walletType) {
         const storedWalletType = localStorage.getItem('browser-transport-wallet-type')
         if (storedWalletType) {
-            transportOptions.walletType = storedWalletType
+            walletType = storedWalletType
         } else if (selectorOptions.showSelector) {
-            transportOptions.walletType = await wallets.displayWalletSelector()
+            walletType = await wallets.displayWalletSelector()
         } else {
             throw new Error('Wallet Type Unavailable: No walletType provided and showSelector is set to false')
         }
     }
 
     // Set scheme (proton default)
-    switch (transportOptions.walletType) {
+    switch (walletType) {
         case 'anchor':
             linkOptions.scheme = 'esr'
             break
@@ -73,10 +74,17 @@ export const ConnectWallet = async ({
     }
 
     // Create transport
-    linkOptions.transport = new ProtonLinkBrowserTransport(transportOptions)
+    const transport = new ProtonLinkBrowserTransport({
+        ...transportOptions,
+        walletType
+    })
 
     // Create link
-    const link = new ProtonLink(linkOptions)
+    const link = new ProtonLink({
+        ...linkOptions,
+        transport,
+        walletType
+    })
 
     // Return link
     return link

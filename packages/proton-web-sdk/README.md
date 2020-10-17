@@ -16,16 +16,18 @@ const appIdentifier = 'taskly'
 // Pop up modal
 const link = await ConnectWallet({
     linkOptions: {
-        endpoints: ['https://proton.greymass.com']
+        endpoints: ['https://proton.greymass.com'],
+        // rpc: rpc /* Optional: if you wish to provide rpc directly instead of endpoints */
     },
     transportOptions: {
-        requestAccount: 'myprotonacc', // Your proton account
-        // walletType: 'proton' // Optional: set if you want a specific wallet (e.g. 'proton', 'anchor'),
+        requestAccount: 'myprotonacc', /* Optional: Your proton account */
+        requestStatus: true, /* Optional: Display request success and error messages, Default true */
     },
     selectorOptions: {
-        appName: 'Taskly',
-        appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg',
-        // showSelector: false // Optional: Reconnect without modal (must provide walletType)
+        appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
+        appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
+        // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
+        // showSelector: false /* Optional: Reconnect without modal if false, Default true */
     }
 })
 
@@ -34,7 +36,7 @@ const { session } = await this.link.login(appIdentifier)
 console.log('User authorization:', session.auth) // { actor: 'fred', permission: 'active }
 
 // Save auth for reconnection on refresh
-localStorage.setItem('savedUserAuth', JSON.stringify(session.auth))
+localStorage.setItem('saved-user-auth', JSON.stringify(session.auth))
 
 // Send Transaction
 const result = await this.session.transact({
@@ -58,10 +60,12 @@ const result = await this.session.transact({
 })
 console.log('Transaction ID', result.processed.id)
 
-// Restore session after refresh (must recreate link first with showSelector as false and walletType as 'proton' or 'anchor)
-const savedUserAuth = JSON.parse(localstorage.getItem('savedUserAuth'))
+// Restore session after refresh (must recreate link first with showSelector as false)
+const savedUserAuth = JSON.parse(localstorage.getItem('saved-user-auth'))
 const session = await link.restoreSession(appIdentifier, savedUserAuth)
 
 // Logout
 await link.removeSession(appIdentifier, session.auth)
+session = undefined
+localStorage.removeItem('saved-user-auth')
 ```

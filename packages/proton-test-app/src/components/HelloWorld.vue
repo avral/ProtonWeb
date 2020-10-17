@@ -27,14 +27,14 @@ export default {
   },
 
   methods: {
-    async createLink (showSelector, walletType) {
+    async createLink (showSelector) {
       this.link = await ConnectWallet({
         linkOptions: {
           endpoints: ['https://proton.greymass.com']
         },
         transportOptions: {
           requestAccount: 'myprotonacc', // Your proton account
-          walletType
+          requestStatus: true
         },
         selectorOptions: {
           appName: 'Taskly',
@@ -54,7 +54,7 @@ export default {
       console.log('User authorization:', session.auth) // { actor: 'fred', permission: 'active }
 
       // Save auth for reconnection on refresh
-      localStorage.setItem('savedUserAuth', JSON.stringify(session.auth))
+      localStorage.setItem('saved-user-auth', JSON.stringify(session.auth))
     },
 
     async transfer () {
@@ -84,15 +84,17 @@ export default {
     async logout () {
       await this.link.removeSession(appIdentifier, this.session.auth)
       this.session = undefined
+      localStorage.removeItem('saved-user-auth')
     },
 
     async reconnect () {
       // Restore session after refresh
-      const saved = localStorage.getItem('savedUserAuth')
+      const saved = localStorage.getItem('saved-user-auth')
+
       if (saved) {
         // Create link if not exists
         if (!this.link) {
-          await this.createLink(false, 'proton')
+          await this.createLink(false)
         }
 
         const savedUserAuth = JSON.parse(saved)
