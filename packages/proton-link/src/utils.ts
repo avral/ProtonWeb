@@ -1,12 +1,8 @@
-import {Numeric, Serialize} from 'eosjs'
+import {Numeric, Serialize} from '@protonprotocol/protonjs'
 import * as ecc from 'eosjs-ecc'
-import makeFetch from 'fetch-ponyfill'
 
 import {Bytes, SealedMessage} from './link-abi'
 import linkAbi from './link-abi-data'
-
-/** @internal */
-export const fetch = makeFetch().fetch
 
 /** @internal */
 const types = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), linkAbi)

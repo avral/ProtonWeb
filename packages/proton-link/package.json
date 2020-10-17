@@ -1,65 +1,64 @@
 {
   "name": "@protonprotocol/proton-link",
-  "version": "2.4.12",
-  "description": "Library for authenticating and signing transactions using the Anchor Link protocol",
-  "license": "MIT",
-  "main": "lib/index.es5.js",
-  "module": "lib/index.js",
-  "unpkg": "lib/bundle.js",
-  "types": "lib/index.d.ts",
+  "author": "jafri",
+  "module": "dist/index.js",
+  "unpkg": "dist/bundle.js",
+  "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "scripts": {
-    "prepare": "make"
-  },
-  "directories": {
-    "lib": "lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ProtonProtocol/ProtonWeb.git"
-  },
-  "keywords": [
-    "Proton"
-  ],
-  "author": "Proton, Greymass",
-  "bugs": {
-    "url": "https://github.com/ProtonProtocol/ProtonWeb/issues"
-  },
-  "homepage": "https://github.com/ProtonProtocol/ProtonWeb#readme",
+  "version": "2.5.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
-    "lib/*",
-    "src/*"
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "watch": "tsdx watch  --verbose --noClean",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/proton-link.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/proton-link.esm.js",
+      "limit": "10 KB"
+    }
   ],
   "dependencies": {
-    "@protonprotocol/proton-signing-request": "^2.4.6",
-    "eosjs": "^20.0.0",
+    "@protonprotocol/proton-signing-request": "^2.4.7",
+    "@protonprotocol/protonjs": "^21.0.21",
     "eosjs-ecc": "^4.0.7",
-    "fetch-ponyfill": "^6.1.0",
     "isomorphic-ws": "^4.0.1",
-    "pako": "^1.0.10",
-    "uuid": "^8.1.0",
-    "ws": "^7.2.5"
+    "pako": "^1.0.11",
+    "uuid": "^8.3.1",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
-    "@types/node": "^14.0.5",
     "@types/pako": "^1.0.1",
-    "@types/uuid": "^8.0.0",
-    "@types/ws": "^7.2.4",
-    "browserify": "^16.5.1",
-    "eosio-abi2ts": "^1.2.2",
-    "exorcist": "^1.0.1",
-    "gh-pages": "^2.2.0",
-    "prettier": "^2.0.5",
-    "ts-node": "^8.10.2",
-    "tsify": "^4.0.1",
-    "tslint": "^6.1.2",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.3.0",
-    "typedoc": "^0.17.7",
-    "typescript": "^3.9.3"
-  },
-  "gitHead": "294f4ec66b874a78400d5b543a739edfe9396465",
-  "publishConfig": {
-    "access": "public"
+    "@types/uuid": "^8.3.0",
+    "@types/ws": "^7.2.7"
   }
 }

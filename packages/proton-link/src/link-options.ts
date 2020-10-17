@@ -1,5 +1,5 @@
 import {ChainName} from '@protonprotocol/proton-signing-request'
-import {JsonRpc} from 'eosjs'
+import {JsonRpc} from '@protonprotocol/protonjs'
 import {LinkStorage} from './link-storage'
 import {LinkTransport} from './link-transport'
 
@@ -32,14 +32,6 @@ export interface LinkOptions {
      * Explicitly set this to `null` to force no storage.
      */
     storage?: LinkStorage | null
-    /**
-     * Text encoder, only needed in old browsers or if used in node.js versions prior to v13.
-     */
-    textEncoder?: TextEncoder
-    /**
-     * Text decoder, only needed in old browsers or if used in node.js versions prior to v13.
-     */
-    textDecoder?: TextDecoder
     /**
      * Scheme for transport
      */

@@ -83,10 +83,6 @@ Many of the `SigningRequest` method calls below will reference an `opts` paramet
 
 ```js
 const opts = {
-    // string encoder
-    textEncoder,
-    // string decoder
-    textDecoder,
     // zlib string compression (optional, recommended)
     zlib: {
         deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
@@ -203,8 +199,6 @@ SigningRequest {
     callback: '',
     info: []
   },
-  textEncoder: TextEncoder { encoding: 'utf-8' },
-  textDecoder: TextDecoder { encoding: 'utf-8', fatal: false, ignoreBOM: false },
   zlib: {
     deflateRaw: [Function: deflateRaw],
     inflateRaw: [Function: inflateRaw]
@@ -280,8 +274,6 @@ ResolvedSigningRequest {
       callback: '',
       info: []
     },
-    textEncoder: TextEncoder { encoding: 'utf-8' },
-    textDecoder: TextDecoder { encoding: 'utf-8', fatal: false, ignoreBOM: false },
     zlib: {
       deflateRaw: [Function: deflateRaw],
       inflateRaw: [Function: inflateRaw]
