@@ -648,7 +648,6 @@ export class Link implements esr.AbiProvider {
     /** Makes sure session is in storage list of sessions and moves it to top (most recently used). */
     private async storeSession(identifier: string, session: LinkSession) {
         let key = this.sessionKey(identifier, formatAuth(session.auth))
-        console.log('store key', key)
         let data = JSON.stringify(session.serialize())
         await this.storage!.write(key, data)
         await this.touchSession(identifier, session.auth)
@@ -656,7 +655,6 @@ export class Link implements esr.AbiProvider {
 
     /** Session storage key for identifier and suffix. */
     private sessionKey(identifier: string, suffix: string) {
-        console.log([this.chainId, identifier, suffix].join('-'))
         return [this.chainId, identifier, suffix].join('-')
     }
 }
