@@ -8,17 +8,19 @@ interface ConnectWalletArgs {
     linkOptions: any,
     transportOptions?: {
         requestAccount?: string,
-        appName?: string,
-        appLogo?: string,
         walletType?: string
     } | any;
-    showSelector?: boolean
+    selectorOptions?: {
+        appName?: string,
+        appLogo?: string,
+        showSelector?: boolean
+    }
 }
 
 export const ConnectWallet = async ({
     linkOptions = {},
     transportOptions = {},
-    showSelector = true
+    selectorOptions = {}
 }: ConnectWalletArgs) => {
     // Add RPC if not provided
     if (!linkOptions.rpc && linkOptions.endpoints) {
@@ -31,15 +33,20 @@ export const ConnectWallet = async ({
         linkOptions.chainId = info.chainId
     }
 
+    // Default showSelector to true
+    if (!selectorOptions.showSelector) {
+        selectorOptions.showSelector = true
+    }
+
     // Create Modal Class
-    const wallets = new SupportedWallets(transportOptions.appName, transportOptions.appLogo)
+    const wallets = new SupportedWallets(selectorOptions.appName, selectorOptions.appLogo)
 
     // Determine wallet type from storage or selector modal
     if (!transportOptions.walletType) {
         const storedWalletType = localStorage.getItem('browser-transport-wallet-type')
         if (storedWalletType) {
             transportOptions.walletType = storedWalletType
-        } else if (showSelector) {
+        } else if (selectorOptions.showSelector) {
             transportOptions.walletType = await wallets.displayWalletSelector()
         } else {
             throw new Error('Wallet Type Unavailable: No walletType provided and showSelector is set to false')

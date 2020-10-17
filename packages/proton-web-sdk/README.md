@@ -20,11 +20,13 @@ const link = await ConnectWallet({
     },
     transportOptions: {
         requestAccount: 'myprotonacc', // Your proton account
+        // walletType: 'proton' // Optional: set if you want a specific wallet (e.g. 'proton', 'anchor'),
+    },
+    selectorOptions: {
         appName: 'Taskly',
         appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg',
-        // walletType: 'proton' // Optional: set if you want a specific wallet (e.g. 'proton', 'anchor')
-    },
-    // showSelector: false // Optional: Reconnect without modal (must provide walletType)
+        // showSelector: false // Optional: Reconnect without modal (must provide walletType)
+    }
 })
 
 // Login

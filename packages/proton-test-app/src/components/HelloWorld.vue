@@ -33,12 +33,14 @@ export default {
           endpoints: ['https://proton.greymass.com']
         },
         transportOptions: {
-          requestAccount: 'myprotonacc',
-          appName: 'Taskly',
-          appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg',
+          requestAccount: 'myprotonacc', // Your proton account
           walletType
         },
-        showSelector
+        selectorOptions: {
+          appName: 'Taskly',
+          appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg',
+          showSelector
+        }
       })
     },
 
