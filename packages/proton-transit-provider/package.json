@@ -1,43 +1,48 @@
 {
-	"name": "@protonprotocol/proton-transit-provider",
-	"version": "2.4.10",
-	"description": "Transit provider for Proton Wallet",
-	"license": "MIT",
-	"main": "lib/index.js",
-	"module": "lib/index.js",
-	"types": "lib",
-	"scripts": {
-		"echo": "echo \"================== transit-proton-provider ===================\"",
-		"installpkg": "yarn echo && npm install",
-		"clean": "rm -rf lib && rm -rf umd",
-		"prebuild": "yarn clean",
-		"build": "../../node_modules/typescript/bin/tsc",
-		"build-production": "yarn build && TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack",
-		"watch": "../../node_modules/typescript/bin/tsc -w",
-		"test": "",
-		"lint": "../../node_modules/.bin/tslint -c ../../tslint.json -p ./tsconfig.json"
-	},
-	"dependencies": {
-		"@protonprotocol/proton-web-sdk": "^2.4.20"
-	},
-	"devDependencies": {
-		"@protonprotocol/proton-browser-transport": "^2.4.20",
-		"@protonprotocol/proton-link": "^2.4.12",
-		"eos-transit": "^4.0.7",
-		"eosjs": "^20.0.0",
-		"prettier": "^1.19.1",
-		"webpack": "^4.25.1",
-		"webpack-cli": "^3.1.2"
-	},
-	"prettier": {
-		"singleQuote": true,
-		"printWidth": 80,
-		"tabWidth": 2,
-		"useTabs": false,
-		"bracketSpacing": true
-	},
-	"gitHead": "c813d287af9b6483dc7aa71d7fd6a6330fedd72d",
-	"publishConfig": {
-		"access": "public"
-	}
+  "name": "@protonprotocol/proton-transit-provider",
+  "author": "jafri",
+  "module": "dist/index.js",
+  "unpkg": "dist/bundle.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "version": "2.5.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "watch": "tsdx watch  --verbose --noClean",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "dependencies": {
+    "@protonprotocol/proton-web-sdk": "^2.5.0",
+    "@protonprotocol/protonjs": "^21.0.21"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "devDependencies": {
+    "@protonprotocol/proton-browser-transport": "^2.4.21",
+    "eos-transit": "^4.0.7"
+  }
 }

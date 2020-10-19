@@ -40,8 +40,8 @@ import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
 Include the scripts in your `<head>` tag.
 
 ```html
-<script src="https://unpkg.com/anchor-link"></script>
-<script src="https://unpkg.com/anchor-link-browser-transport"></script>
+<script src="https://unpkg.com/@protonprotocol/proton-link"></script>
+<script src="https://unpkg.com/@protonprotocol/anchor-link-browser-transport"></script>
 ```
 
 `AnchorLink` and `AnchorLinkBrowserTransport` are now available in the global scope of your document.

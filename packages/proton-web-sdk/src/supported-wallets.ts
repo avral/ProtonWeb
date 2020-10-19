@@ -1,12 +1,12 @@
 import styleText from './styles'
 
 export default class SupportedWallets {
-    constructor(public readonly name: string, logo: string) {
+    constructor(public readonly name?: string, logo?: string) {
         this.appLogo = logo
         this.appName = name || 'app'
     }
 
-    private appLogo: string
+    private appLogo: string | undefined
     private appName: string
 
     /** Container and stylesheet for Wallet Selector */
@@ -94,9 +94,8 @@ export default class SupportedWallets {
     /**
      * Only Proton and Anchor are available
      */
-
-    public displayWalletSelector() {
-        return new Promise((resolve, reject) => {
+    public displayWalletSelector(): Promise<string> {
+        return new Promise((resolve) => {
             this.setUpSelectorContainer()
             const header = this.createEl({class: 'connect-header'})
             const body = this.createEl({class: 'connect-body'})
