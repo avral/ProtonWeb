@@ -1,6 +1,6 @@
-# Anchor Link [![Package Version](https://img.shields.io/npm/v/anchor-link.svg?style=flat-square)](https://www.npmjs.com/package/anchor-link) ![License](https://img.shields.io/npm/l/anchor-link.svg?style=flat-square)
+# Proton Link [!![Package Version](https://img.shields.io/npm/v/@protonprotocol/https://www.npmjs.com/package/@protonprotocol/proton-link.svg?style=flat-square](https://www.npmjs.com/package/@protonprotocol/proton-link) ![License](https://img.shields.io/npm/l/@protonprotocol/proton-link.svg?style=flat-square)
 
-Persistent, fast and secure signature provider for EOSIO chains built on top of [EOSIO Signing Requests (EEP-7)](https://github.com/ProtonProtocol/proton-signing-request)
+Persistent, fast and secure signature provider for Proton chain built on top of [EOSIO Signing Requests (EEP-7)](https://github.com/greymass/eosio-signing-request). This was forked from the [Anchor Link](https://github.com/greymass/anchor-link) module, much of the documentation from Anchor Link still applies.
 
 Key features:
   - Persistent sessions
@@ -12,55 +12,43 @@ Resources:
   - [API Documentation](https://greymass.github.io/anchor-link)
   - [Protocol specification](./protocol.md)
   - [Usage examples](./examples)
-  - [Developer chat](https://t.me/anchor_link)
 
 ## Installation
 
-The `anchor-link` package is distributed both as a module on [npm](https://www.npmjs.com/package/anchor-link) and a standalone bundle on [unpkg](http://unpkg.com/anchor-link).
+The `proton-link` package is distributed as a module on [npm](https://www.npmjs.com/package/@protonprotocol/proton-link)
 
 ### Browser using a bundler (recommended)
 
-Install Anchor Link and a [transport](#transports):
+Install Proton Link and a [transport](#transports):
 
 ```
-yarn add anchor-link anchor-link-browser-transport
+yarn add proton-link proton-browser-transport
 # or
-npm install --save anchor-link anchor-link-browser-transport
+npm install --save proton-link proton-browser-transport
 ```
 
 Import them into your project:
 
 ```js
-import AnchorLink from 'anchor-link'
-import AnchorLinkBrowserTransport from 'anchor-link-browser-transport'
+import ProtonLink from 'proton-link'
+import ProtonLinkBrowserTransport from 'proton-browser-transport'
 ```
-
-### Browser using a pre-built bundle
-
-Include the scripts in your `<head>` tag.
-
-```html
-<script src="https://unpkg.com/@protonprotocol/proton-link"></script>
-<script src="https://unpkg.com/@protonprotocol/anchor-link-browser-transport"></script>
-```
-
-`AnchorLink` and `AnchorLinkBrowserTransport` are now available in the global scope of your document.
 
 ### Using node.js
 
 Using node.js
 
 ```
-yarn add anchor-link anchor-link-console-transport
+yarn add @protonprotocol/proton-link @protonprotocol/proton-browser-transport
 # or
-npm install --save anchor-link anchor-link-console-transport
+npm install --save @protonprotocol/proton-link @protonprotocol/proton-browser-transport
 ```
 
 Import them into your project:
 
 ```js
-const AnchorLink = require('anchor-link')
-const AnchorLinkConsoleTransport = require('anchor-link-console-transport')
+const ProtonLink = require('proton-link')
+const ProtonLinkBrowserTransport = require('proton-browser-transport')
 ```
 
 ## Basic usage
@@ -68,24 +56,27 @@ const AnchorLinkConsoleTransport = require('anchor-link-console-transport')
 First you need to instantiate your transport and the link.
 
 ```ts
-const transport = new AnchorLinkBrowserTransport()
-const link = new AnchorLink({transport})
+const transport = new ProtonLinkBrowserTransport()
+const link = new ProtonLink({transport})
 ```
 
-Now you're ready to create signing requests for EOS main-net (see [options](https://greymass.github.io/anchor-link/interfaces/linkoptions.html) for how to use it on other networks).
+For more customization, please see [Proton Browser Transport](https://github.com/ProtonProtocol/ProtonWeb/tree/develop/packages/proton-browser-transport)
+
+Now you're ready to create signing requests for Proton main-net.
 
 ```ts
 const action = {
-    account: 'eosio',
-    name: 'voteproducer',
+    account: 'xtokens',
+    name: 'transfer',
     authorization: [{
         actor: '............1', // ............1 will be resolved to the signing accounts permission
         permission: '............2' // ............2 will be resolved to the signing accounts authority
     }],
     data: {
-        voter: '............1', // same here
-        proxy: 'greymassvote',
-        producers: [],
+        from: '............1',
+        to: targetAccount,
+        quantity: '0.01000000 XUSDT',
+        memo: 'Taskly'
     }
 }
 link.transact({action}).then((result) => {
@@ -115,14 +106,13 @@ Available transports:
 
  Package | Description
 ---------| ---------------
- [anchor-link-browser-transport](https://github.com/greymass/anchor-link-browser-transport) | Browser overlay that generates QR codes or triggers local URI handler if available
- [anchor-link-console-transport](https://github.com/greymass/anchor-link-console-transport) | Transport that prints ASCII QR codes and esr:// links to the JavaScript console
+ [proton-browser-transport](https://www.npmjs.com/package/@protonprotocol/proton-browser-transport) | Browser overlay that generates QR codes or triggers local URI handler if available
 
 See the [`LinkTransport` documentation](https://greymass.github.io/anchor-link/interfaces/linktransport.html) for details on how to implement custom transports.
 
 ## Protocol
 
-The Anchor Link protocol uses EEP-7 identity requests to establish a channel to compatible wallets using an untrusted HTTP POST to WebSocket forwarder (see [buoy node.js](https://github.com/greymass/buoy-nodejs) and [buoy golang](https://github.com/greymass/buoy-golang)).
+The Proton Link protocol uses EEP-7 identity requests to establish a channel to compatible wallets using an untrusted HTTP POST to WebSocket forwarder (see [buoy node.js](https://github.com/greymass/buoy-nodejs) and [buoy golang](https://github.com/greymass/buoy-golang)).
 
 A session key and unique channel URL is generated by the client which is attached to the identity request and sent to the wallet (see [transports](#transports)). The wallet signs the identity proof and sends it back along with its own channel URL and session key. Subsequent signature requests can now be encrypted to a shared secret derived from the two keys and pushed directly to the wallet channel.
 
@@ -134,10 +124,16 @@ You need [Make](https://www.gnu.org/software/make/), [node.js](https://nodejs.or
 
 Clone the repository and run `make` to checkout all dependencies and build the project. See the [Makefile](./Makefile) for other useful targets. Before submitting a pull request make sure to run `make lint`.
 
+## Implementation Details
+
+Proton Web SDK is a cross-device authentication and signing protocol built on top of ESR (EOSIO Signing Requests / EEP-7).
+
+More information in the [Proton Web SDK](https://github.com/ProtonProtocol/ProtonWeb)
+
 ## License
 
 [MIT](./LICENSE.md)
 
 ---
 
-Made with ☕️&❤️ by [team Greymass](https://greymass.com), if you find this useful please consider [supporting us](https://greymass.com/support-us).
+Made with ☕️&❤️ by [team Greymass](https://greymass.com) and [Proton](https://protonchain.com).
