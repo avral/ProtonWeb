@@ -5,7 +5,11 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
+<<<<<<< HEAD
   "version": "2.5.2",
+=======
+  "version": "2.5.1",
+>>>>>>> Add hot-reloading of packages, walletType, proton testnet, full example and remove anchor-link (#15)
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,6 +33,10 @@
     "@protonprotocol/protonjs": "^21.0.21",
     "qrcode": "^1.4.4"
   },
+<<<<<<< HEAD
+=======
+  "peerDependencies": {},
+>>>>>>> Add hot-reloading of packages, walletType, proton testnet, full example and remove anchor-link (#15)
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
