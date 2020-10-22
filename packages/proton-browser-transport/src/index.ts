@@ -1,7 +1,7 @@
 import {LinkSession, LinkStorage, LinkTransport} from '@protonprotocol/proton-link'
 import {SigningRequest} from '@protonprotocol/proton-signing-request'
 import * as qrcode from 'qrcode'
-import styles from './styles'
+import styleSelector from './styles'
 
 export interface BrowserTransportOptions {
     /** CSS class prefix, defaults to `@protonprotocol/proton-link` */
@@ -72,7 +72,7 @@ export default class BrowserTransport implements LinkTransport {
         if (this.injectStyles && !this.styleEl) {
             this.styleEl = document.createElement('style')
             this.styleEl.type = 'text/css'
-            const css = styles[this.walletType].replace(/%prefix%/g, this.classPrefix)
+            const css = styleSelector(this.walletType).replace(/%prefix%/g, this.classPrefix)
             this.styleEl.appendChild(document.createTextNode(css))
             document.head.appendChild(this.styleEl)
         }
@@ -186,7 +186,7 @@ export default class BrowserTransport implements LinkTransport {
         const linkA = this.createEl({
             tag: 'a',
             href: crossDeviceUri,
-            text: 'Open Proton Wallet',
+            text: `Open ${this.walletType.replace(/\b[a-z]/g, (letter) => letter.toUpperCase())} Wallet`,
         })
         linkA.addEventListener('click', (event) => {
             event.preventDefault()
@@ -219,11 +219,11 @@ export default class BrowserTransport implements LinkTransport {
         let footnoteEl: HTMLElement = this.createEl({class: 'footnote'})
         const isIdentity = request.isIdentity()
         if (isIdentity) {
-            footnoteEl = this.createEl({class: 'footnote', text: "Don't have Proton Wallet? "})
+            footnoteEl = this.createEl({class: 'footnote', text: `Don't have ${this.walletType.replace(/\b[a-z]/g, (letter) => letter.toUpperCase())} Wallet? `})
             const footnoteLink = this.createEl({
                 tag: 'a',
                 target: '_blank',
-                href: 'https://protonchain.com',
+                href: this.walletType == 'proton' ? 'https://protonchain.com' : 'https://greymass.com/en/anchor/',
                 text: 'Download it here',
             })
             footnoteEl.appendChild(footnoteLink)
