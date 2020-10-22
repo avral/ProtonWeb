@@ -223,7 +223,7 @@ export default class BrowserTransport implements LinkTransport {
             const footnoteLink = this.createEl({
                 tag: 'a',
                 target: '_blank',
-                href: this.walletType == 'proton' ? 'https://protonchain.com' : 'https://greymass.com/en/anchor/',
+                href: footnoteLinks[this.walletType],
                 text: 'Download it here',
             })
             footnoteEl.appendChild(footnoteLink)
@@ -412,4 +412,13 @@ function returnUrl() {
 
 function isAppleHandheld() {
     return /iP(ad|od|hone)/i.test(navigator.userAgent)
+}
+
+interface footNoteDownloadLinks {
+    [key: string]: string
+}
+
+const footnoteLinks : footNoteDownloadLinks = {
+    proton: 'https://protonchain.com',
+    anchor: 'https://greymass.com/en/anchor/'
 }
