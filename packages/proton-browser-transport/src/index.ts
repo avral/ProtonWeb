@@ -22,6 +22,12 @@ interface footNoteDownloadLinks {
     [key: string]: string
 }
 
+const footnoteLinks : footNoteDownloadLinks = {
+    proton: 'https://protonchain.com',
+    anchor: 'https://greymass.com/en/anchor/'
+}
+
+
 class Storage implements LinkStorage {
     constructor(readonly keyPrefix: string) {}
     async write(key: string, data: string): Promise<void> {
@@ -416,9 +422,4 @@ function returnUrl() {
 
 function isAppleHandheld() {
     return /iP(ad|od|hone)/i.test(navigator.userAgent)
-}
-
-const footnoteLinks : footNoteDownloadLinks = {
-    proton: 'https://protonchain.com',
-    anchor: 'https://greymass.com/en/anchor/'
 }
