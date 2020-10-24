@@ -1,7 +1,4 @@
-# eosio-signing-request (ESR - Revision 2)
-![version](https://badgen.net/npm/v/eosio-signing-request?style=for-the-badge)
-![license](https://badgen.net/npm/license/eosio-signing-request?style=for-the-badge)
-![downloads](https://badgen.net/npm/dw/eosio-signing-request?style=for-the-badge)
+# proton-signing-request [!![Package Version](https://img.shields.io/npm/v/@protonprotocol/https://www.npmjs.com/package/@protonprotocol/proton-signing-request.svg?style=flat-square](https://www.npmjs.com/package/@protonprotocol/proton-signing-request) ![License](https://img.shields.io/npm/l/@protonprotocol/proton-signing-request.svg?style=flat-square)
 
 A library to assist with the EOSIO Signing Request (ESR) protocol.
 The full specification for ESR is available here:
@@ -10,32 +7,34 @@ https://github.com/eosio-eps/EEPs/blob/master/EEPS/eep-7.md
 
 The ESR protocol allows for an application (dapp) to generate signature requests (transactions) which can then be passed to signers (wallets) for signature creation. These signature requests can be used within URI links, QR Codes, or other transports between applications and signers.
 
+This package was forked from the [eosio-signing-request](https://github.com/greymass/eosio-signing-request) with some modifications for Proton.
+
 ---
 
 ## Installation
 
-To add eosio-signing-request to your project, install via the package manager of your choice:
+To add proton-signing-request to your project, install via the package manager of your choice:
 
 #### NPM
 
-```npm install eosio-signing-request```
+```npm install proton-signing-request```
 
 #### Yarn
 
-```yarn add eosio-signing-request```
+```yarn add proton-signing-request```
 
 ---
 
 ## Signing Request Flow
 
-In an environment where an ***application/dapp*** is requesting that an end user perform a transaction within their preferred ***signer/wallet***, each of these applications will utilize the `eosio-signing-request` library to fulfill different roles.
+In an environment where an ***application/dapp*** is requesting that an end user perform a transaction within their preferred ***signer/wallet***, each of these applications will utilize the `proton-signing-request` library to fulfill different roles.
 
 - The ***application/dapp*** will be creating and encoding the signing request.
 - The ***signer/wallet*** will be decoding and resolving the signing request.
 
 The specification itself then allows either the ***signer/wallet*** itself to broadcast the finalized transaction, or the transaction/signature themselves can be passed back to the ***application/dapp*** to broadcast.
 
-The `eosio-signing-request` library is not responsible for transporting this information between the ***application/dapp***
+The `proton-signing-request` library is not responsible for transporting this information between the ***application/dapp***
 and ***signer/wallet***, and so this topic will not be covered in this README.
 
 ---
@@ -83,10 +82,6 @@ Many of the `SigningRequest` method calls below will reference an `opts` paramet
 
 ```js
 const opts = {
-    // string encoder
-    textEncoder,
-    // string decoder
-    textDecoder,
     // zlib string compression (optional, recommended)
     zlib: {
         deflateRaw: (data) => new Uint8Array(zlib.deflateRawSync(Buffer.from(data))),
@@ -203,8 +198,6 @@ SigningRequest {
     callback: '',
     info: []
   },
-  textEncoder: TextEncoder { encoding: 'utf-8' },
-  textDecoder: TextDecoder { encoding: 'utf-8', fatal: false, ignoreBOM: false },
   zlib: {
     deflateRaw: [Function: deflateRaw],
     inflateRaw: [Function: inflateRaw]
@@ -280,8 +273,6 @@ ResolvedSigningRequest {
       callback: '',
       info: []
     },
-    textEncoder: TextEncoder { encoding: 'utf-8' },
-    textDecoder: TextDecoder { encoding: 'utf-8', fatal: false, ignoreBOM: false },
     zlib: {
       deflateRaw: [Function: deflateRaw],
       inflateRaw: [Function: inflateRaw]
@@ -325,8 +316,15 @@ The `transaction` or `serializedTransaction` can now be used within any signatur
 
 This README will be updated further to provide more usage as time progresses. The library itself already supports sessions, identities, callbacks, signature generation, and more. It will just take time to properly document every use case.
 
+## Implementation Details
+
+Proton Web SDK is a cross-device authentication and signing protocol built on top of ESR (EOSIO Signing Requests / EEP-7).
+
+More information in the [Proton Web SDK](https://github.com/ProtonProtocol/ProtonWeb)
+
+
 ### Developer Chat
 
-We have a telegram channel dedicated to the development of this protocol which you can find here:
+EOSIO has a telegram channel dedicated to the development of this protocol which you can find here:
 
 https://t.me/eosio_signing_request

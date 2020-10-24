@@ -4,6 +4,10 @@
   "devDependencies": {
     "lerna": "^3.19.0"
   },
+  "scripts": {
+    "watch": "lerna run watch --parallel --stream",
+    "start": "lerna run start --stream"
+  },
   "workspaces": [
     "packages/*"
   ]

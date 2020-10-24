@@ -1,11 +1,11 @@
 import {SigningRequest} from '@protonprotocol/proton-signing-request'
-import {ApiInterfaces} from 'eosjs'
+import {ApiInterfaces} from '@protonprotocol/protonjs'
 
 import {SessionError} from './errors'
 import {Link, PermissionLevel, TransactArgs, TransactOptions, TransactResult} from './link'
 import {LinkInfo} from './link-abi'
 import {LinkTransport} from './link-transport'
-import {abiEncode, fetch, sealMessage} from './utils'
+import {abiEncode, sealMessage} from './utils'
 
 /**
  * Type describing a link session that can create a eosjs compatible
@@ -107,7 +107,7 @@ export class LinkChannelSession extends LinkSession implements LinkTransport {
     readonly auth: PermissionLevel
     readonly identifier: string
     readonly type = 'channel'
-    readonly metadata
+    readonly metadata: any
     readonly publicKey: string
     serialize: () => SerializedLinkSession
     private channel: ChannelInfo
@@ -136,19 +136,19 @@ export class LinkChannelSession extends LinkSession implements LinkTransport {
         })
     }
 
-    onSuccess(request, result) {
+    onSuccess(request: any, result: any) {
         if (this.link.transport.onSuccess) {
             this.link.transport.onSuccess(request, result)
         }
     }
 
-    onFailure(request, error) {
+    onFailure(request: any, error: any) {
         if (this.link.transport.onFailure) {
             this.link.transport.onFailure(request, error)
         }
     }
 
-    onRequest(request, cancel) {
+    onRequest(request: any, cancel: any) {
         const info: LinkInfo = {
             expiration: new Date(Date.now() + this.timeout).toISOString().slice(0, -1),
         }
@@ -169,14 +169,14 @@ export class LinkChannelSession extends LinkSession implements LinkTransport {
             },
             body: this.encrypt(request),
         })
-            .then((response) => {
+            .then((response: any) => {
                 if (response.status !== 200) {
                     cancel(new SessionError('Unable to push message', 'E_DELIVERY'))
                 } else {
                     // request delivered
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 cancel(
                     new SessionError(
                         `Unable to reach link service (${error.message || String(error)})`,
@@ -186,7 +186,7 @@ export class LinkChannelSession extends LinkSession implements LinkTransport {
             })
     }
 
-    prepare(request) {
+    prepare(request: any) {
         if (this.link.transport.prepare) {
             return this.link.transport.prepare(request, this)
         }
@@ -252,19 +252,19 @@ export class LinkFallbackSession extends LinkSession implements LinkTransport {
         })
     }
 
-    onSuccess(request, result) {
+    onSuccess(request: any, result: any) {
         if (this.link.transport.onSuccess) {
             this.link.transport.onSuccess(request, result)
         }
     }
 
-    onFailure(request, error) {
+    onFailure(request: any, error: any) {
         if (this.link.transport.onFailure) {
             this.link.transport.onFailure(request, error)
         }
     }
 
-    onRequest(request, cancel) {
+    onRequest(request: any, cancel: any) {
         if (this.link.transport.onSessionRequest) {
             this.link.transport.onSessionRequest(this, request, cancel)
         } else {
@@ -272,7 +272,7 @@ export class LinkFallbackSession extends LinkSession implements LinkTransport {
         }
     }
 
-    prepare(request) {
+    prepare(request: any) {
         if (this.link.transport.prepare) {
             return this.link.transport.prepare(request, this)
         }

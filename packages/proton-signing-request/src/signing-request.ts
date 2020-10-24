@@ -2,7 +2,7 @@
  * EOSIO Signing Request (ESR).
  */
 
-import {Serialize} from 'eosjs'
+import {Serialize, TextEncoder, TextDecoder} from '@protonprotocol/protonjs'
 import sha256 from 'fast-sha256'
 
 import * as abi from './abi'
@@ -10,6 +10,8 @@ import * as base64u from './base64u'
 
 const ProtocolVersion = 2
 
+const textEncoder = new TextEncoder()
+const textDecoder = new TextDecoder()
 const AbiTypes = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), abi.data as any)
 
 /** Interface that should be implemented by abi providers. */
@@ -224,10 +226,6 @@ export interface SigningRequestCreateIdentityArguments {
 }
 
 export interface SigningRequestEncodingOptions {
-    /** UTF-8 text encoder, required when using node.js. */
-    textEncoder?: any
-    /** UTF-8 text decoder, required when using node.js. */
-    textDecoder?: any
     /** Optional zlib, if provided the request will be compressed when encoding. */
     zlib?: ZlibProvider
     /** Abi provider, required if the arguments contain un-encoded actions. */
@@ -251,12 +249,10 @@ export class SigningRequest {
         args: SigningRequestCreateArguments,
         options: SigningRequestEncodingOptions = {}
     ) {
-        const textEncoder = options.textEncoder || new TextEncoder()
-        const textDecoder = options.textDecoder || new TextDecoder()
         const data: any = {}
 
         const serialize = (action: abi.Action) => {
-            return serializeAction(action, textEncoder, textDecoder, options.abiProvider)
+            return serializeAction(action, options.abiProvider)
         }
 
         // set the request data
@@ -344,8 +340,6 @@ export class SigningRequest {
         const req = new SigningRequest(
             ProtocolVersion,
             data,
-            textEncoder,
-            textDecoder,
             options.zlib,
             options.abiProvider,
             undefined,
@@ -405,10 +399,7 @@ export class SigningRequest {
         if (typeof serializedTransaction === 'string') {
             serializedTransaction = Serialize.hexToUint8Array(serializedTransaction)
         }
-        let buf = new Serialize.SerialBuffer({
-            textDecoder: options.textDecoder,
-            textEncoder: options.textEncoder,
-        })
+        let buf = new Serialize.SerialBuffer()
         buf.push(2) // header
         const id = variantId(chainId as any)
         if (id[0] === 'chain_alias') {
@@ -452,11 +443,7 @@ export class SigningRequest {
             }
             array = options.zlib.inflateRaw(array)
         }
-        const textEncoder = options.textEncoder || new TextEncoder()
-        const textDecoder = options.textDecoder || new TextDecoder()
         const buffer = new Serialize.SerialBuffer({
-            textEncoder,
-            textDecoder,
             array,
         })
         const req = SigningRequest.type.deserialize(buffer)
@@ -468,8 +455,6 @@ export class SigningRequest {
         return new SigningRequest(
             version,
             req,
-            textEncoder,
-            textDecoder,
             options.zlib,
             options.abiProvider,
             signature,
@@ -486,8 +471,6 @@ export class SigningRequest {
     /** The request signature. */
     public signature?: abi.RequestSignature
 
-    private textEncoder: TextEncoder
-    private textDecoder: TextDecoder
     private zlib?: ZlibProvider
     private abiProvider?: AbiProvider
 
@@ -498,8 +481,6 @@ export class SigningRequest {
     constructor(
         version: number,
         data: abi.SigningRequest,
-        textEncoder: TextEncoder,
-        textDecoder: TextDecoder,
         zlib?: ZlibProvider,
         abiProvider?: AbiProvider,
         signature?: abi.RequestSignature,
@@ -513,8 +494,6 @@ export class SigningRequest {
         }
         this.version = version
         this.data = data
-        this.textEncoder = textEncoder
-        this.textDecoder = textDecoder
         this.zlib = zlib
         this.abiProvider = abiProvider
         this.signature = signature
@@ -534,10 +513,7 @@ export class SigningRequest {
      * Get the signature digest for this request.
      */
     public getSignatureDigest() {
-        const buffer = new Serialize.SerialBuffer({
-            textEncoder: this.textEncoder,
-            textDecoder: this.textDecoder,
-        })
+        const buffer = new Serialize.SerialBuffer()
         // protocol version + utf8 "request"
         buffer.pushArray([this.version, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74])
         buffer.pushArray(this.getData())
@@ -618,10 +594,7 @@ export class SigningRequest {
 
     /** Get the request data without header or signature. */
     public getData(): Uint8Array {
-        const buffer = new Serialize.SerialBuffer({
-            textEncoder: this.textEncoder,
-            textDecoder: this.textDecoder,
-        })
+        const buffer = new Serialize.SerialBuffer()
         SigningRequest.type.serialize(buffer, this.data)
         return buffer.asUint8Array()
     }
@@ -631,10 +604,7 @@ export class SigningRequest {
         if (!this.signature) {
             return new Uint8Array(0)
         }
-        const buffer = new Serialize.SerialBuffer({
-            textEncoder: this.textEncoder,
-            textDecoder: this.textDecoder,
-        })
+        const buffer = new Serialize.SerialBuffer()
         const type = AbiTypes.get('request_signature')!
         type.serialize(buffer, this.signature)
         return buffer.asUint8Array()
@@ -706,8 +676,6 @@ export class SigningRequest {
                 rawAction.name,
                 rawAction.authorization,
                 rawAction.data as any,
-                this.textEncoder,
-                this.textDecoder
             )
             if (signer) {
                 action.authorization = action.authorization.map((auth: any) => {
@@ -768,10 +736,7 @@ export class SigningRequest {
 
     public resolve(abis: AbiMap, signer: abi.PermissionLevel, ctx: TransactionContext = {}) {
         const transaction = this.resolveTransaction(abis, signer, ctx)
-        const buf = new Serialize.SerialBuffer({
-            textDecoder: this.textDecoder,
-            textEncoder: this.textEncoder,
-        })
+        const buf = new Serialize.SerialBuffer()
         const actions = transaction.actions.map((action) => {
             let contractAbi: any
             if (isIdentity(action)) {
@@ -783,15 +748,12 @@ export class SigningRequest {
                 throw new Error(`Missing ABI definition for ${action.account}`)
             }
             const contract = getContract(contractAbi)
-            const {textDecoder, textEncoder} = this
             return Serialize.serializeAction(
                 contract,
                 action.account,
                 action.name,
                 action.authorization,
-                action.data,
-                textEncoder,
-                textDecoder
+                action.data
             )
         })
         SigningRequest.transactionType.serialize(buf, {
@@ -842,10 +804,7 @@ export class SigningRequest {
                 let data: string = '0101000000000000000200000000000000' // placeholder permission
                 let authorization: abi.PermissionLevel[] = [PlaceholderAuth]
                 if (req[1].permission) {
-                    let buf = new Serialize.SerialBuffer({
-                        textDecoder: this.textDecoder,
-                        textEncoder: this.textEncoder,
-                    })
+                    let buf = new Serialize.SerialBuffer()
                     SigningRequest.idType.serialize(buf, req[1])
                     data = Serialize.arrayToHex(buf.asUint8Array())
                     authorization = [req[1].permission]
@@ -943,7 +902,7 @@ export class SigningRequest {
         let rv: {[key: string]: string} = {}
         let raw = this.getRawInfo()
         for (const key of Object.keys(raw)) {
-            rv[key] = this.textDecoder.decode(raw[key])
+            rv[key] = textDecoder.decode(raw[key] as any)
         }
         return rv
     }
@@ -956,7 +915,7 @@ export class SigningRequest {
         let encodedValue: Uint8Array
         switch (typeof value) {
             case 'string':
-                encodedValue = this.textEncoder.encode(value)
+                encodedValue = textEncoder.encode(value)
                 break
             case 'boolean':
                 encodedValue = new Uint8Array([value ? 1 : 0])
@@ -978,7 +937,7 @@ export class SigningRequest {
         if (this.signature) {
             signature = JSON.parse(JSON.stringify(this.signature))
         }
-        const data = JSON.stringify(this.data, (key, value) => {
+        const data = JSON.stringify(this.data, (_, value) => {
             if (value instanceof Uint8Array) {
                 return Array.from(value)
             }
@@ -987,8 +946,6 @@ export class SigningRequest {
         return new SigningRequest(
             this.version,
             JSON.parse(data),
-            this.textEncoder,
-            this.textDecoder,
             this.zlib,
             this.abiProvider,
             signature,
@@ -1065,7 +1022,7 @@ export class ResolvedSigningRequest {
             sa: this.signer.actor,
             sp: this.signer.permission,
         }
-        for (const [n, sig] of signatures.slice(1).entries()) {
+        for (const [n, sig] of signatures.slice(1).entries() as any) {
             payload[`sig${n}`] = sig
         }
         if (blockNum) {
@@ -1094,8 +1051,6 @@ function getContract(contractAbi: any): Serialize.Contract {
 
 async function serializeAction(
     action: abi.Action,
-    textEncoder: TextEncoder,
-    textDecoder: TextDecoder,
     abiProvider?: AbiProvider
 ) {
     if (typeof action.data === 'string') {
@@ -1115,9 +1070,7 @@ async function serializeAction(
         action.account,
         action.name,
         action.authorization,
-        action.data,
-        textEncoder,
-        textDecoder
+        action.data
     )
 }
 
@@ -1152,7 +1105,7 @@ function hasTapos(tx: abi.Transaction) {
 /** Resolve a chain id to a chain name alias, returns UNKNOWN (0x00) if the chain id has no alias. */
 export function idToName(chainId: abi.ChainId): ChainName {
     chainId = chainId.toLowerCase()
-    for (const [n, id] of ChainIdLookup) {
+    for (const [n, id] of ChainIdLookup as any) {
         if (id === chainId) {
             n
         }
