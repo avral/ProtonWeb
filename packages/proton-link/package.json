@@ -5,7 +5,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -25,7 +25,6 @@
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -38,7 +37,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@protonprotocol/proton-signing-request": "^2.4.7",
+    "@protonprotocol/proton-signing-request": "^2.5.2",
     "@protonprotocol/protonjs": "^21.0.21",
     "eosjs-ecc": "^4.0.7",
     "isomorphic-ws": "^4.0.1",

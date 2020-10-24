@@ -5,7 +5,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,7 +29,6 @@
     "@protonprotocol/protonjs": "^21.0.21",
     "fast-sha256": "^1.1.1"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
