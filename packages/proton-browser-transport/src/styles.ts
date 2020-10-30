@@ -26,7 +26,7 @@ return (`
 }
 
 .%prefix% {
-    font-family: CircularStd, -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    font-family: 'Circular Std Book', -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
         Arial, sans-serif;
     font-size: 13px;
     background: rgba(0, 0, 0, 0.65);
@@ -49,6 +49,7 @@ return (`
     background: ${styles[walletType].backgroundColor};
     color: white;
     margin: 20px;
+    position: relative;
     border-radius: 20px;
     position: relative;
     box-shadow: 0px 4px 100px rgba(0, 0, 0, .5);
@@ -69,8 +70,25 @@ return (`
     background-color: rgba(0,0,0,0.2);
 }
 
+.%prefix%-back {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cpath d='M0 0L24 0 24 24 0 24z' transform='translate(-348 -152) translate(332 136) translate(16 16)'/%3E%3Cpath fill='rgba(255,255,255, 0.8)' fill-rule='nonzero' d='M16.41 5.791L14.619 4 7 11.619 14.619 19.239 16.41 17.448 10.594 11.619z' transform='translate(-348 -152) translate(332 136) translate(16 16)'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.%prefix%-back:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cpath d='M0 0L24 0 24 24 0 24z' transform='translate(-348 -152) translate(332 136) translate(16 16)'/%3E%3Cpath fill='rgba(255,255,255, 1)' fill-rule='nonzero' d='M16.41 5.791L14.619 4 7 11.619 14.619 19.239 16.41 17.448 10.594 11.619z' transform='translate(-348 -152) translate(332 136) translate(16 16)'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E%0A");
+}
+
 .%prefix%-header {
-    font-family: CircularStd-Book;
+    font-family: 'Circular Std Book', sans-serif;
     font-size: 16px;
     line-height: 24px;
 }
@@ -203,7 +221,7 @@ return (`
 
 .%prefix%-uri {
     width: 100%;
-    padding: 20px 4px 0px 4px;
+    padding: 20px 0px 0px 0px;
 }
 
 .%prefix%-background {
@@ -230,7 +248,7 @@ return (`
 }
 
 .%prefix%-footnote {
-    font-family: CircularStd-Book;
+    font-family: 'Circular Std Book', sans-serif;
     font-size: 16px;
     text-align: center;
     width: 100%;
@@ -251,7 +269,7 @@ return (`
 .%prefix%-uri a {
     width: 100%;
     background-color: rgba(255, 255, 255, 0.3);
-    font-family: CircularStd;
+    font-family: 'Circular Std Book', sans-serif;
     font-size: 16px;
     font-weight: 500;
     text-align: center;
@@ -261,6 +279,7 @@ return (`
     flex: 1;
     padding: 18px 0px 16px 0px;
     display: block;
+    border-radius: 10px;
 }
 
 .%prefix%-uri a:hover {
