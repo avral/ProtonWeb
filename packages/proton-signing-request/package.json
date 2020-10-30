@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@protonprotocol/protonjs": "^21.0.21",
-    "fast-sha256": "^1.1.1"
+    "fast-sha256": "^1.1.1",
+    "fast-text-encoding": "^1.0.3"
   },
   "husky": {
     "hooks": {

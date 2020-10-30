@@ -2,8 +2,9 @@
  * EOSIO Signing Request (ESR).
  */
 
-import {Serialize, TextEncoder, TextDecoder} from '@protonprotocol/protonjs'
+import {Serialize} from '@protonprotocol/protonjs'
 import sha256 from 'fast-sha256'
+require('fast-text-encoding');
 
 import * as abi from './abi'
 import * as base64u from './base64u'
