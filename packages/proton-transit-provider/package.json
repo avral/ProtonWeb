@@ -43,5 +43,6 @@
   "devDependencies": {
     "@protonprotocol/proton-browser-transport": "^2.5.2",
     "eos-transit": "^4.0.7"
-  }
+  },
+  "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"
 }

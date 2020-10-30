@@ -49,5 +49,6 @@
     "@types/pako": "^1.0.1",
     "@types/uuid": "^8.3.0",
     "@types/ws": "^7.2.7"
-  }
+  },
+  "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"
 }
