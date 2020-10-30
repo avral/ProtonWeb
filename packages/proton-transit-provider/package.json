@@ -5,7 +5,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.2",
+  "version": "2.5.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,7 +26,7 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@protonprotocol/proton-web-sdk": "^2.5.2",
+    "@protonprotocol/proton-web-sdk": "^2.5.3",
     "@protonprotocol/protonjs": "^21.0.21"
   },
   "husky": {
