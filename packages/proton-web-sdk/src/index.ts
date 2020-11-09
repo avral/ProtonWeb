@@ -89,7 +89,11 @@ export const ConnectWallet = async ({
             if (storedWalletType) {
                 walletType = storedWalletType
             } else if (selectorOptions.showSelector) {
-                walletType = await wallets.displayWalletSelector()
+                try {
+                    walletType = await wallets.displayWalletSelector()
+                } catch(e) {
+                    throw new Error(e)
+                }
             } else {
                 try {
                     throw new Error('Wallet Type Unavailable: No walletType provided and showSelector is set to false')
