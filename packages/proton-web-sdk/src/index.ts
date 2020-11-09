@@ -76,7 +76,7 @@ export const ConnectWallet = async ({
         }
     }
 
-    let session, link
+    let session, link, loginResult
 
     while(!session) {
         // Create Modal Class
@@ -136,9 +136,9 @@ export const ConnectWallet = async ({
             let backToSelector = false
             document.addEventListener('backToSelector', () => {backToSelector = true})
             try {
-                const loginResult = await link.login(transportOptions.requestAccount || '')
+                loginResult = await link.login(transportOptions.requestAccount || '')
                 session = loginResult.session
-                linkOptions.storage.write('user-auth', JSON.stringify(session.auth))
+                linkOptions.storage.write('user-auth', JSON.stringify(loginResult.session.auth))
             } catch(e) {
                 if (backToSelector) {
                     document.removeEventListener('backToSelector', () => {backToSelector = true})
@@ -156,6 +156,6 @@ export const ConnectWallet = async ({
         }
     }
 
-    // Return link, session
-    return { link, session }
+    // Return link, loginResult
+    return { link, session, loginResult }
 }
