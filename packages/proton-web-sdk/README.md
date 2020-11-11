@@ -6,6 +6,9 @@ npm i @protonprotocol/proton-web-sdk
 yarn add @protonprotocol/proton-web-sdk
 ```
 
+Full Documentation:
+https://docs.protonchain.com/sdk/proton-web-sdk
+
 Usage
 ```javascript
 import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
@@ -27,16 +30,18 @@ const link = await ConnectWallet({
         appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
         appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
         // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
-        // showSelector: false /* Optional: Reconnect without modal if false, Default true */
     }
 })
 
-// Login
-const { session } = await link.login(appIdentifier)
-console.log('User authorization:', session.auth) // { actor: 'fred', permission: 'active }
-
-// Save auth for reconnection on refresh
-localStorage.setItem('saved-user-auth', JSON.stringify(session.auth))
+//Login
+  const { link, session } = await ConnectWallet({
+    linkOptions: { chainId: this.chainId, endpoints: this.endpoints },
+    transportOptions: { requestAccount: this.requestAccount, backButton: true },
+    selectorOptions: { appName: this.appName, appLogo: appLogo}
+  });
+  this.link = link;
+  this.session = session;
+  return { auth: session.auth, accountData: session.accountData[0] };
 
 // Send Transaction
 const result = await session.transact({
@@ -60,12 +65,16 @@ const result = await session.transact({
 })
 console.log('Transaction ID', result.processed.id)
 
-// Restore session after refresh (must recreate link first with showSelector as false)
-const savedUserAuth = JSON.parse(localstorage.getItem('saved-user-auth'))
-const session = await link.restoreSession(appIdentifier, savedUserAuth)
-
+// Restore session after refresh (must recreate link first with restoreSession as true)
+const { link, session } = await ConnectWallet({
+    linkOptions: { chainId: this.chainId, endpoints: this.endpoints, restoreSession: true},
+    transportOptions: { requestAccount: this.requestAccount },
+    selectorOptions: { appName: this.appName, appLogo: appLogo}
+  });
+  this.link = link;
+  this.session = session;
+      
 // Logout
 await link.removeSession(appIdentifier, session.auth)
 session = undefined
-localStorage.removeItem('saved-user-auth')
 ```
