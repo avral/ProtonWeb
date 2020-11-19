@@ -16,68 +16,74 @@ import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
 // Constants
 const appIdentifier = 'taskly'
 
-// Pop up modal
-const link = await ConnectWallet({
-    linkOptions: {
-        endpoints: ['https://proton.greymass.com'],
-        // rpc: rpc /* Optional: if you wish to provide rpc directly instead of endpoints */
-    },
-    transportOptions: {
-        requestAccount: 'myprotonacc', /* Optional: Your proton account */
-        requestStatus: true, /* Optional: Display request success and error messages, Default true */
-    },
-    selectorOptions: {
-        appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
-        appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
-        // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
-        // showSelector: false /* Optional: Reconnect without modal if false, Default true */
+// Example wallet connector
+class ProtonWallet {
+    // Connect
+    async function connect ({ restoreSession }) {
+      // Pop up modal
+      const { link, session } = await ConnectWallet({
+        linkOptions: {
+            endpoints: ['https://proton.greymass.com'],
+            restoreSession,
+            // rpc: rpc /* Optional: if you wish to provide rpc directly instead of endpoints */
+        },
+        transportOptions: {
+            requestAccount: 'myprotonacc', /* Optional: Your proton account */
+            requestStatus: true, /* Optional: Display request success and error messages, Default true */
+        },
+        selectorOptions: {
+            appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
+            appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
+            // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
+        }
+      })
+      this.link = link;
+      this.session = session;
     }
-})
 
-//Login
-  const { link, session } = await ConnectWallet({
-    linkOptions: { chainId: this.chainId, endpoints: this.endpoints },
-    transportOptions: { requestAccount: this.requestAccount, backButton: true },
-    selectorOptions: { appName: this.appName, appLogo: appLogo}
-  });
-  this.link = link;
-  this.session = session;
-  return { auth: session.auth, accountData: session.accountData[0] };
+    // Login
+    async function login () {
+      await this.connect()
 
-// Send Transaction
-const result = await session.transact({
-    transaction: {
-        actions: [{
-            // Token contract for XUSDT
-            account: 'xtokens',
-            // Action name
-            name: 'transfer',
-            // Action parameters
-            data: {
-                from: session.auth.actor,
-                to: 'syed',
-                quantity: '0.000001 XUSDT',
-                memo: 'Tip!'
-            },
-            authorization: [session.auth]
-        }]
-    },
-    broadcast: true
-})
-console.log('Transaction ID', result.processed.id)
+      return {
+        auth: this.session.auth,
+        accountData: this.session.accountData[0]
+      };
+    }
 
-// Restore session after refresh (must recreate link first with showSelector as false)
-const { link, session } = await ConnectWallet({
-    linkOptions: { chainId: this.chainId, endpoints: this.endpoints, restoreSession: true},
-    transportOptions: { requestAccount: this.requestAccount },
-    selectorOptions: { appName: this.appName, appLogo: appLogo, showSelector: false}
-  });
-  this.link = link;
-  this.session = session;
-      
-// Logout
-await link.removeSession(appIdentifier, session.auth)
-session = undefined
+    // Send Transaction (e.g. actions)
+    /*
+    [{
+       account: 'xtokens', // Contract name
+       name: 'transfer', // Action name
+       data: {
+         from: this.session.auth.actor,
+         to: 'syed',
+         quantity: '0.000001 XUSDT',
+         memo: 'Tip!'
+       },
+       authorization: this.session.auth
+    }]
+    */
+    async function transact (actions) {
+        const result = await this.session.transact({ transaction: { actions } })
+        console.log('Transaction ID', result.processed.id)
+        return result
+    }
+
+    // Restore session after refresh (must recreate link first with showSelector as false)
+    async function reconnect () {
+      await this.connect({ restoreSession: true })
+    }
+
+    // Logout
+    async function logout () {
+      await this.link.removeSession(appIdentifier, this.session.auth)
+      this.session = undefined
+    }
+}
+
+const wallet = new ProtonWallet()
 ```
 
 #### Directory
