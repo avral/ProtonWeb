@@ -23,7 +23,7 @@ class ProtonWallet {
     link = undefined
     session = undefined
     
-    async connect ({ restoreSession }) {
+    async login ({ restoreSession } = {}) {
       // Pop up modal
       const { link, session } = await ConnectWallet({
         linkOptions: {
@@ -45,25 +45,11 @@ class ProtonWallet {
       this.session = session
     }
 
-    async login () {
-      await this.connect()
-      return {
-        auth: this.session.auth,
-        accountData: this.session.accountData[0]
-      }
-    }
-
     async transact (actions) {
       return this.session.transact({
         transaction: {
           actions
         }
-      })
-    }
-
-    async reconnect () {
-      await this.connect({
-        restoreSession: true
       })
     }
 
@@ -77,8 +63,13 @@ class ProtonWallet {
  * USAGE
  */
 async function main () {
+  // Create Wallet Class
   const wallet = new ProtonWallet()
+  
+  // Login
   await wallet.login()
+  
+  // Transact
   const result = await wallet.transact([{
     account: 'xtokens', // Contract name
     name: 'transfer', // Action name
@@ -91,10 +82,15 @@ async function main () {
     authorization: this.session.auth
   }])
   console.log('Transaction ID', result.processed.id)
+  
+  // Reconnect on refresh
+  await wallet.login({ restoreSession: true })
+  
+  // Logout
+  await wallet.logout()
 }
 
 main()
-
 ```
 
 #### Directory
