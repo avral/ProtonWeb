@@ -84,10 +84,10 @@ async function main () {
   console.log('Transaction ID', result.processed.id)
   
   // Reconnect on refresh
-  await wallet.login({ restoreSession: true })
+  // await wallet.login({ restoreSession: true })
   
   // Logout
-  await wallet.logout()
+  // await wallet.logout()
 }
 
 main()
