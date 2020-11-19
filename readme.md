@@ -3,6 +3,8 @@
 Installation
 ```
 npm i @protonprotocol/proton-web-sdk
+```
+```
 yarn add @protonprotocol/proton-web-sdk
 ```
 
@@ -13,77 +15,84 @@ Usage
 ```javascript
 import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
 
-// Constants
-const appIdentifier = 'taskly'
+const appIdentifier = 'taskly' // Proton account name
 
-// Example wallet connector
 class ProtonWallet {
-    // Connect
-    async function connect ({ restoreSession }) {
+    link = undefined
+    session = undefined
+    
+    async connect ({ restoreSession }) {
       // Pop up modal
       const { link, session } = await ConnectWallet({
         linkOptions: {
-            endpoints: ['https://proton.greymass.com'],
-            restoreSession,
-            // rpc: rpc /* Optional: if you wish to provide rpc directly instead of endpoints */
+          endpoints: ['https://proton.greymass.com'],
+          restoreSession
+          // rpc: rpc /* Optional: if you wish to provide rpc directly instead of endpoints */
         },
         transportOptions: {
-            requestAccount: 'myprotonacc', /* Optional: Your proton account */
-            requestStatus: true, /* Optional: Display request success and error messages, Default true */
+          requestAccount: appIdentifier, /* Optional: Your proton account */
+          requestStatus: true /* Optional: Display request success and error messages, Default true */
         },
         selectorOptions: {
-            appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
-            appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
-            // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
+          appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
+          appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg' /* Optional: Logo to show in modal */
+          // walletType: 'proton' /* Optional: Connect to only specified wallet (e.g. 'proton', 'anchor') */
         }
       })
-      this.link = link;
-      this.session = session;
+      this.link = link
+      this.session = session
     }
 
-    // Login
-    async function login () {
+    async login () {
       await this.connect()
-
       return {
         auth: this.session.auth,
         accountData: this.session.accountData[0]
-      };
+      }
     }
 
-    // Send Transaction (e.g. actions)
-    /*
-    [{
-       account: 'xtokens', // Contract name
-       name: 'transfer', // Action name
-       data: {
-         from: this.session.auth.actor,
-         to: 'syed',
-         quantity: '0.000001 XUSDT',
-         memo: 'Tip!'
-       },
-       authorization: this.session.auth
-    }]
-    */
-    async function transact (actions) {
-        const result = await this.session.transact({ transaction: { actions } })
-        console.log('Transaction ID', result.processed.id)
-        return result
+    async transact (actions) {
+      return this.session.transact({
+        transaction: {
+          actions
+        }
+      })
     }
 
-    // Restore session after refresh (must recreate link first with showSelector as false)
-    async function reconnect () {
-      await this.connect({ restoreSession: true })
+    async reconnect () {
+      await this.connect({
+        restoreSession: true
+      })
     }
 
-    // Logout
-    async function logout () {
+    async logout () {
       await this.link.removeSession(appIdentifier, this.session.auth)
       this.session = undefined
     }
 }
 
-const wallet = new ProtonWallet()
+/**
+ * USAGE
+ */
+async function main () {
+  const wallet = new ProtonWallet()
+  await wallet.login()
+  const result = await wallet.transact([{
+    account: 'xtokens', // Contract name
+    name: 'transfer', // Action name
+    data: {
+      from: this.session.auth.actor,
+      to: 'syed',
+      quantity: '0.000001 XUSDT',
+      memo: 'Tip!'
+    },
+    authorization: this.session.auth
+  }])
+  console.log('Transaction ID', result.processed.id)
+}
+
+main()
+
 ```
 
 #### Directory
