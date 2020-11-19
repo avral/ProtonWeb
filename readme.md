@@ -1,6 +1,6 @@
 # Proton Web SDK
 
-Installation
+**Installation**
 ```
 npm i @protonprotocol/proton-web-sdk
 ```
@@ -8,10 +8,12 @@ npm i @protonprotocol/proton-web-sdk
 yarn add @protonprotocol/proton-web-sdk
 ```
 
-Full Documentation:
+**Full Documentation:**
+
 https://docs.protonchain.com/sdk/proton-web-sdk
 
-Usage
+
+**Token Transfer Example**
 ```javascript
 import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
 
