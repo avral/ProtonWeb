@@ -5,7 +5,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,8 +26,8 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.5.4",
-    "@protonprotocol/proton-link": "^2.5.6",
+    "@protonprotocol/proton-browser-transport": "^2.5.5",
+    "@protonprotocol/proton-link": "^2.5.7",
     "@protonprotocol/protonjs": "^21.0.21"
   },
   "husky": {
