@@ -150,6 +150,14 @@ export const ConnectWallet = async ({
             const savedUserAuth : PermissionLevel = Object.keys(parsedUserAuth).length > 0 ? parsedUserAuth : null
             if (savedUserAuth) {
                 session = await link.restoreSession(transportOptions.requestAccount || '', savedUserAuth)
+
+                // Could not restore
+                if (!session) {
+                    // clean storage to remove unexpected side effects if session restore fails
+                    linkOptions.storage.remove('wallet-type')
+                    linkOptions.storage.remove('user-auth')
+                    return { link: null, session: null }
+                }
             }
         }
     }
