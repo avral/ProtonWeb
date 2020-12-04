@@ -36,7 +36,9 @@ export default class SupportedWallets {
         this.font.rel = 'stylesheet';
         this.styleEl = document.createElement('style')
         this.styleEl.type = 'text/css'
-        this.styleEl.appendChild(document.createTextNode(styleText))
+
+        const customStyleText = this.getCustomStyleText()
+        this.styleEl.appendChild(document.createTextNode(styleText + customStyleText))
         this.styleEl.appendChild(this.font)
         document.head.appendChild(this.styleEl)
 
@@ -182,22 +184,12 @@ export default class SupportedWallets {
 
             this.selectorEl.appendChild(header)
             this.selectorEl.appendChild(body)
-            this.setCustomStyles()
             this.showSelector()
         })
     }
 
-    private getAllTypecastElementsByClassName(className: string): HTMLElement[] {
-        return Array.from(document.getElementsByClassName(className) as HTMLCollectionOf<HTMLElement>)
-    }
-
-    private getTypecastElementByClassName(className: string): HTMLElement {
-        return this.getAllTypecastElementsByClassName(className)[0]
-    }
-
-    private setCustomStyles() {
-        if (!this.customStyles) return
-
+    private getCustomStyleText(): string {
+        if (!this.customStyles) return ''
         const {
             modalBackgroundColor,
             logoBackgroundColor,
@@ -209,57 +201,65 @@ export default class SupportedWallets {
             linkColor
         } = this.customStyles
 
-        if (modalBackgroundColor) {
-            const walletSelectorInner = this.getTypecastElementByClassName('wallet-selector-inner')
-            const walletSelectorConnect = this.getTypecastElementByClassName('wallet-selector-connect')
-            walletSelectorInner.style.backgroundColor = modalBackgroundColor
-            walletSelectorConnect.style.backgroundColor = modalBackgroundColor
+        return `        
+        ${modalBackgroundColor && `
+        .wallet-selector-inner {
+            background: ${modalBackgroundColor};
         }
-        
-        if (logoBackgroundColor) {
-            const logo = this.getTypecastElementByClassName('wallet-selector-logo')
-            logo.style.backgroundColor = logoBackgroundColor
-            
-            if (isLogoRound) {
-                logo.style.width = '120px'
-                logo.style.height = '120px'
-                logo.style.padding = '10px'
-                logo.style.marginBottom = '10px'
-                logo.style.border = '1px solid rgba(161, 165, 176, 0.23)'
-                logo.style.borderRadius = '50%'
-            }
+
+        .wallet-selector-connect {
+            background: ${modalBackgroundColor};
         }
-        
-        if (optionBackgroundColor) {
-            const selectorOptions = Array.from(this.getTypecastElementByClassName('wallet-selector-wallet-list').children as HTMLCollectionOf<HTMLElement>)
-            for (const option of selectorOptions) {
-                option.style.backgroundColor = optionBackgroundColor
-            }
+        `}
+
+        ${logoBackgroundColor && `
+        .wallet-selector-logo {
+            background: ${logoBackgroundColor};
+            ${isLogoRound && `
+            width: 120px;
+            height: 120px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(161, 165, 176, 0.23);
+            border-radius: 50%;
+            `}
         }
-        
-        if (optionFontColor) {
-            const selectorOptionNames = this.getAllTypecastElementsByClassName('wallet-selector-wallet-name')
-            for (const name of selectorOptionNames) {
-                name.style.color = optionFontColor
-            }
+        `}
+
+        ${optionBackgroundColor && `
+        .wallet-selector-wallet-list li {
+            background: ${optionBackgroundColor};
         }
-        
-        if (primaryFontColor) {
-            const selectorTitle = this.getTypecastElementByClassName('wallet-selector-title')
-            selectorTitle.style.color = primaryFontColor
+        `}
+
+        ${optionFontColor && `
+        .wallet-selector-wallet-name {
+            color: ${optionFontColor};
         }
-        
-        if (secondaryFontColor) {
-            const selectorSubtitle = this.getTypecastElementByClassName('wallet-selector-subtitle')
-            const footerText = this.getTypecastElementByClassName('wallet-selector-tos-agreement')
-            selectorSubtitle.style.color = secondaryFontColor
-            footerText.style.color = secondaryFontColor
+        `}
+
+        ${primaryFontColor && `
+        .wallet-selector-title {
+            color: ${primaryFontColor};
         }
-        
-        if (linkColor) {
-            const termsOfServiceLink = this.getTypecastElementByClassName('wallet-selector-tos-link')
-            termsOfServiceLink.style.color = linkColor
+        `}
+
+        ${secondaryFontColor && `
+        .wallet-selector-subtitle {
+            color: ${secondaryFontColor};
         }
+
+        .wallet-selector-tos-agreement {
+            color: ${secondaryFontColor};
+        }
+        `}
+
+        ${linkColor && `
+        .wallet-selector-tos-link {
+            color: ${linkColor};
+        }
+        `}
+        `
     }
 }
 
