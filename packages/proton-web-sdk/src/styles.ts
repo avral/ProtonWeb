@@ -176,5 +176,5 @@ export default `
     color: rgb(0, 170, 239);
     text-decoration: none;
 }
-.
+
 `
