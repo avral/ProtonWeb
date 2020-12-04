@@ -1,13 +1,16 @@
 import styleText from './styles'
+import { SelectorCustomStyles } from './index'
 
 export default class SupportedWallets {
-    constructor(public readonly name?: string, logo?: string) {
+    constructor(public readonly name?: string, logo?: string, customStyles?: SelectorCustomStyles) {
         this.appLogo = logo
         this.appName = name || 'app'
+        this.customStyles = customStyles;
     }
 
     private appLogo: string | undefined
     private appName: string
+    private customStyles: SelectorCustomStyles | undefined
 
     /** Container and stylesheet for Wallet Selector */
     private selectorContainerEl!: HTMLElement
@@ -179,8 +182,84 @@ export default class SupportedWallets {
 
             this.selectorEl.appendChild(header)
             this.selectorEl.appendChild(body)
+            this.setCustomStyles()
             this.showSelector()
         })
+    }
+
+    private getAllTypecastElementsByClassName(className: string): HTMLElement[] {
+        return Array.from(document.getElementsByClassName(className) as HTMLCollectionOf<HTMLElement>)
+    }
+
+    private getTypecastElementByClassName(className: string): HTMLElement {
+        return this.getAllTypecastElementsByClassName(className)[0]
+    }
+
+    private setCustomStyles() {
+        if (!this.customStyles) return
+
+        const {
+            modalBackgroundColor,
+            logoBackgroundColor,
+            isLogoRound,
+            optionBackgroundColor,
+            optionFontColor,
+            primaryFontColor,
+            secondaryFontColor,
+            linkColor
+        } = this.customStyles
+
+        if (modalBackgroundColor) {
+            const walletSelectorInner = this.getTypecastElementByClassName('wallet-selector-inner')
+            const walletSelectorConnect = this.getTypecastElementByClassName('wallet-selector-connect')
+            walletSelectorInner.style.backgroundColor = modalBackgroundColor
+            walletSelectorConnect.style.backgroundColor = modalBackgroundColor
+        }
+        
+        if (logoBackgroundColor) {
+            const logo = this.getTypecastElementByClassName('wallet-selector-logo')
+            logo.style.backgroundColor = logoBackgroundColor
+            
+            if (isLogoRound) {
+                logo.style.width = '120px'
+                logo.style.height = '120px'
+                logo.style.padding = '10px'
+                logo.style.marginBottom = '10px'
+                logo.style.border = '1px solid rgba(161, 165, 176, 0.23)'
+                logo.style.borderRadius = '50%'
+            }
+        }
+        
+        if (optionBackgroundColor) {
+            const selectorOptions = Array.from(this.getTypecastElementByClassName('wallet-selector-wallet-list').children as HTMLCollectionOf<HTMLElement>)
+            for (const option of selectorOptions) {
+                option.style.backgroundColor = optionBackgroundColor
+            }
+        }
+        
+        if (optionFontColor) {
+            const selectorOptionNames = this.getAllTypecastElementsByClassName('wallet-selector-wallet-name')
+            for (const name of selectorOptionNames) {
+                name.style.color = optionFontColor
+            }
+        }
+        
+        if (primaryFontColor) {
+            const selectorTitle = this.getTypecastElementByClassName('wallet-selector-title')
+            selectorTitle.style.color = primaryFontColor
+        }
+        
+        if (secondaryFontColor) {
+            const selectorSubtitle = this.getTypecastElementByClassName('wallet-selector-subtitle')
+            const footerText = this.getTypecastElementByClassName('wallet-selector-tos-agreement')
+            selectorSubtitle.style.color = secondaryFontColor
+            footerText.style.color = secondaryFontColor
+        }
+        
+        if (linkColor) {
+            const termsOfServiceLink = this.getTypecastElementByClassName('wallet-selector-tos-link')
+            termsOfServiceLink.style.color = linkColor
+        }
     }
 }
 
