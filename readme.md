@@ -29,7 +29,7 @@ const link = await ConnectWallet({
     selectorOptions: {
         appName: 'Taskly', /* Optional: Name to show in modal, Default 'app' */
         appLogo: 'https://protondemos.com/static/media/taskly-logo.ad0bfb0f.svg', /* Optional: Logo to show in modal */
-        customStyles: { /* Optional: Custom styles for modal */
+        customStyleOptions: { /* Optional: Custom style options for modal */
             modalBackgroundColor: '#F4F7FA',
             logoBackgroundColor: 'white',
             isLogoRound: true,

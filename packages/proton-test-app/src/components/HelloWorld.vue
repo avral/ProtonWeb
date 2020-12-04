@@ -42,7 +42,7 @@ export default {
           appLogo: 'https://taskly.protonchain.com/static/media/taskly-logo.ad0bfb0f.svg',
           modalBackgroundColor: 'pink',
           optionBackgroundColor: 'white',
-          customStyles: {
+          customStyleOptions: {
             modalBackgroundColor: '#F4F7FA',
             logoBackgroundColor: 'white',
             isLogoRound: true,

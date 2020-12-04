@@ -1,16 +1,16 @@
 import styleText from './styles'
-import { SelectorCustomStyles } from './index'
+import { CustomStyleOptions } from './index'
 
 export default class SupportedWallets {
-    constructor(public readonly name?: string, logo?: string, customStyles?: SelectorCustomStyles) {
+    constructor(public readonly name?: string, logo?: string, customStyleOptions?: CustomStyleOptions) {
         this.appLogo = logo
         this.appName = name || 'app'
-        this.customStyles = customStyles;
+        this.customStyleOptions = customStyleOptions;
     }
 
     private appLogo: string | undefined
     private appName: string
-    private customStyles: SelectorCustomStyles | undefined
+    private customStyleOptions: CustomStyleOptions | undefined
 
     /** Container and stylesheet for Wallet Selector */
     private selectorContainerEl!: HTMLElement
@@ -189,7 +189,7 @@ export default class SupportedWallets {
     }
 
     private getCustomStyleText(): string {
-        if (!this.customStyles) return ''
+        if (!this.customStyleOptions) return ''
         const {
             modalBackgroundColor,
             logoBackgroundColor,
@@ -199,7 +199,7 @@ export default class SupportedWallets {
             primaryFontColor,
             secondaryFontColor,
             linkColor
-        } = this.customStyles
+        } = this.customStyleOptions
 
         return `        
         ${modalBackgroundColor && `
