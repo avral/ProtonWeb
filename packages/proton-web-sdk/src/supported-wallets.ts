@@ -1,4 +1,4 @@
-import styleText from './styles'
+import getStyleText from './styles'
 import { CustomStyleOptions } from './index'
 
 export default class SupportedWallets {
@@ -37,8 +37,8 @@ export default class SupportedWallets {
         this.styleEl = document.createElement('style')
         this.styleEl.type = 'text/css'
 
-        const customStyleText = this.getCustomStyleText()
-        this.styleEl.appendChild(document.createTextNode(styleText + customStyleText))
+        const styleText = getStyleText(this.customStyleOptions)
+        this.styleEl.appendChild(document.createTextNode(styleText))
         this.styleEl.appendChild(this.font)
         document.head.appendChild(this.styleEl)
 
@@ -186,80 +186,6 @@ export default class SupportedWallets {
             this.selectorEl.appendChild(body)
             this.showSelector()
         })
-    }
-
-    private getCustomStyleText(): string {
-        if (!this.customStyleOptions) return ''
-        const {
-            modalBackgroundColor,
-            logoBackgroundColor,
-            isLogoRound,
-            optionBackgroundColor,
-            optionFontColor,
-            primaryFontColor,
-            secondaryFontColor,
-            linkColor
-        } = this.customStyleOptions
-
-        return `        
-        ${modalBackgroundColor && `
-        .wallet-selector-inner {
-            background: ${modalBackgroundColor};
-        }
-
-        .wallet-selector-connect {
-            background: ${modalBackgroundColor};
-        }
-        `}
-
-        ${logoBackgroundColor && `
-        .wallet-selector-logo {
-            background: ${logoBackgroundColor};
-            ${isLogoRound && `
-            width: 120px;
-            height: 120px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(161, 165, 176, 0.23);
-            border-radius: 50%;
-            `}
-        }
-        `}
-
-        ${optionBackgroundColor && `
-        .wallet-selector-wallet-list li {
-            background: ${optionBackgroundColor};
-        }
-        `}
-
-        ${optionFontColor && `
-        .wallet-selector-wallet-name {
-            color: ${optionFontColor};
-        }
-        `}
-
-        ${primaryFontColor && `
-        .wallet-selector-title {
-            color: ${primaryFontColor};
-        }
-        `}
-
-        ${secondaryFontColor && `
-        .wallet-selector-subtitle {
-            color: ${secondaryFontColor};
-        }
-
-        .wallet-selector-tos-agreement {
-            color: ${secondaryFontColor};
-        }
-        `}
-
-        ${linkColor && `
-        .wallet-selector-tos-link {
-            color: ${linkColor};
-        }
-        `}
-        `
     }
 }
 
