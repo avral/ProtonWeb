@@ -2,6 +2,28 @@
 import { CustomStyleOptions } from './index';
 
 export default (customStyleOptions: CustomStyleOptions | undefined): string => {
+    const defaultOptions = {
+        modalBackgroundColor: '#ffffff',
+        logoBackgroundColor: 'transparent',
+        isLogoRound: false,
+        optionBackgroundColor: 'transparent',
+        optionFontColor: '#000531',
+        primaryFontColor: 'black',
+        secondaryFontColor: '#a1a5b0',
+        linkColor: '#00AAEF',
+    };
+
+    const {
+        modalBackgroundColor,
+        logoBackgroundColor,
+        isLogoRound,
+        optionBackgroundColor,
+        optionFontColor,
+        primaryFontColor,
+        secondaryFontColor,
+        linkColor,
+    } = Object.assign(defaultOptions, customStyleOptions);
+
     return `
     .wallet-selector * {
         box-sizing: border-box;
@@ -29,7 +51,7 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
     }
 
     .wallet-selector-inner {
-        background: ${customStyleOptions && customStyleOptions.modalBackgroundColor ? customStyleOptions.modalBackgroundColor : '#ffffff'};
+        background: ${modalBackgroundColor};
         color: white;
         margin: 20px;
         padding-top: 50px;
@@ -67,7 +89,7 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
         border-radius: 10px;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
-        background: ${customStyleOptions && customStyleOptions.modalBackgroundColor ? customStyleOptions.modalBackgroundColor : '#ffffff'};
+        background: ${modalBackgroundColor};
     }
 
     .wallet-selector-connect-header {
@@ -79,17 +101,14 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
     .wallet-selector-logo {
         width: 100px;
         height: 100px;
-
-        ${customStyleOptions && customStyleOptions.logoBackgroundColor && `
-            background: ${customStyleOptions.logoBackgroundColor};
-            ${customStyleOptions.isLogoRound && `
-            width: 120px;
-            height: 120px;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid rgba(161, 165, 176, 0.23);
-            border-radius: 50%;
-            `}
+        background: ${logoBackgroundColor};
+        ${isLogoRound && `
+        width: 120px;
+        height: 120px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid rgba(161, 165, 176, 0.23);
+        border-radius: 50%;
         `}
     }
 
@@ -97,7 +116,7 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
         font-size: 16px;
         font-family: 'Circular Std Book', sans-serif;
         line-height: 24px;
-        color: ${customStyleOptions && customStyleOptions.primaryFontColor ? customStyleOptions.primaryFontColor : 'black'};
+        color: ${primaryFontColor};
         text-align: center;
     }
 
@@ -105,7 +124,7 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
         font-size: 16px;
         font-family: 'Circular Std Book', sans-serif;
         line-height: 24px;
-        color: ${customStyleOptions && customStyleOptions.secondaryFontColor ? customStyleOptions.secondaryFontColor : '#a1a5b0'};
+        color: ${secondaryFontColor};
         text-align: center;
     }
 
@@ -119,11 +138,9 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
         list-style: none;
     }
 
-    ${customStyleOptions && customStyleOptions.optionBackgroundColor && `
     .wallet-selector-wallet-list li {
-        background: ${customStyleOptions.optionBackgroundColor};
+        background: ${optionBackgroundColor};
     }
-    `}
 
     .wallet-selector-proton-wallet, .wallet-selector-anchor-wallet {
         display: flex;
@@ -161,7 +178,7 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
         font-family: 'Circular Std Book', sans-serif;
         font-size: 16px;
         line-height: 24px;
-        color: ${customStyleOptions && customStyleOptions.optionFontColor ? customStyleOptions.optionFontColor : '#000531'};
+        color: ${optionFontColor};
         margin-left: 20px;
     }
 
@@ -190,11 +207,11 @@ export default (customStyleOptions: CustomStyleOptions | undefined): string => {
         text-align: center;
         margin-top: 55px;
         margin-bottom: 30px;
-        color: ${customStyleOptions && customStyleOptions.secondaryFontColor ? customStyleOptions.secondaryFontColor : 'rgb(161, 165, 176)'};
+        color: ${secondaryFontColor};
     }
 
     .wallet-selector-tos-link {
-        color: ${customStyleOptions && customStyleOptions.linkColor ? customStyleOptions.linkColor : 'rgb(0, 170, 239)'};
+        color: ${linkColor};
         text-decoration: none;
     }
     `
