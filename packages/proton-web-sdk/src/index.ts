@@ -21,6 +21,17 @@ class Storage implements LinkStorage {
 
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
+export interface CustomStyleOptions {
+    modalBackgroundColor?: string,
+    logoBackgroundColor?: string,
+    isLogoRound?: boolean,
+    optionBackgroundColor?: string,
+    optionFontColor?: string,
+    primaryFontColor?: string,
+    secondaryFontColor?: string,
+    linkColor?: string,
+}
+
 interface ConnectWalletArgs {
     linkOptions: PartialBy<LinkOptions, 'transport'> & {
         endpoints?: string | string[],
@@ -34,7 +45,7 @@ interface ConnectWalletArgs {
         appName?: string,
         appLogo?: string,
         walletType?: string
-        showSelector?: boolean
+        customStyleOptions?: CustomStyleOptions
     }
 }
 
@@ -59,11 +70,6 @@ export const ConnectWallet = async ({
         linkOptions.storage = new Storage(linkOptions.storagePrefix || 'proton-storage')
     }
 
-    // Default showSelector to true
-    if (selectorOptions.showSelector !== false) {
-        selectorOptions.showSelector = true
-    }
-
     // Stop restore session if no saved data
     if (linkOptions.restoreSession) {
         const savedUserAuth = await linkOptions.storage.read('user-auth')
@@ -80,7 +86,7 @@ export const ConnectWallet = async ({
 
     while(!session) {
         // Create Modal Class
-        const wallets = new SupportedWallets(selectorOptions.appName, selectorOptions.appLogo)
+        const wallets = new SupportedWallets(selectorOptions.appName, selectorOptions.appLogo, selectorOptions.customStyleOptions)
 
         // Determine wallet type from storage or selector modal
         let walletType = selectorOptions.walletType
@@ -88,7 +94,7 @@ export const ConnectWallet = async ({
             const storedWalletType = await linkOptions.storage.read('wallet-type')
             if (storedWalletType) {
                 walletType = storedWalletType
-            } else if (selectorOptions.showSelector) {
+            } else if (!linkOptions.restoreSession) {
                 try {
                     walletType = await wallets.displayWalletSelector()
                 } catch(e) {
@@ -96,7 +102,7 @@ export const ConnectWallet = async ({
                 }
             } else {
                 try {
-                    throw new Error('Wallet Type Unavailable: No walletType provided and showSelector is set to false')
+                    throw new Error('Wallet Type Unavailable: No walletType provided')
                 } catch (e) {
                     console.error(e)
                 }
@@ -147,8 +153,9 @@ export const ConnectWallet = async ({
                 if (backToSelector) {
                     document.removeEventListener('backToSelector', () => {backToSelector = true})
                     continue
+                } else {
+                    throw e;
                 }
-                return e
             }
         } else {
             const stringifiedUserAuth = await linkOptions.storage.read('user-auth')
@@ -156,6 +163,14 @@ export const ConnectWallet = async ({
             const savedUserAuth : PermissionLevel = Object.keys(parsedUserAuth).length > 0 ? parsedUserAuth : null
             if (savedUserAuth) {
                 session = await link.restoreSession(transportOptions.requestAccount || '', savedUserAuth)
+
+                // Could not restore
+                if (!session) {
+                    // clean storage to remove unexpected side effects if session restore fails
+                    linkOptions.storage.remove('wallet-type')
+                    linkOptions.storage.remove('user-auth')
+                    return { link: null, session: null }
+                }
             }
         }
     }
