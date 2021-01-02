@@ -3,7 +3,7 @@ import {Numeric, Serialize} from '@proton/js'
 import {Bytes, SealedMessage} from './link-abi'
 import linkAbi from './link-abi-data'
 
-const ecc = require('eosjs-ecc')
+import * as ecc from '@jafri/eosjs-ecc'
 
 /** @internal */
 const types = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), linkAbi)
