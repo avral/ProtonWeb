@@ -1,4 +1,4 @@
-import {SigningRequest} from '@protonprotocol/proton-signing-request'
+import {SigningRequest} from '@proton/signing-request'
 
 import {TransactResult} from './link'
 import {LinkSession} from './link-session'

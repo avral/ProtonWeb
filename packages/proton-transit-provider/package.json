@@ -1,5 +1,5 @@
 {
-  "name": "@protonprotocol/proton-transit-provider",
+  "name": "@proton/transit-provider",
   "author": "jafri",
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
@@ -26,8 +26,8 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@protonprotocol/proton-web-sdk": "^2.6.3",
-    "@protonprotocol/protonjs": "^21.0.21"
+    "@proton/web-sdk": "^2.6.3",
+    "@proton/js": "^22.0.1-17"
   },
   "husky": {
     "hooks": {
@@ -41,7 +41,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.5.5",
+    "@proton/browser-transport": "^2.5.5",
     "eos-transit": "^4.0.7"
   },
   "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"

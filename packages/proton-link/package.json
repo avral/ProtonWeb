@@ -1,5 +1,5 @@
 {
-  "name": "@protonprotocol/proton-link",
+  "name": "@proton/link",
   "author": "jafri",
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
@@ -37,8 +37,8 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@protonprotocol/proton-signing-request": "^2.5.4",
-    "@protonprotocol/protonjs": "^21.0.21",
+    "@proton/signing-request": "^2.5.4",
+    "@proton/js": "^22.0.1-17",
     "eosjs-ecc": "^4.0.7",
     "isomorphic-ws": "^4.0.1",
     "pako": "^1.0.11",

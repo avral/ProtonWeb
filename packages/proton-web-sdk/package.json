@@ -1,5 +1,5 @@
 {
-  "name": "@protonprotocol/proton-web-sdk",
+  "name": "@proton/web-sdk",
   "author": "jafri",
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
@@ -26,9 +26,9 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.5.5",
-    "@protonprotocol/proton-link": "^2.5.7",
-    "@protonprotocol/protonjs": "^21.0.21"
+    "@proton/browser-transport": "^2.5.5",
+    "@proton/link": "^2.5.7",
+    "@proton/js": "^22.0.1-17"
   },
   "husky": {
     "hooks": {

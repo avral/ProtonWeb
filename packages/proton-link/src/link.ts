@@ -1,5 +1,5 @@
-import * as esr from '@protonprotocol/proton-signing-request'
-import {ApiInterfaces, JsonRpc, Key} from '@protonprotocol/protonjs'
+import * as esr from '@proton/signing-request'
+import {ApiInterfaces, JsonRpc, Key} from '@proton/js'
 import WebSocket from 'isomorphic-ws'
 import zlib from 'pako'
 import {v4 as uuid} from 'uuid'

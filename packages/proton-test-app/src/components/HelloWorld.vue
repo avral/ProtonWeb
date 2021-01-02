@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
+import { ConnectWallet } from '@proton/web-sdk'
 
 // Constants
 const appIdentifier = 'taskly'

@@ -1,4 +1,4 @@
-import {Numeric, Serialize} from '@protonprotocol/protonjs'
+import {Numeric, Serialize} from '@proton/js'
 import * as ecc from 'eosjs-ecc'
 
 import {Bytes, SealedMessage} from './link-abi'

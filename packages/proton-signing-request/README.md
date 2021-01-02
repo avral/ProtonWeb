@@ -1,4 +1,4 @@
-# proton-signing-request [!![Package Version](https://img.shields.io/npm/v/@protonprotocol/https://www.npmjs.com/package/@protonprotocol/proton-signing-request.svg?style=flat-square](https://www.npmjs.com/package/@protonprotocol/proton-signing-request) ![License](https://img.shields.io/npm/l/@protonprotocol/proton-signing-request.svg?style=flat-square)
+# proton-signing-request [!![Package Version](https://img.shields.io/npm/v/@proton/https://www.npmjs.com/package/@proton/signing-request.svg?style=flat-square](https://www.npmjs.com/package/@proton/signing-request) ![License](https://img.shields.io/npm/l/@proton/signing-request.svg?style=flat-square)
 
 A library to assist with the EOSIO Signing Request (ESR) protocol.
 The full specification for ESR is available here:

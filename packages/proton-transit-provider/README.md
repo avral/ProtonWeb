@@ -10,7 +10,7 @@ EOS Transit, GitHub: https://github.com/eosnewyork/eos-transit/tree/master/packa
 
 ## Links To This Package
 
-NPM: https://www.npmjs.com/package/@protonprotocol/proton-transit-provider
+NPM: https://www.npmjs.com/package/@proton/transit-provider
 GitHub: https://github.com/ProtonProtocol/ProtonWeb/tree/master/packages/proton-transit-provider
 
 ## Implementation Details
