@@ -189,19 +189,27 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@jafri/eosjs-ecc@^4.0.9":
-  version "4.0.9"
-  resolved "https://registry.yarnpkg.com/@jafri/eosjs-ecc/-/eosjs-ecc-4.0.9.tgz#5fb5eaae3040b91817340246d5629bbf47ccdd9c"
-  integrity sha512-mhRCs84AwFh3qPJHM5EnVJz/zobjJmkto6e747TX8rz17wg4lExyGjFCWf47t9SwuPDhJ67Cnrsuv1f//e2rsg==
+"@jafri/ecurve@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@jafri/ecurve/-/ecurve-1.0.6.tgz#b98c1e91e87742154d99afbaffbd77c2867f07ff"
+  integrity sha512-BLBudTYJT1PnMPLO3cFgM+4fKdo9ocgHtwpQI8yCEM8PE6ojABMphyuPbrTuR9g93RPTx+bveyR2tZBb5UvLmA==
+  dependencies:
+    bigi "^1.1.0"
+    safe-buffer "^5.0.1"
+
+"@jafri/eosjs-ecc@^4.0.10":
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/@jafri/eosjs-ecc/-/eosjs-ecc-4.0.10.tgz#360d95f6ae8f6e56582b8098279c584575ff3b9f"
+  integrity sha512-gdbutvdPXU7CUh3YczMZtWKx2YbiM4tmtDZciEipf3e7XDktxvjjgYrFVPd9dY1nbWSTl2ChzwI9bS8rgfoESQ==
   dependencies:
     "@babel/runtime" "7.6.0"
+    "@jafri/ecurve" "^1.0.6"
     bigi "1.4.2"
     browserify-aes "1.0.6"
     bs58 "4.0.1"
     bytebuffer "5.0.1"
     create-hash "1.1.3"
     create-hmac "1.1.6"
-    ecurve "1.0.5"
     randombytes "2.0.5"
 
 "@lerna/add@3.21.0":
