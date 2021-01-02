@@ -1002,10 +1002,10 @@
     "@octokit/openapi-types" "^2.0.1"
     "@types/node" ">= 8"
 
-"@proton/js@^22.0.1-17":
-  version "22.0.1-17"
-  resolved "https://registry.yarnpkg.com/@proton/js/-/js-22.0.1-17.tgz#98e004606a1bd5f4ef376e1531a8119321e8edb4"
-  integrity sha512-v3R3evJ3RbJ5/3UmioLX8aPZqdkH3UNNGPpq9S4L6qFxVQxNkRRpoXu4JW2ZXfqaNF2xfluElLElUkexmGrb+g==
+"@proton/js@22.0.1-18":
+  version "22.0.1-18"
+  resolved "https://registry.yarnpkg.com/@proton/js/-/js-22.0.1-18.tgz#7178309ad3a1c5671a4ce573a223ab85962a991a"
+  integrity sha512-DPHMjOU6nATdFqxNZuN2m2w5Z5r0YTYvR7uCahJzEphj9O9RsTtk4uK9WhQ7C2XhNs18KSeYaWlXyqtjSqfocg==
   dependencies:
     bn.js "5.1.2"
     bs58 "^4.0.1"
