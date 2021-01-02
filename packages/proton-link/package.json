@@ -40,7 +40,7 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@jafri/eosjs-ecc": "^4.0.8",
+    "@jafri/eosjs-ecc": "^4.0.9",
     "@proton/js": "22.0.1-18",
     "@proton/signing-request": "^2.5.8",
     "isomorphic-ws": "^4.0.1",
