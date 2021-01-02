@@ -22,16 +22,16 @@ The `proton-link` package is distributed as a module on [npm](https://www.npmjs.
 Install Proton Link and a [transport](#transports):
 
 ```
-yarn add proton-link proton-browser-transport
+yarn add @proton/link @proton/browser-transport
 # or
-npm install --save proton-link proton-browser-transport
+npm install --save @proton/link @proton/browser-transport
 ```
 
 Import them into your project:
 
 ```js
-import ProtonLink from 'proton-link'
-import ProtonLinkBrowserTransport from 'proton-browser-transport'
+import ProtonLink from '@proton/link'
+import ProtonLinkBrowserTransport from '@proton/browser-transport'
 ```
 
 ### Using node.js
@@ -47,8 +47,8 @@ npm install --save @proton/link @proton/browser-transport
 Import them into your project:
 
 ```js
-const ProtonLink = require('proton-link')
-const ProtonLinkBrowserTransport = require('proton-browser-transport')
+const ProtonLink = require('@proton/link')
+const ProtonLinkBrowserTransport = require('@proton/browser-transport')
 ```
 
 ## Basic usage

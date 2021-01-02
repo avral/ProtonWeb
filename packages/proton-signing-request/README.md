@@ -17,11 +17,11 @@ To add proton-signing-request to your project, install via the package manager o
 
 #### NPM
 
-```npm install proton-signing-request```
+```npm install @proton/signing-request```
 
 #### Yarn
 
-```yarn add proton-signing-request```
+```yarn add @proton/signing-request```
 
 ---
 
