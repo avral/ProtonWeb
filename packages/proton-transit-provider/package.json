@@ -5,7 +5,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.9",
+  "version": "2.5.10",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,8 +26,8 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@proton/web-sdk": "^2.6.3",
-    "@proton/js": "^22.0.1-17"
+    "@proton/js": "^22.0.1-17",
+    "@proton/web-sdk": "^2.6.4"
   },
   "husky": {
     "hooks": {
@@ -41,7 +41,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@proton/browser-transport": "^2.5.5",
+    "@proton/browser-transport": "^2.5.6",
     "eos-transit": "^4.0.7"
   },
   "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"

@@ -5,7 +5,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.7",
+  "version": "2.5.8",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -37,8 +37,8 @@
     "trailingComma": "es5"
   },
   "dependencies": {
-    "@proton/signing-request": "^2.5.4",
     "@proton/js": "^22.0.1-17",
+    "@proton/signing-request": "^2.5.5",
     "eosjs-ecc": "^4.0.7",
     "isomorphic-ws": "^4.0.1",
     "pako": "^1.0.11",
