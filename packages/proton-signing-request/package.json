@@ -1,11 +1,14 @@
 {
   "name": "@proton/signing-request",
   "author": "jafri",
+  "publishConfig": {
+    "access": "public"
+  },
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.6",
+  "version": "2.5.7",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -41,5 +44,5 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"
+  "gitHead": "0c26667103b462921691a26bab570bd7fc97bba4"
 }

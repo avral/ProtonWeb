@@ -1,11 +1,14 @@
 {
   "name": "@proton/web-sdk",
   "author": "jafri",
+  "publishConfig": {
+    "access": "public"
+  },
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.6.5",
+  "version": "2.6.6",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,9 +29,9 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@proton/browser-transport": "^2.5.7",
+    "@proton/browser-transport": "^2.5.8",
     "@proton/js": "^22.0.1-17",
-    "@proton/link": "^2.5.9"
+    "@proton/link": "^2.5.10"
   },
   "husky": {
     "hooks": {
@@ -41,5 +44,5 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"
+  "gitHead": "0c26667103b462921691a26bab570bd7fc97bba4"
 }
