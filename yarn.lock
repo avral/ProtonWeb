@@ -189,10 +189,10 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
-"@jafri/eosjs-ecc@^4.0.8":
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/@jafri/eosjs-ecc/-/eosjs-ecc-4.0.8.tgz#bc72b67052f4f40e9e54f26aa436dd88edcf552d"
-  integrity sha512-j8OHr0/1YppfVnqMHnxyj1hUVUJ0RQEmyoZMWNvozzAUs9eGQUZiEFNIyIeYcKgBeJNEeRz7Mwm1pMJCDLO/NQ==
+"@jafri/eosjs-ecc@^4.0.9":
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/@jafri/eosjs-ecc/-/eosjs-ecc-4.0.9.tgz#5fb5eaae3040b91817340246d5629bbf47ccdd9c"
+  integrity sha512-mhRCs84AwFh3qPJHM5EnVJz/zobjJmkto6e747TX8rz17wg4lExyGjFCWf47t9SwuPDhJ67Cnrsuv1f//e2rsg==
   dependencies:
     "@babel/runtime" "7.6.0"
     bigi "1.4.2"
