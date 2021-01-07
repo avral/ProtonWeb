@@ -189,6 +189,29 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
+"@jafri/ecurve@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@jafri/ecurve/-/ecurve-1.0.6.tgz#b98c1e91e87742154d99afbaffbd77c2867f07ff"
+  integrity sha512-BLBudTYJT1PnMPLO3cFgM+4fKdo9ocgHtwpQI8yCEM8PE6ojABMphyuPbrTuR9g93RPTx+bveyR2tZBb5UvLmA==
+  dependencies:
+    bigi "^1.1.0"
+    safe-buffer "^5.0.1"
+
+"@jafri/eosjs-ecc@^4.0.10":
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/@jafri/eosjs-ecc/-/eosjs-ecc-4.0.10.tgz#360d95f6ae8f6e56582b8098279c584575ff3b9f"
+  integrity sha512-gdbutvdPXU7CUh3YczMZtWKx2YbiM4tmtDZciEipf3e7XDktxvjjgYrFVPd9dY1nbWSTl2ChzwI9bS8rgfoESQ==
+  dependencies:
+    "@babel/runtime" "7.6.0"
+    "@jafri/ecurve" "^1.0.6"
+    bigi "1.4.2"
+    browserify-aes "1.0.6"
+    bs58 "4.0.1"
+    bytebuffer "5.0.1"
+    create-hash "1.1.3"
+    create-hmac "1.1.6"
+    randombytes "2.0.5"
+
 "@lerna/add@3.21.0":
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.21.0.tgz#27007bde71cc7b0a2969ab3c2f0ae41578b4577b"
@@ -4502,7 +4525,7 @@ eos-transit@^4.0.7:
     eosjs "^20.0.0"
     uuid "^3.3.2"
 
-eosjs-ecc@4.0.7, eosjs-ecc@^4.0.7:
+eosjs-ecc@4.0.7:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/eosjs-ecc/-/eosjs-ecc-4.0.7.tgz#f5246da3b84839fcc237204768ef6e5ea56cc814"
   integrity sha512-uuqhqnrDy9XTpKfkhiZqRDUTCCI9oWBalVK5IosL7kpYwA9I3lm68INYFLyWsHpF2xwHqPql8MrMYJ3zfOn5Qg==
