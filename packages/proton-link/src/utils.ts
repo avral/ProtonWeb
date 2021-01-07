@@ -9,7 +9,7 @@ import * as ecc from 'eosjs-ecc'
 const types = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), linkAbi)
 
 /**
- * Helper to ABI encode value.
+ * Helper to ABI encode value
  * @internal
  */
 export function abiEncode(value: any, typeName: string): Uint8Array {
