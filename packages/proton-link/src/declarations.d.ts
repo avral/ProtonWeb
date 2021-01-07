@@ -1,1 +1,1 @@
-declare module '@jafri/eosjs-ecc';
+declare module 'eosjs-ecc';
