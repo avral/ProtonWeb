@@ -8,7 +8,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.13",
+  "version": "2.5.14",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -46,5 +46,5 @@
   "devDependencies": {
     "@types/qrcode": "^1.3.5"
   },
-  "gitHead": "19c1a622ea371e8ace3483d7e68d22e2696a17cb"
+  "gitHead": "1391c0f7f52c920fb4f13d56f18e0d60fcfb070e"
 }
