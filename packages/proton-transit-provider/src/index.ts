@@ -2,7 +2,6 @@ import { NetworkConfig, WalletAuth, WalletProvider, DiscoveryOptions } from 'eos
 import { ApiInterfaces } from '@proton/js';
 import { Link, LinkOptions, LinkSession } from '@proton/link';
 import { BrowserTransportOptions } from '@proton/browser-transport';
-// import { ConnectWallet } from '@proton/web-sdk'
 
 export class ProtonProvider implements WalletProvider {
   id = 'proton';
