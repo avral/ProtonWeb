@@ -8,7 +8,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.23",
+  "version": "2.5.24",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@proton/js": "22.0.1-19",
-    "@proton/web-sdk": "^2.7.3"
+    "@proton/web-sdk": "^2.7.4"
   },
   "husky": {
     "hooks": {
@@ -44,7 +44,7 @@
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@proton/browser-transport": "^2.5.11",
+    "@proton/browser-transport": "^2.5.12",
     "eos-transit": "^4.0.7"
   },
   "gitHead": "220f5b8b9cb8f7d96380cebbb16d2889d0863bc4"
