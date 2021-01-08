@@ -8,7 +8,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.7.4",
+  "version": "2.7.5",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,7 +29,7 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@proton/browser-transport": "^2.5.12",
+    "@proton/browser-transport": "^2.5.13",
     "@proton/js": "22.0.1-19",
     "@proton/link": "19"
   },
@@ -44,5 +44,5 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "gitHead": "220f5b8b9cb8f7d96380cebbb16d2889d0863bc4"
+  "gitHead": "19c1a622ea371e8ace3483d7e68d22e2696a17cb"
 }
