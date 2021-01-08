@@ -1,5 +1,7 @@
 0 silly argv {
 0 silly argv   _: [ 'publish' ],
+0 silly argv   'force-publish': true,
+0 silly argv   forcePublish: true,
 0 silly argv   composed: 'publish',
 0 silly argv   lernaVersion: '3.22.1',
 0 silly argv   '$0': 'lerna'
@@ -7,9 +9,15 @@
 1 notice cli v3.22.1
 2 verbose rootPath /Users/jafri/ProtonWeb
 3 info versioning independent
-4 verbose session 980df07c1b90ab8d
+4 verbose session cbc66fec48bd179b
 5 verbose user-agent lerna/3.22.1/node@v12.19.0+x64 (darwin)
-6 silly argv { _: [ 'publish' ], composed: 'publish', lernaVersion: '3.22.1' }
+6 silly argv {
+6 silly argv   _: [ 'publish' ],
+6 silly argv   'force-publish': true,
+6 silly argv   forcePublish: true,
+6 silly argv   composed: 'publish',
+6 silly argv   lernaVersion: '3.22.1'
+6 silly argv }
 7 verbose rootPath /Users/jafri/ProtonWeb
 8 silly isAnythingCommitted
 9 verbose isAnythingCommitted 1
@@ -17,134 +25,170 @@
 11 verbose currentBranch develop
 12 silly remoteBranchExists
 13 silly isBehindUpstream
-14 silly isBehindUpstream develop is behind origin/develop by 0 commit(s) and ahead by 1
+14 silly isBehindUpstream develop is behind origin/develop by 0 commit(s) and ahead by 0
 15 silly hasTags
 16 verbose hasTags true
-17 silly git-describe.sync "@proton/link@2.5.17-1-g7bea61c" => {"lastTagName":"@proton/link@2.5.17","lastVersion":"2.5.17","refCount":"1","sha":"7bea61c","isDirty":false}
-18 info Looking for changed packages since @proton/link@2.5.17
-19 silly checking diff packages/proton-browser-transport
-20 silly no diff found in @proton/browser-transport
-21 silly checking diff packages/proton-link
-22 silly found diff in packages/proton-link/package.json
-22 silly found diff in packages/proton-link/src/declarations.d.ts
-22 silly found diff in packages/proton-link/src/utils.ts
-23 verbose filtered diff [
-23 verbose filtered diff   'packages/proton-link/package.json',
-23 verbose filtered diff   'packages/proton-link/src/declarations.d.ts',
-23 verbose filtered diff   'packages/proton-link/src/utils.ts'
-23 verbose filtered diff ]
-24 silly checking diff packages/proton-signing-request
-25 silly no diff found in @proton/signing-request
-26 silly checking diff packages/proton-test-app
-27 silly no diff found in proton-test-app
-28 silly checking diff packages/proton-transit-provider
-29 silly no diff found in @proton/transit-provider
-30 silly checking diff packages/proton-web-sdk
-31 silly no diff found in @proton/web-sdk
-32 verbose updated @proton/link
-33 verbose updated @proton/transit-provider
-34 verbose updated @proton/web-sdk
-35 verbose git-describe undefined => "@proton/link@2.5.17-1-g7bea61c"
-36 silly git-describe parsed => {"lastTagName":"@proton/link@2.5.17","lastVersion":"2.5.17","refCount":"1","sha":"7bea61c","isDirty":false}
-37 info execute Skipping releases
-38 silly lifecycle No script for "preversion" in "proton-web", continuing
-39 silly lifecycle No script for "preversion" in "@proton/link", continuing
-40 silly lifecycle No script for "version" in "@proton/link", continuing
-41 silly lifecycle No script for "preversion" in "@proton/web-sdk", continuing
-42 silly lifecycle No script for "version" in "@proton/web-sdk", continuing
-43 silly lifecycle No script for "preversion" in "@proton/transit-provider", continuing
-44 silly lifecycle No script for "version" in "@proton/transit-provider", continuing
-45 silly lifecycle No script for "version" in "proton-web", continuing
-46 silly gitAdd [
-46 silly gitAdd   'packages/proton-link/package.json',
-46 silly gitAdd   'packages/proton-web-sdk/package.json',
-46 silly gitAdd   'packages/proton-transit-provider/package.json'
-46 silly gitAdd ]
-47 silly gitCommit Publish
-47 silly gitCommit
-47 silly gitCommit  - @proton/link@2.5.18
-47 silly gitCommit  - @proton/transit-provider@2.5.20
-47 silly gitCommit  - @proton/web-sdk@2.6.14
-48 verbose git [
-48 verbose git   'commit',
-48 verbose git   '-F',
-48 verbose git   '/private/var/folders/n2/vlwf6b256svdn00m_k87wlqc0000gn/T/510a4dcd-07c4-4069-bc2c-7eec21c1fdeb/lerna-commit.txt'
-48 verbose git ]
-49 silly gitTag @proton/link@2.5.18
-50 verbose git [ 'tag', '@proton/link@2.5.18', '-m', '@proton/link@2.5.18' ]
-51 silly gitTag @proton/transit-provider@2.5.20
-52 verbose git [
-52 verbose git   'tag',
-52 verbose git   '@proton/transit-provider@2.5.20',
-52 verbose git   '-m',
-52 verbose git   '@proton/transit-provider@2.5.20'
-52 verbose git ]
-53 silly gitTag @proton/web-sdk@2.6.14
-54 verbose git [ 'tag', '@proton/web-sdk@2.6.14', '-m', '@proton/web-sdk@2.6.14' ]
-55 silly lifecycle No script for "postversion" in "@proton/link", continuing
-56 silly lifecycle No script for "postversion" in "@proton/transit-provider", continuing
-57 silly lifecycle No script for "postversion" in "@proton/web-sdk", continuing
-58 silly lifecycle No script for "postversion" in "proton-web", continuing
-59 info git Pushing tags...
-60 silly gitPush origin develop
-61 info publish Publishing packages to npm...
-62 info Verifying npm credentials
-63 verbose Retrieving npm user profile
-64 http fetch GET 200 https://registry.npmjs.org/-/npm/v1/user 976ms
-65 silly npm profile get received {"tfa":false,"name":"jafri","email":"syedjafri97@gmail.com","email_verified":true,"created":"2017-05-24T21:27:00.163Z","updated":"2020-09-09T14:50:22.372Z","cidr_whitelist":null,"fullname":"Syed Jafri","twitter":"","github":"jafri"}
-66 silly get npm username received {"username":"jafri","tfa":false,"name":"jafri","email":"syedjafri97@gmail.com","email_verified":true,"created":"2017-05-24T21:27:00.163Z","updated":"2020-09-09T14:50:22.372Z","cidr_whitelist":null,"fullname":"Syed Jafri","twitter":"","github":"jafri"}
-67 silly verifyNpmPackageAccess
-68 http fetch GET 200 https://registry.npmjs.org/-/org/jafri/package?format=cli 702ms
-69 info Checking two-factor auth mode
-70 verbose Retrieving npm user profile
-71 http fetch GET 200 https://registry.npmjs.org/-/npm/v1/user 610ms
-72 silly npm profile get received {"tfa":false,"name":"jafri","email":"syedjafri97@gmail.com","email_verified":true,"created":"2017-05-24T21:27:00.163Z","updated":"2020-09-09T14:50:22.372Z","cidr_whitelist":null,"fullname":"Syed Jafri","twitter":"","github":"jafri"}
-73 silly 2FA false
-74 silly getCurrentSHA
-75 verbose getCurrentSHA 220f5b8b9cb8f7d96380cebbb16d2889d0863bc4
-76 silly lifecycle No script for "prepublish" in "proton-web", continuing
-77 silly lifecycle No script for "prepare" in "proton-web", continuing
-78 silly lifecycle No script for "prepublishOnly" in "proton-web", continuing
-79 silly lifecycle No script for "prepack" in "proton-web", continuing
-80 verbose pack-directory packages/proton-link
-81 silly lifecycle No script for "prepublish" in "@proton/link", continuing
-82 silly lifecycle "prepare" starting in "@proton/link"
-83 info lifecycle @proton/link@2.5.18~prepare: @proton/link@2.5.18
-84 verbose lifecycle @proton/link@2.5.18~prepare: unsafe-perm in lifecycle true
-85 verbose lifecycle @proton/link@2.5.18~prepare: PATH: /Users/jafri/ProtonWeb/node_modules/npm-lifecycle/node-gyp-bin:/Users/jafri/ProtonWeb/packages/proton-link/node_modules/.bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Applications/Keybase.app/Contents/SharedSupport/bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin
-86 verbose lifecycle @proton/link@2.5.18~prepare: CWD: /Users/jafri/ProtonWeb/packages/proton-link
-87 silly lifecycle @proton/link@2.5.18~prepare: Args: [ '-c', 'tsdx build' ]
-88 silly lifecycle @proton/link@2.5.18~prepare: Returned: code: 0  signal: null
-89 silly lifecycle "prepare" finished in "@proton/link"
-90 silly lifecycle No script for "prepublishOnly" in "@proton/link", continuing
-91 silly lifecycle No script for "prepack" in "@proton/link", continuing
-92 silly lifecycle No script for "postpack" in "@proton/link", continuing
-93 verbose packed packages/proton-link
-94 verbose pack-directory packages/proton-web-sdk
-95 silly lifecycle No script for "prepublish" in "@proton/web-sdk", continuing
-96 silly lifecycle "prepare" starting in "@proton/web-sdk"
-97 info lifecycle @proton/web-sdk@2.6.14~prepare: @proton/web-sdk@2.6.14
-98 verbose lifecycle @proton/web-sdk@2.6.14~prepare: unsafe-perm in lifecycle true
-99 verbose lifecycle @proton/web-sdk@2.6.14~prepare: PATH: /Users/jafri/ProtonWeb/node_modules/npm-lifecycle/node-gyp-bin:/Users/jafri/ProtonWeb/packages/proton-web-sdk/node_modules/.bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Applications/Keybase.app/Contents/SharedSupport/bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin
-100 verbose lifecycle @proton/web-sdk@2.6.14~prepare: CWD: /Users/jafri/ProtonWeb/packages/proton-web-sdk
-101 silly lifecycle @proton/web-sdk@2.6.14~prepare: Args: [ '-c', 'tsdx build' ]
-102 silly lifecycle @proton/web-sdk@2.6.14~prepare: Returned: code: 0  signal: null
-103 silly lifecycle "prepare" finished in "@proton/web-sdk"
-104 silly lifecycle No script for "prepublishOnly" in "@proton/web-sdk", continuing
-105 silly lifecycle No script for "prepack" in "@proton/web-sdk", continuing
-106 error ZlibError: zlib: invalid stored block lengths
-106 error     at Unzip.<anonymous> (/Users/jafri/ProtonWeb/node_modules/minizlib/index.js:73:52)
-106 error     at Unzip.emit (events.js:326:22)
-106 error     at Zlib.zlibOnError [as onerror] (zlib.js:183:8)
-106 error     at processChunkSync (zlib.js:429:12)
-106 error     at Unzip.ZlibBase._processChunk (zlib.js:404:12)
-106 error     at Unzip.write (/Users/jafri/ProtonWeb/node_modules/minizlib/index.js:140:30)
-106 error     at Object.write (/Users/jafri/ProtonWeb/node_modules/tar/lib/parse.js:305:58)
-106 error     at Yallist.<anonymous> (/Users/jafri/ProtonWeb/node_modules/minipass/index.js:374:18)
-106 error     at Yallist.forEach (/Users/jafri/ProtonWeb/node_modules/yallist/yallist.js:156:8)
-106 error     at ReadStream.emit (/Users/jafri/ProtonWeb/node_modules/minipass/index.js:373:20)
-106 error     at ReadStream.emit (/Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:154:22)
-106 error     at ReadStream.write (/Users/jafri/ProtonWeb/node_modules/minipass/index.js:163:17)
-106 error     at ReadStream.[_handleChunk] (/Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:131:19)
-106 error     at ReadStream.[_onread] (/Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:109:32)
-106 error     at /Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:101:22
+17 silly git-describe.sync "@proton/browser-transport@2.5.12-0-g19c1a62-dirty" => {"lastTagName":"@proton/browser-transport@2.5.12","lastVersion":"2.5.12","refCount":"0","sha":"19c1a62","isDirty":true}
+18 warn force-publish all packages
+19 info Assuming all packages changed
+20 verbose updated @proton/browser-transport
+21 verbose updated @proton/link
+22 verbose updated @proton/signing-request
+23 verbose updated proton-test-app
+24 verbose updated @proton/transit-provider
+25 verbose updated @proton/web-sdk
+26 info execute Skipping releases
+27 silly lifecycle No script for "preversion" in "proton-web", continuing
+28 silly lifecycle No script for "preversion" in "@proton/browser-transport", continuing
+29 silly lifecycle No script for "preversion" in "@proton/signing-request", continuing
+30 silly lifecycle No script for "preversion" in "proton-test-app", continuing
+31 silly lifecycle No script for "version" in "proton-test-app", continuing
+32 silly lifecycle No script for "version" in "@proton/signing-request", continuing
+33 silly lifecycle No script for "preversion" in "@proton/link", continuing
+34 silly lifecycle No script for "version" in "@proton/browser-transport", continuing
+35 silly lifecycle No script for "preversion" in "@proton/web-sdk", continuing
+36 silly lifecycle No script for "version" in "@proton/link", continuing
+37 silly lifecycle No script for "version" in "@proton/web-sdk", continuing
+38 silly lifecycle No script for "preversion" in "@proton/transit-provider", continuing
+39 silly lifecycle No script for "version" in "@proton/transit-provider", continuing
+40 silly lifecycle No script for "version" in "proton-web", continuing
+41 silly gitAdd [
+41 silly gitAdd   'packages/proton-test-app/package.json',
+41 silly gitAdd   'packages/proton-signing-request/package.json',
+41 silly gitAdd   'packages/proton-browser-transport/package.json',
+41 silly gitAdd   'packages/proton-link/package.json',
+41 silly gitAdd   'packages/proton-web-sdk/package.json',
+41 silly gitAdd   'packages/proton-transit-provider/package.json'
+41 silly gitAdd ]
+42 silly gitCommit Publish
+42 silly gitCommit
+42 silly gitCommit  - @proton/browser-transport@2.5.13
+42 silly gitCommit  - @proton/link@2.5.23
+42 silly gitCommit  - @proton/signing-request@2.5.12
+42 silly gitCommit  - proton-test-app@1.0.9
+42 silly gitCommit  - @proton/transit-provider@2.5.25
+42 silly gitCommit  - @proton/web-sdk@2.7.5
+43 verbose git [
+43 verbose git   'commit',
+43 verbose git   '-F',
+43 verbose git   '/private/var/folders/n2/vlwf6b256svdn00m_k87wlqc0000gn/T/91fc0cbe-93fd-45aa-a9f5-528ee500be9d/lerna-commit.txt'
+43 verbose git ]
+44 silly gitTag @proton/browser-transport@2.5.13
+45 verbose git [
+45 verbose git   'tag',
+45 verbose git   '@proton/browser-transport@2.5.13',
+45 verbose git   '-m',
+45 verbose git   '@proton/browser-transport@2.5.13'
+45 verbose git ]
+46 silly gitTag @proton/link@2.5.23
+47 verbose git [ 'tag', '@proton/link@2.5.23', '-m', '@proton/link@2.5.23' ]
+48 silly gitTag @proton/signing-request@2.5.12
+49 verbose git [
+49 verbose git   'tag',
+49 verbose git   '@proton/signing-request@2.5.12',
+49 verbose git   '-m',
+49 verbose git   '@proton/signing-request@2.5.12'
+49 verbose git ]
+50 silly gitTag proton-test-app@1.0.9
+51 verbose git [ 'tag', 'proton-test-app@1.0.9', '-m', 'proton-test-app@1.0.9' ]
+52 silly gitTag @proton/transit-provider@2.5.25
+53 verbose git [
+53 verbose git   'tag',
+53 verbose git   '@proton/transit-provider@2.5.25',
+53 verbose git   '-m',
+53 verbose git   '@proton/transit-provider@2.5.25'
+53 verbose git ]
+54 silly gitTag @proton/web-sdk@2.7.5
+55 verbose git [ 'tag', '@proton/web-sdk@2.7.5', '-m', '@proton/web-sdk@2.7.5' ]
+56 silly lifecycle No script for "postversion" in "@proton/browser-transport", continuing
+57 silly lifecycle No script for "postversion" in "@proton/link", continuing
+58 silly lifecycle No script for "postversion" in "@proton/signing-request", continuing
+59 silly lifecycle No script for "postversion" in "proton-test-app", continuing
+60 silly lifecycle No script for "postversion" in "@proton/transit-provider", continuing
+61 silly lifecycle No script for "postversion" in "@proton/web-sdk", continuing
+62 silly lifecycle No script for "postversion" in "proton-web", continuing
+63 info git Pushing tags...
+64 silly gitPush origin develop
+65 info publish Publishing packages to npm...
+66 info Verifying npm credentials
+67 verbose Retrieving npm user profile
+68 http fetch GET 200 https://registry.npmjs.org/-/npm/v1/user 1400ms
+69 silly npm profile get received {"tfa":false,"name":"jafri","email":"syedjafri97@gmail.com","email_verified":true,"created":"2017-05-24T21:27:00.163Z","updated":"2020-09-09T14:50:22.372Z","cidr_whitelist":null,"fullname":"Syed Jafri","twitter":"","github":"jafri"}
+70 silly get npm username received {"username":"jafri","tfa":false,"name":"jafri","email":"syedjafri97@gmail.com","email_verified":true,"created":"2017-05-24T21:27:00.163Z","updated":"2020-09-09T14:50:22.372Z","cidr_whitelist":null,"fullname":"Syed Jafri","twitter":"","github":"jafri"}
+71 silly verifyNpmPackageAccess
+72 http fetch GET 200 https://registry.npmjs.org/-/org/jafri/package?format=cli 679ms
+73 info Checking two-factor auth mode
+74 verbose Retrieving npm user profile
+75 http fetch GET 200 https://registry.npmjs.org/-/npm/v1/user 600ms
+76 silly npm profile get received {"tfa":false,"name":"jafri","email":"syedjafri97@gmail.com","email_verified":true,"created":"2017-05-24T21:27:00.163Z","updated":"2020-09-09T14:50:22.372Z","cidr_whitelist":null,"fullname":"Syed Jafri","twitter":"","github":"jafri"}
+77 silly 2FA false
+78 silly getCurrentSHA
+79 verbose getCurrentSHA 1391c0f7f52c920fb4f13d56f18e0d60fcfb070e
+80 silly lifecycle No script for "prepublish" in "proton-web", continuing
+81 silly lifecycle No script for "prepare" in "proton-web", continuing
+82 silly lifecycle No script for "prepublishOnly" in "proton-web", continuing
+83 silly lifecycle No script for "prepack" in "proton-web", continuing
+84 verbose pack-directory packages/proton-browser-transport
+85 verbose pack-directory packages/proton-signing-request
+86 silly lifecycle No script for "prepublish" in "@proton/browser-transport", continuing
+87 silly lifecycle No script for "prepublish" in "@proton/signing-request", continuing
+88 silly lifecycle "prepare" starting in "@proton/browser-transport"
+89 info lifecycle @proton/browser-transport@2.5.13~prepare: @proton/browser-transport@2.5.13
+90 silly lifecycle "prepare" starting in "@proton/signing-request"
+91 info lifecycle @proton/signing-request@2.5.12~prepare: @proton/signing-request@2.5.12
+92 verbose lifecycle @proton/browser-transport@2.5.13~prepare: unsafe-perm in lifecycle true
+93 verbose lifecycle @proton/browser-transport@2.5.13~prepare: PATH: /Users/jafri/ProtonWeb/node_modules/npm-lifecycle/node-gyp-bin:/Users/jafri/ProtonWeb/packages/proton-browser-transport/node_modules/.bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Applications/Keybase.app/Contents/SharedSupport/bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin
+94 verbose lifecycle @proton/browser-transport@2.5.13~prepare: CWD: /Users/jafri/ProtonWeb/packages/proton-browser-transport
+95 silly lifecycle @proton/browser-transport@2.5.13~prepare: Args: [ '-c', 'tsdx build' ]
+96 silly lifecycle @proton/browser-transport@2.5.13~prepare: Returned: code: 0  signal: null
+97 verbose lifecycle @proton/signing-request@2.5.12~prepare: unsafe-perm in lifecycle true
+98 verbose lifecycle @proton/signing-request@2.5.12~prepare: PATH: /Users/jafri/ProtonWeb/node_modules/npm-lifecycle/node-gyp-bin:/Users/jafri/ProtonWeb/packages/proton-signing-request/node_modules/.bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Applications/Keybase.app/Contents/SharedSupport/bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin
+99 verbose lifecycle @proton/signing-request@2.5.12~prepare: CWD: /Users/jafri/ProtonWeb/packages/proton-signing-request
+100 silly lifecycle @proton/signing-request@2.5.12~prepare: Args: [ '-c', 'tsdx build' ]
+101 silly lifecycle "prepare" finished in "@proton/browser-transport"
+102 silly lifecycle No script for "prepublishOnly" in "@proton/browser-transport", continuing
+103 silly lifecycle No script for "prepack" in "@proton/browser-transport", continuing
+104 silly lifecycle No script for "postpack" in "@proton/browser-transport", continuing
+105 verbose packed packages/proton-browser-transport
+106 verbose pack-directory packages/proton-web-sdk
+107 silly lifecycle No script for "prepublish" in "@proton/web-sdk", continuing
+108 silly lifecycle "prepare" starting in "@proton/web-sdk"
+109 info lifecycle @proton/web-sdk@2.7.5~prepare: @proton/web-sdk@2.7.5
+110 silly lifecycle @proton/signing-request@2.5.12~prepare: Returned: code: 0  signal: null
+111 verbose lifecycle @proton/web-sdk@2.7.5~prepare: unsafe-perm in lifecycle true
+112 verbose lifecycle @proton/web-sdk@2.7.5~prepare: PATH: /Users/jafri/ProtonWeb/node_modules/npm-lifecycle/node-gyp-bin:/Users/jafri/ProtonWeb/packages/proton-web-sdk/node_modules/.bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Applications/Keybase.app/Contents/SharedSupport/bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin
+113 verbose lifecycle @proton/web-sdk@2.7.5~prepare: CWD: /Users/jafri/ProtonWeb/packages/proton-web-sdk
+114 silly lifecycle @proton/web-sdk@2.7.5~prepare: Args: [ '-c', 'tsdx build' ]
+115 silly lifecycle "prepare" finished in "@proton/signing-request"
+116 silly lifecycle No script for "prepublishOnly" in "@proton/signing-request", continuing
+117 silly lifecycle No script for "prepack" in "@proton/signing-request", continuing
+118 silly lifecycle No script for "postpack" in "@proton/signing-request", continuing
+119 verbose packed packages/proton-signing-request
+120 verbose pack-directory packages/proton-link
+121 silly lifecycle No script for "prepublish" in "@proton/link", continuing
+122 silly lifecycle "prepare" starting in "@proton/link"
+123 info lifecycle @proton/link@2.5.23~prepare: @proton/link@2.5.23
+124 silly lifecycle @proton/web-sdk@2.7.5~prepare: Returned: code: 0  signal: null
+125 verbose lifecycle @proton/link@2.5.23~prepare: unsafe-perm in lifecycle true
+126 verbose lifecycle @proton/link@2.5.23~prepare: PATH: /Users/jafri/ProtonWeb/node_modules/npm-lifecycle/node-gyp-bin:/Users/jafri/ProtonWeb/packages/proton-link/node_modules/.bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/Applications/Keybase.app/Contents/SharedSupport/bin:/Users/jafri/google-cloud-sdk/bin:/Users/jafri/.nvm/versions/node/v12.19.0/bin
+127 verbose lifecycle @proton/link@2.5.23~prepare: CWD: /Users/jafri/ProtonWeb/packages/proton-link
+128 silly lifecycle @proton/link@2.5.23~prepare: Args: [ '-c', 'tsdx build' ]
+129 silly lifecycle "prepare" finished in "@proton/web-sdk"
+130 silly lifecycle No script for "prepublishOnly" in "@proton/web-sdk", continuing
+131 silly lifecycle No script for "prepack" in "@proton/web-sdk", continuing
+132 error ZlibError: zlib: invalid code lengths set
+132 error     at Unzip.<anonymous> (/Users/jafri/ProtonWeb/node_modules/minizlib/index.js:73:52)
+132 error     at Unzip.emit (events.js:326:22)
+132 error     at Zlib.zlibOnError [as onerror] (zlib.js:183:8)
+132 error     at processChunkSync (zlib.js:429:12)
+132 error     at Unzip.ZlibBase._processChunk (zlib.js:404:12)
+132 error     at Unzip.write (/Users/jafri/ProtonWeb/node_modules/minizlib/index.js:140:30)
+132 error     at Object.write (/Users/jafri/ProtonWeb/node_modules/tar/lib/parse.js:305:58)
+132 error     at Yallist.<anonymous> (/Users/jafri/ProtonWeb/node_modules/minipass/index.js:374:18)
+132 error     at Yallist.forEach (/Users/jafri/ProtonWeb/node_modules/yallist/yallist.js:156:8)
+132 error     at ReadStream.emit (/Users/jafri/ProtonWeb/node_modules/minipass/index.js:373:20)
+132 error     at ReadStream.emit (/Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:154:22)
+132 error     at ReadStream.write (/Users/jafri/ProtonWeb/node_modules/minipass/index.js:163:17)
+132 error     at ReadStream.[_handleChunk] (/Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:131:19)
+132 error     at ReadStream.[_onread] (/Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:109:32)
+132 error     at /Users/jafri/ProtonWeb/node_modules/fs-minipass/index.js:101:22
