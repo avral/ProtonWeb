@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@proton/js": "22.0.1-19",
-    "@proton/signing-request": "^2.5.9",
+    "@proton/signing-request": "^2.5.8",
     "eosjs-ecc": "^4.0.7",
     "isomorphic-ws": "^4.0.1",
     "pako": "^1.0.11",
