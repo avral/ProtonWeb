@@ -2,10 +2,10 @@
 
 **Installation**
 ```
-npm i @protonprotocol/proton-web-sdk
+npm i @proton/web-sdk
 ```
 ```
-yarn add @protonprotocol/proton-web-sdk
+yarn add @proton/web-sdk
 ```
 
 Full Documentation:
@@ -13,7 +13,7 @@ https://docs.protonchain.com/sdk/proton-web-sdk
 
 Usage
 ```javascript
-import { ConnectWallet } from '@protonprotocol/proton-web-sdk'
+import { ConnectWallet } from '@proton/web-sdk'
 
 const appIdentifier = 'taskly' // Proton account name
 

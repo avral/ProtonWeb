@@ -1,10 +1,10 @@
-import {LinkSession, LinkTransport} from '@protonprotocol/proton-link'
-import {SigningRequest} from '@protonprotocol/proton-signing-request'
+import {LinkSession, LinkTransport} from '@proton/link'
+import {SigningRequest} from '@proton/signing-request'
 import * as qrcode from 'qrcode'
 import styleSelector from './styles'
 
 export interface BrowserTransportOptions {
-    /** CSS class prefix, defaults to `@protonprotocol/proton-link` */
+    /** CSS class prefix, defaults to `@proton/link` */
     classPrefix?: string
     /** Whether to inject CSS styles in the page header, defaults to true. */
     injectStyles?: boolean

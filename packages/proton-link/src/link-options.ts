@@ -1,5 +1,5 @@
-import {ChainName} from '@protonprotocol/proton-signing-request'
-import {JsonRpc} from '@protonprotocol/protonjs'
+import {ChainName} from '@proton/signing-request'
+import {JsonRpc} from '@proton/js'
 import {LinkStorage} from './link-storage'
 import {LinkTransport} from './link-transport'
 

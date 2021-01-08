@@ -1,4 +1,4 @@
-# Proton Link [!![Package Version](https://img.shields.io/npm/v/@protonprotocol/https://www.npmjs.com/package/@protonprotocol/proton-link.svg?style=flat-square](https://www.npmjs.com/package/@protonprotocol/proton-link) ![License](https://img.shields.io/npm/l/@protonprotocol/proton-link.svg?style=flat-square)
+# Proton Link [!![Package Version](https://img.shields.io/npm/v/@proton/https://www.npmjs.com/package/@proton/link.svg?style=flat-square](https://www.npmjs.com/package/@proton/link) ![License](https://img.shields.io/npm/l/@proton/link.svg?style=flat-square)
 
 Persistent, fast and secure signature provider for Proton chain built on top of [EOSIO Signing Requests (EEP-7)](https://github.com/greymass/eosio-signing-request). This was forked from the [Anchor Link](https://github.com/greymass/anchor-link) module, much of the documentation from Anchor Link still applies.
 
@@ -15,23 +15,23 @@ Resources:
 
 ## Installation
 
-The `proton-link` package is distributed as a module on [npm](https://www.npmjs.com/package/@protonprotocol/proton-link)
+The `proton-link` package is distributed as a module on [npm](https://www.npmjs.com/package/@proton/link)
 
 ### Browser using a bundler (recommended)
 
 Install Proton Link and a [transport](#transports):
 
 ```
-yarn add proton-link proton-browser-transport
+yarn add @proton/link @proton/browser-transport
 # or
-npm install --save proton-link proton-browser-transport
+npm install --save @proton/link @proton/browser-transport
 ```
 
 Import them into your project:
 
 ```js
-import ProtonLink from 'proton-link'
-import ProtonLinkBrowserTransport from 'proton-browser-transport'
+import ProtonLink from '@proton/link'
+import ProtonLinkBrowserTransport from '@proton/browser-transport'
 ```
 
 ### Using node.js
@@ -39,16 +39,16 @@ import ProtonLinkBrowserTransport from 'proton-browser-transport'
 Using node.js
 
 ```
-yarn add @protonprotocol/proton-link @protonprotocol/proton-browser-transport
+yarn add @proton/link @proton/browser-transport
 # or
-npm install --save @protonprotocol/proton-link @protonprotocol/proton-browser-transport
+npm install --save @proton/link @proton/browser-transport
 ```
 
 Import them into your project:
 
 ```js
-const ProtonLink = require('proton-link')
-const ProtonLinkBrowserTransport = require('proton-browser-transport')
+const ProtonLink = require('@proton/link')
+const ProtonLinkBrowserTransport = require('@proton/browser-transport')
 ```
 
 ## Basic usage
@@ -106,7 +106,7 @@ Available transports:
 
  Package | Description
 ---------| ---------------
- [proton-browser-transport](https://www.npmjs.com/package/@protonprotocol/proton-browser-transport) | Browser overlay that generates QR codes or triggers local URI handler if available
+ [proton-browser-transport](https://www.npmjs.com/package/@proton/browser-transport) | Browser overlay that generates QR codes or triggers local URI handler if available
 
 See the [`LinkTransport` documentation](https://greymass.github.io/anchor-link/interfaces/linktransport.html) for details on how to implement custom transports.
 

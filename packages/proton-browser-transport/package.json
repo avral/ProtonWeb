@@ -1,11 +1,14 @@
 {
-  "name": "@protonprotocol/proton-browser-transport",
-  "author": "jafri",
+  "name": "@proton/browser-transport",
+  "author": "metallicus",
+  "publishConfig": {
+    "access": "public"
+  },
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.5.6",
+  "version": "2.5.9",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,7 +29,7 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@protonprotocol/protonjs": "^21.0.21",
+    "@proton/js": "22.0.1-18",
     "qrcode": "^1.4.4"
   },
   "husky": {
@@ -42,5 +45,6 @@
   },
   "devDependencies": {
     "@types/qrcode": "^1.3.5"
-  }
+  },
+  "gitHead": "0c26667103b462921691a26bab570bd7fc97bba4"
 }

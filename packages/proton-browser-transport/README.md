@@ -1,6 +1,6 @@
-# Proton Browser Transport [![Package Version](https://img.shields.io/npm/v/@protonprotocol/proton-link-browser-transport.svg?style=flat-square)](https://www.npmjs.com/package/@protonprotocol/proton-link-browser-transport) ![License](https://img.shields.io/npm/l/@protonprotocol/proton-link-browser-transport.svg?style=flat-square)
+# Proton Browser Transport [![Package Version](https://img.shields.io/npm/v/@proton/link-browser-transport.svg?style=flat-square)](https://www.npmjs.com/package/@proton/link-browser-transport) ![License](https://img.shields.io/npm/l/@proton/link-browser-transport.svg?style=flat-square)
 
-A transport library for usage of [Proton Link](https://www.npmjs.com/package/@protonprotocol/proton-link) within a web browser environment.
+A transport library for usage of [Proton Link](https://www.npmjs.com/package/@proton/link) within a web browser environment.
 
 ## Basic usage
 
@@ -15,13 +15,13 @@ Parameters can be passed to the transport during construction as an object, allo
 
 ```ts
 const transport = new ProtonLinkBrowserTransport({
-    /** CSS class prefix, defaults to `@protonprotocol/proton-link` */
+    /** CSS class prefix, defaults to `@proton/link` */
     classPrefix: 'my-css-prefix',
     /** Whether to inject CSS styles in the page header, defaults to true. */
     injectStyles: true,
     /** Whether to display request success and error messages, defaults to true */
     requestStatus: false,
-    /** Local storage prefix, defaults to `@protonprotocol/proton-link`. */
+    /** Local storage prefix, defaults to `@proton/link`. */
     storagePrefix: 'my-localstorage-prefix',
     /** Requesting account of the dapp (optional) */
     requestAccount: 'taskly',

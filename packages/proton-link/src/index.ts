@@ -10,4 +10,4 @@ import {Link} from './link'
 export default Link
 
 // convenience re-exports from esr.
-export {PlaceholderAuth, PlaceholderName, PlaceholderPermission} from '@protonprotocol/proton-signing-request'
+export {PlaceholderAuth, PlaceholderName, PlaceholderPermission} from '@proton/signing-request'

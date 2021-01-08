@@ -1,6 +1,9 @@
 {
-  "name": "@protonprotocol/proton-web-sdk",
-  "author": "jafri",
+  "name": "@proton/web-sdk",
+  "author": "metallicus",
+  "publishConfig": {
+    "access": "public"
+  },
   "module": "dist/index.js",
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
@@ -26,9 +29,9 @@
     "analyze": "size-limit --why"
   },
   "dependencies": {
-    "@protonprotocol/proton-browser-transport": "^2.5.6",
-    "@protonprotocol/proton-link": "^2.5.8",
-    "@protonprotocol/protonjs": "^21.0.21"
+    "@proton/browser-transport": "^2.5.9",
+    "@proton/js": "22.0.1-18",
+    "@proton/link": "^2.5.8"
   },
   "husky": {
     "hooks": {
@@ -41,5 +44,5 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "gitHead": "1da8736c4a6390c789d15af662b3453c2c151878"
+  "gitHead": "220f5b8b9cb8f7d96380cebbb16d2889d0863bc4"
 }

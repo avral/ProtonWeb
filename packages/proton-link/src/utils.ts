@@ -1,14 +1,15 @@
-import {Numeric, Serialize} from '@protonprotocol/protonjs'
-import * as ecc from 'eosjs-ecc'
+import {Numeric, Serialize} from '@proton/js'
 
 import {Bytes, SealedMessage} from './link-abi'
 import linkAbi from './link-abi-data'
+
+import * as ecc from 'eosjs-ecc'
 
 /** @internal */
 const types = Serialize.getTypesFromAbi(Serialize.createInitialTypes(), linkAbi)
 
 /**
- * Helper to ABI encode value.
+ * Helper to ABI encode value
  * @internal
  */
 export function abiEncode(value: any, typeName: string): Uint8Array {

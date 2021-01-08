@@ -2,7 +2,7 @@
  * EOSIO Signing Request (ESR).
  */
 
-import {Serialize} from '@protonprotocol/protonjs'
+import {Serialize} from '@proton/js'
 import sha256 from 'fast-sha256'
 require('fast-text-encoding');
 

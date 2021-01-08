@@ -1,6 +1,6 @@
-import ProtonLinkBrowserTransport, { BrowserTransportOptions } from '@protonprotocol/proton-browser-transport'
-import ProtonLink, { LinkOptions, LinkStorage, PermissionLevel } from '@protonprotocol/proton-link'
-import { JsonRpc } from '@protonprotocol/protonjs'
+import ProtonLinkBrowserTransport, { BrowserTransportOptions } from '@proton/browser-transport'
+import ProtonLink, { LinkOptions, LinkStorage, PermissionLevel } from '@proton/link'
+import { JsonRpc } from '@proton/js'
 import SupportedWallets from './supported-wallets'
 
 class Storage implements LinkStorage {

@@ -1,5 +1,5 @@
-import {SigningRequest} from '@protonprotocol/proton-signing-request'
-import {ApiInterfaces} from '@protonprotocol/protonjs'
+import {SigningRequest} from '@proton/signing-request'
+import {ApiInterfaces} from '@proton/js'
 
 import {SessionError} from './errors'
 import {Link, PermissionLevel, TransactArgs, TransactOptions, TransactResult} from './link'
