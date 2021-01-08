@@ -1,6 +1,6 @@
 {
   "name": "@proton/signing-request",
-  "author": "jafri",
+  "author": "metallicus",
   "publishConfig": {
     "access": "public"
   },

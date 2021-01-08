@@ -1,6 +1,6 @@
 {
   "name": "@proton/browser-transport",
-  "author": "jafri",
+  "author": "metallicus",
   "publishConfig": {
     "access": "public"
   },

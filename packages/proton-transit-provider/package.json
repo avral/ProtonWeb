@@ -1,6 +1,6 @@
 {
   "name": "@proton/transit-provider",
-  "author": "jafri",
+  "author": "metallicus",
   "publishConfig": {
     "access": "public"
   },
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@proton/js": "22.0.1-18",
-    "@proton/web-sdk": "^2.6.15"
+    "@proton/web-sdk": "^2.7.0"
   },
   "husky": {
     "hooks": {
