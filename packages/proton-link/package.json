@@ -53,5 +53,5 @@
     "@types/uuid": "^8.3.0",
     "@types/ws": "^7.2.7"
   },
-  "gitHead": "1391c0f7f52c920fb4f13d56f18e0d60fcfb070e"
+  "gitHead": "5ae220c1401f182f576c41c6f9a99f433c337366"
 }
