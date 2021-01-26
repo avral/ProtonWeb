@@ -838,7 +838,7 @@ export class SigningRequest {
                     actions: this.getRawActions(),
                     context_free_actions: [],
                     transaction_extensions: [],
-                    expiration: '1970-01-01T00:00:00.000',
+                    expiration: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, -1), // 1 week
                     ref_block_num: 0,
                     ref_block_prefix: 0,
                     max_cpu_usage_ms: 0,
