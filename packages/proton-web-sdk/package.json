@@ -8,7 +8,7 @@
   "unpkg": "dist/bundle.js",
   "types": "dist/index.d.ts",
   "source": "src/index.ts",
-  "version": "2.7.12",
+  "version": "2.7.13",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -31,7 +31,7 @@
   "dependencies": {
     "@proton/browser-transport": "^2.5.17",
     "@proton/js": "22.0.1-19",
-    "@proton/link": "^2.5.28"
+    "@proton/link": "^2.5.29"
   },
   "husky": {
     "hooks": {
