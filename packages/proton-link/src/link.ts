@@ -77,6 +77,36 @@ export interface LoginResult extends IdentifyResult {
     session: LinkSession
 }
 
+type KycProvider = {
+    blisted: number;
+    desc: string;
+    iconurl: string;
+    kyc_provider: string;
+    name: string;
+    url: string;
+}
+
+type KycInfo = {
+    kyc_provider: string;
+    kyc_level: string;
+    kyc_date: number;
+}
+
+type UserInfo = {
+    acc: string;
+    avatar: string;
+    date: number;
+    aacts: any[]; 
+    ac: any[];
+    isLightKYCVerified?: boolean;
+    kyc: KycInfo[];
+    name: string;
+    raccs: any[];
+    verified: number;
+    verifiedon: number;
+    verifier: string;
+}
+
 /**
  * Main class, also exposed as the default export of the library.
  *
@@ -102,7 +132,7 @@ export class Link implements esr.AbiProvider {
     public readonly chainId: string
     /** Storage adapter used to persist sessions. */
     public readonly storage?: LinkStorage
-
+    public validKycProviders: string[] = [];
     private serviceAddress: string
     private requestOptions: esr.SigningRequestEncodingOptions
     private abiCache = new Map<string, any>()
@@ -145,6 +175,7 @@ export class Link implements esr.AbiProvider {
         if (options.walletType && options.walletType.length > 0) {
             this.walletType = options.walletType || ''
         }
+        this.getValidKycProviders()
     }
 
     /**
@@ -485,7 +516,7 @@ export class Link implements esr.AbiProvider {
                 lower_bound: session.auth.actor,
                 upper_bound: session.auth.actor,
             })
-            session.accountData = rows
+            session.accountData = await this.isLightKYCVerified(rows);
         }
 
         // once successfully logged in, set wallet type so restore session can work properly
@@ -498,6 +529,81 @@ export class Link implements esr.AbiProvider {
             session,
         }
     }
+
+     /**
+     * Checks blockchain for a list of kycproviders, and sorts through the ones that are blacklisted.
+     * @returns An array of strings with valid kyc provider names.
+     */
+    public async getValidKycProviders() {
+        try {
+            const {rows} = await this.rpc.get_table_rows({
+                scope: 'eosio.proton',
+                code: 'eosio.proton',
+                json: true,
+                table: 'kycproviders',
+            });
+            this.validKycProviders = rows.map((provider: KycProvider) => {
+                if (!provider.blisted) {
+                    return provider.kyc_provider;
+                } else return undefined;
+            });
+        } catch (e) {
+            throw new Error('Unable to get kycProviders.')
+        }
+    }
+
+    /**
+     * Takes an account or a list of accounts and checks to make sure that they are light-verified
+     * @param account This could be an array of user rows from the usersinfo table on the blockchain, or a singular string for an account name
+     * @returns An object of the user data as pulled from the usersinfo table on the blockchain with an additional key, isLightKYCVerified (boolean)
+     */
+    public async isLightKYCVerified(account: UserInfo[] | string) {
+        const lightKyc =  ["lastname", "firstname", "birthdate", "address"];
+        if (account.length === 0) {
+            throw new Error('Please enter an account.');
+        }
+        if (this.validKycProviders.length === 0) {
+            await this.getValidKycProviders();
+        }
+
+        let accountRows: UserInfo[] = [];
+        const resultsWithKycStatus: UserInfo[] = [];
+
+        if (Array.isArray(account)) {
+            accountRows = account;
+        } else if (typeof account === 'string') {
+            try {
+                const {rows} = await this.rpc.get_table_rows({
+                    scope: 'eosio.proton',
+                    code: 'eosio.proton',
+                    json: true,
+                    table: 'usersinfo',
+                    lower_bound: account,
+                    upper_bound: account,
+                });
+                accountRows = rows;
+            } catch(e) {
+                throw new Error('Account not found!');
+            }
+        }        
+        accountRows.forEach((singleAccount) => {
+            let levelsResult: string[] = [];
+            const accountCopy = Object.assign({}, singleAccount);
+            accountCopy.isLightKYCVerified = false;
+            const accountKYC = accountCopy.kyc;
+            if (accountKYC && accountKYC.length > 0) {
+                accountKYC.forEach((kyc: KycInfo) => {
+                    if (this.validKycProviders.indexOf(kyc.kyc_provider) >= 0) {
+                        const result = kyc.kyc_level.split(',').map((kycItem: string) => kycItem.split(':')[1]);
+                        levelsResult = result.concat(levelsResult);
+                    }
+                })
+            }
+            accountCopy.isLightKYCVerified = lightKyc.every(val => levelsResult.includes(val));
+            resultsWithKycStatus.push(accountCopy);
+        })
+        return resultsWithKycStatus;
+    };
 
     /**
      * Restore previous session, see [[Link.login]] to create a new session.
@@ -547,7 +653,7 @@ export class Link implements esr.AbiProvider {
                 lower_bound: session.auth.actor,
                 upper_bound: session.auth.actor,
             })
-            session.accountData = rows
+            session.accountData = await this.isLightKYCVerified(rows);
         }
 
         return session
