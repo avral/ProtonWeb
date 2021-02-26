@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@proton/browser-transport": "^2.5.17",
-    "@proton/js": "22.0.1-19",
+    "@proton/js": "22.0.45",
     "@proton/link": "^2.5.30"
   },
   "husky": {
