@@ -1,6 +1,5 @@
 import {SigningRequest} from '@proton/signing-request'
 import {ApiInterfaces} from '@proton/js'
-
 import {SessionError} from './errors'
 import {Link, PermissionLevel, TransactArgs, TransactOptions, TransactResult} from './link'
 import {LinkInfo} from './link-abi'
@@ -166,7 +165,10 @@ export class LinkChannelSession extends LinkSession implements LinkTransport {
             method: 'POST',
             headers: {
                 'X-Buoy-Wait': (this.timeout / 1000).toFixed(0),
+                'Content-Type': "text/html",
+                'Accept': "text/html"
             },
+
             body: this.encrypt(request),
         })
             .then((response: any) => {
